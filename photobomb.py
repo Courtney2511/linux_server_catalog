@@ -12,13 +12,18 @@ session = DBSession()
 
 @app.route('/')
 def home():
-    return "This is the home page"
+    categories = session.query(Category).all()
+    print categories
+    return render_template('testpage.html', categories=categories)
 
 
 @app.route('/photos')
 def photos():
     return "this is the photo index page"
 
+@app.route('/users/new')
+def new_user():
+    return "This is the new users page"
 
 
 if __name__ == '__main__':
