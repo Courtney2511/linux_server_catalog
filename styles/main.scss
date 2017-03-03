@@ -1,3 +1,39 @@
+
+/* General Styles */
 body {
-	background: #ece7e7;
+  background: white;
+}
+
+/* Header */
+
+.page-title {
+  width: 600px;
+  margin: auto;
+}
+
+.title {
+  align-content: center;
+}
+
+/* Navigation */
+
+.nav-bar {
+  display: inline-block;
+}
+
+.nav-item {
+  float: right;
+  margin: 5px;
+  list-style: none;
+}
+
+a.nav-item {
+  text-decoration: none;
+}
+
+/* Index */
+
+.photo {
+  width: 400px;
+  height: 300px;
 }
