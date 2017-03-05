@@ -27,6 +27,8 @@
     "node-sass": "^4.3.0",
     "react": "15.4.2",
     "react-dom": "15.4.2",
+    "react-grid-system": "^2.6.0",
+    "react-router": "^3.0.2",
     "sass-loader": "^6.0.2"
   },
   "devDependencies": {

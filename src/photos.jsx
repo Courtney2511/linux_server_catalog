@@ -22,8 +22,8 @@ export default class Photos extends React.Component {
 
   componentDidMount() {
     const url = (this.props.category)
-      ? `http://localhost:5000/photos/${this.props.category}/JSON`
-      : 'http://localhost:5000/photos/JSON'
+      ? `http://localhost:5000/photos/${this.props.category}`
+      : 'http://localhost:5000/photos'
     this.serverRequest =
       axios.get(url).then((result) => {
         console.log(result)
