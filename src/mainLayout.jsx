@@ -8,7 +8,13 @@ export default class MainLayout extends React.Component {
     return (
       <header>
         <div className="page-title">
-          <h1 className="title">PHOTOBOMB</h1>
+          <div className="header-left">
+            <h1 className="title">PHOTOBOMB</h1>
+          </div>
+          <div className="header-right">
+            <p>Log In</p>
+            <p>Sign Up</p>
+          </div>
         </div>
         <nav>
           <ul className="nav-bar">

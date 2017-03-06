@@ -5,10 +5,12 @@ import { Link } from 'react-router'
 
 function Photo(props) {
   return (
-    <div>
-      <h2>{props.photo.description} ({props.photo.date_created}) {props.photo.user.name}</h2>
-      <img className="photo" src={props.photo.picture} />
-      <Link to={"/photos/" + props.photo.id}>More info</Link>
+    <div className="photo">
+      <Link to={"/photos/" + props.photo.id}>
+        <img className="photo" src={props.photo.picture} />
+      </Link>
+      <h3>{props.photo.description}</h3>
+      <p>{props.photo.date_created} {props.photo.user.name}</p>
     </div>
     )
 }

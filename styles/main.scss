@@ -1,18 +1,35 @@
 
 /* General Styles */
 body {
-  background: white;
+  background: #f4f4f5;
+  margin: 0;
+  box-sizing: border-box;
+  color: #494945;
 }
 
 /* Header */
 
 .page-title {
-  width: 600px;
-  margin: auto;
+  background-color: white;
+}
+
+.header-left {
+  width: 50%;
+  float: left;
+}
+
+.header-right {
+  width: 50%;
+  float: right;
+}
+
+header.p {
+  display: inline;
 }
 
 .title {
-  text-align: center;
+  font-family: Arial;
+  text-align: left;
 }
 
 /* Navigation */
