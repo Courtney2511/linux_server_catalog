@@ -1,12 +1,14 @@
 import React from 'react'
-import '../styles/main.scss'
+import '../styles/photo_index.scss'
 import axios from 'axios'
+import { Link } from 'react-router'
 
 function Photo(props) {
   return (
     <div>
-      <h2>{props.photo.description} ({props.photo.date_created})</h2>
+      <h2>{props.photo.description} ({props.photo.date_created}) {props.photo.user.name}</h2>
       <img className="photo" src={props.photo.picture} />
+      <Link to={"/photos/" + props.photo.id}>More info</Link>
     </div>
     )
 }
@@ -21,9 +23,7 @@ export default class Photos extends React.Component {
   }
 
   componentDidMount() {
-    const url = (this.props.category)
-      ? `http://localhost:5000/photos/${this.props.category}`
-      : 'http://localhost:5000/photos'
+    const url = 'http://localhost:5000/photos'
     this.serverRequest =
       axios.get(url).then((result) => {
         console.log(result)

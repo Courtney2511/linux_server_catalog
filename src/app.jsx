@@ -4,6 +4,7 @@ import '../styles/index.scss'
 import Photos from './photos.jsx'
 import NewPhoto from './newPhoto.jsx'
 import mainLayout from './mainLayout.jsx'
+import PhotoDetail from './photoDetail.jsx'
 
 
 export default class App extends React.Component {
@@ -14,8 +15,12 @@ export default class App extends React.Component {
           <Route path="/" component={Photos} />
         </Route>
         <Route component={mainLayout}>
+          <Route path="/photos/:photo_id" component={PhotoDetail} />
+        </Route>
+        <Route component={mainLayout}>
           <Route path="/photos/new" component={NewPhoto} />
         </Route>
+        <Route></Route>
       </Router>
     )
   }

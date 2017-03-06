@@ -12,13 +12,15 @@ body {
 }
 
 .title {
-  align-content: center;
+  text-align: center;
 }
 
 /* Navigation */
 
 .nav-bar {
   display: inline-block;
+  width: 600px;
+  margin: 0 auto;
 }
 
 .nav-item {
@@ -29,11 +31,4 @@ body {
 
 a.nav-item {
   text-decoration: none;
-}
-
-/* Index */
-
-.photo {
-  width: 400px;
-  height: 300px;
 }
