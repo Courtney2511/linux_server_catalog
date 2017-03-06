@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect, \
     flash, jsonify
+from flask import session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_models import Base, Category, User, Photo
@@ -15,43 +16,61 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-# PHOTOS #
 
+# PHOTO #
 
-# All Photos
-@app.route('/photos')
+# ALL Photos
+@app.route('/photos', methods=['GET'])
 def photosJSON():
     photos = session.query(Photo).all()
     return jsonify(photos=[photo.serialize for photo in photos])
 
 
 # Photo By Id
-@app.route('/photos/<int:photo_id>')
+@app.route('/photos/<int:photo_id>', methods=['GET'])
 def photoJSON(photo_id):
     photo = session.query(Photo).get(photo_id)
-    return jsonify(photo.serialize)
+    return jsonify(photo=photo.serialize)
 
 
-# Edit Photo
-@app.route('/photos/<int:photo_id>/edit', methods=['GET', 'POST'])
+# NEW photo
+@app.route('/photos', methods=['POST'])
+def newPhoto():
+    data = request.get_json()
+    # adds photo instance to db from POST request data
+    newPhoto = Photo(description=data['description'],
+                     picture=data['picture'],
+                     category_id=data['category_id'],
+                     user_id=data['user_id'])
+    session.add(newPhoto)
+    session.commit()
+    session.refresh(newPhoto)
+    return jsonify(photo=newPhoto.serialize)
+
+
+# EDIT Photo
+@app.route('/photos/<int:photo_id>', methods=['PUT'])
 def editPhoto(photo_id):
     photo = session.query(Photo).get(photo_id)
-    if request.method == 'POST':
-        print "post request received"
-    else:
-        return jsonify(photo.serialize)
+    photo.description = data['description']
+    photo.picture = data['picture']
+    photo.category_id = data['category_id']
+    session.add(Photo)
+    session.commit()
+    return jsonify(photo=photo.serialize)
 
 
-# new photo
-@app.route('/photos/new', methods=['GET', 'POST'])
-def newPhoto():
-    # adds photo instance to db from POST request data
-    if request.method == 'POST':
-        newPhoto = Photo(description=request.args.get("description"),
-                         picture=request.args.get("picture"),
-                         category_id=request.args.get("category_id"))
-        session.add(newPhoto)
-        session.commit()
+# delete photo
+@app.route('/photos/<int:photo_id>', methods=['DELETE'])
+def deletePhoto(photo_id):
+    photo = session.query(Photo).get(photo_id)
+    if photo is None:
+        return jsonify(Message="Not Found"), 404
+    session.delete(photo)
+    session.commit()
+    return jsonify(success=true)
+
+# CATEGORY #
 
 
 # Categories
@@ -75,11 +94,23 @@ def categoryPhotosJSON(category_id):
     return jsonify(photos=[photo.serialize for photo in category.photos])
 
 
+# USER #
+
 # all users
 @app.route('/users')
 def users():
     users = session.query(User).all()
     return jsonify(users=[user.serialize for user in users])
+
+
+# New User
+@app.route('/users/new', methods=['GET', 'POST'])
+def newUser():
+    if request.method == 'POST':
+        newUser = User(name=request.form['name'],
+                       email=request.form['email'])
+        session.add(newUser)
+        session.commit()
 
 
 # home
@@ -88,6 +119,8 @@ def home():
     categories = session.query(Category).all()
     print categories
     return render_template('testpage.html', categories=categories)
+
+# Helper Methods:
 
 
 if __name__ == '__main__':

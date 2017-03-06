@@ -42,11 +42,11 @@ class Photo(Base):
     __tablename__ = 'item'
     id = Column(Integer, primary_key=True)
     description = Column(String(250))
-    category_id = Column(Integer, ForeignKey('category.id'))
+    category_id = Column(Integer, ForeignKey('category.id'), nullable=False)
     category = relationship("Category", back_populates="photos")
-    picture = Column(String(300))
+    picture = Column(String(500), nullable=False)
     date_created = Column(DateTime, default=datetime.utcnow)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     user = relationship(User)
 
     @property
@@ -55,8 +55,10 @@ class Photo(Base):
         return {
             'id': self.id,
             'description': self.description,
+            'category': self.category.serialize,
             'picture': self.picture,
             'date_created': self.date_created,
+            'user': self.user.serialize,
         }
 
 
