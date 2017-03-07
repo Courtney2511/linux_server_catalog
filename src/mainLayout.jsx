@@ -1,5 +1,6 @@
 import React from 'react'
 import '../styles/main.scss'
+import { Link } from 'react-router'
 
 
 export default class MainLayout extends React.Component {
@@ -18,12 +19,24 @@ export default class MainLayout extends React.Component {
         </div>
         <nav>
           <ul className="nav-bar">
-            <li className="nav-item"><a href="#">ALL</a></li>
-            <li className="nav-item"><a href="#">ANIMALS</a></li>
-            <li className="nav-item"><a href="#">BLACK &amp; WHITE</a></li>
-            <li className="nav-item"><a href="#">LANDSCAPE</a></li>
-            <li className="nav-item"><a href="#">PEOPLE</a></li>
-            <li className="nav-item"><a href="#">FOOD</a></li>
+            <li className="nav-item">
+              <Link to={"/"}>ALL</Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/categories/1"}>ANIMALS</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/categories/2">BLACK &amp; WHITE</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/categories/3">LANDSCAPE</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/categories/4">PEOPLE</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/categories/5">FOOD</Link>
+            </li>
           </ul>
         </nav>
         <main>
