@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 
 function Photo(props) {
   return (
-    <div className="photo">
+    <div>
       <Link to={"/photos/" + props.photo.id}>
         <img className="photo" src={props.photo.picture} />
       </Link>
@@ -20,12 +20,15 @@ export default class Photos extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      photos: [],
+      photos: []
     }
   }
 
   componentDidMount() {
-    const url = 'http://localhost:5000/photos'
+    let url = 'http://localhost:5000/photos'
+    if (this.props.params.categoryId) {
+      url = `http://localhost:5000/categories/${this.props.params.categoryId}/photos`
+    }
     this.serverRequest =
       axios.get(url).then((result) => {
         console.log(result)

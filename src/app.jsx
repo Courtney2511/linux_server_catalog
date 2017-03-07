@@ -13,11 +13,8 @@ export default class App extends React.Component {
       <Router history={browserHistory}>
         <Route component={mainLayout}>
           <Route path="/" component={Photos} />
-        </Route>
-        <Route component={mainLayout}>
           <Route path="/photos/:photo_id" component={PhotoDetail} />
-        </Route>
-        <Route component={mainLayout}>
+          <Route path="/categories/:category_id" component={Photos} />
           <Route path="/photos/new" component={NewPhoto} />
         </Route>
         <Route></Route>
