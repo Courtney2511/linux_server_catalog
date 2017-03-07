@@ -5,30 +5,36 @@ body {
   margin: 0;
   box-sizing: border-box;
   color: #494945;
+  font-family: Arial;
 }
 
 /* Header */
 
 .page-title {
   background-color: white;
+  height: 80px;
 }
 
 .header-left {
   width: 50%;
   float: left;
+  background-color: inherit;
+  margin: 5px;
 }
 
 .header-right {
   width: 50%;
   float: right;
+  background-color: inherit;
 }
 
-header.p {
-  display: inline;
+p {
+  display: inline-block;
+  float: right;
+  margin: 5px;
 }
 
 .title {
-  font-family: Arial;
   text-align: left;
 }
 

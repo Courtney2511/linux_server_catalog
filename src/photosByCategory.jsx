@@ -8,12 +8,21 @@ export default class PhotosByCategory extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      photos: [],
-      category: -1
+      photos: []
     }
   }
 
   componentDidMount() {
+    this.loadPhotos()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.params.category_id !== this.props.params.category_id) {
+      this.loadPhotos()
+    }
+  }
+
+  loadPhotos() {
     const url = `http://localhost:5000/categories/${this.props.params.category_id}/photos`
     this.serverRequest =
       axios.get(url).then((result) => {
@@ -21,16 +30,10 @@ export default class PhotosByCategory extends React.Component {
       })
   }
 
-  componentWillReceiveProps() {
-    this.setState({category: `${this.params.category_id}`})
-  }
-
-
-
   render() {
     return (
       <div >
-        {this.state.photos.map(photo => <Photo key={photo.id} photo={photo} category={photo.category.id} />)}
+        {this.state.photos.map(photo => <Photo key={photo.id} photo={photo} />)}
       </div>
     )
   }
