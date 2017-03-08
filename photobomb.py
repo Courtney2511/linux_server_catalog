@@ -2,6 +2,7 @@ import random
 import string
 import hashlib
 import hmac
+import re
 from flask import Flask, render_template, url_for, request, redirect, \
     flash, jsonify
 from flask import session as login_session
@@ -27,11 +28,11 @@ session = DBSession()
 def signup():
 
     data = request.get_json()
-    # hash user password
     username = data['username']
     password = data['password']
+    # hash the password for db storage
     pw_hash = make_pw_hash(username, password)
-    # create new user object
+    # create new user object with hashed password
     new_user = User(username=username,
                     email=data['email'],
                     password=pw_hash
@@ -39,12 +40,43 @@ def signup():
     session.add(new_user)
     session.commit()
     session.refresh(new_user)
+    # return user JSON and status code
     return jsonify(user=new_user.serialize), 200
+
+
+@app.route('/test')
+def test():
+
+
+
+# returns none is password is not 5-20 char long
+def valid_username(username):
+    user_regex = re.compile(r"^.{5,20}$")
+    return username and user_regex.match(username)
+
+
+# returns none if not valid email
+def valid_email(email):
+    email_regex = re.compile(r"^[\S]+@[\S]+.[\S]+$")
+    return email and email_regex.match(email)
+
+
+# returns none if password not 8-20 characters
+def valid_password(password):
+    password_regex = re.compile(r"^.{8,20}$")
+
+
+# user by name
+def user_by_name(username):
+    user = session.query(User).filter_by(username="Courtney").one()
+    print user
+    return user
 
 
 # creates a random 5 letter salt
 def make_salt():
     return ''.join(random.choice(string.letters) for x in xrange(5))
+
 
 def make_pw_hash(name, password, salt=None):
     if not salt:
@@ -52,6 +84,7 @@ def make_pw_hash(name, password, salt=None):
     pw_hash = hashlib.sha256(name + password + salt).hexdigest()
     return '%s,%s' % (pw_hash, salt)
 # -- PHOTO -- #
+
 
 # ALL Photos
 @app.route('/photos', methods=['GET'])
