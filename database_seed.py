@@ -21,11 +21,15 @@ for category in categories:
 
 
 # set up users:
-newUser1 = User(name="Courtney", email="courtney@test.com")
+newUser1 = User(username="Courtney",
+                email="courtney@test.com",
+                password="password")
 session.add(newUser1)
 session.commit()
 
-newUser2 = User(name="Cayleigh", email="cayleigh@test.com")
+newUser2 = User(username="Cayleigh",
+                email="cayleigh@test.com",
+                password="password")
 session.add(newUser2)
 session.commit()
 

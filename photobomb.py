@@ -17,7 +17,21 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-# PHOTO #
+# -- Signup -- #
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    data = request.get_json()
+    # add user instance to db from POST request data
+    new_user = User(name=data['username'],
+                    email=data['email'],
+                    )
+    print new_user
+    print new_user.name
+    print new_user.email
+
+
+# -- PHOTO -- #
 
 # ALL Photos
 @app.route('/photos', methods=['GET'])
@@ -70,7 +84,7 @@ def deletePhoto(photo_id):
     session.commit()
     return jsonify(success=true)
 
-# CATEGORY #
+# -- CATEGORY -- #
 
 
 # Categories
@@ -94,7 +108,7 @@ def categoryPhotosJSON(category_id):
     return jsonify(photos=[photo.serialize for photo in category.photos])
 
 
-# USER #
+# -- USER -- #
 
 # all users
 @app.route('/users')

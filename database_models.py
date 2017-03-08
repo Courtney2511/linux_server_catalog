@@ -26,15 +26,17 @@ class Category(Base):
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
-    name = Column(String(30), nullable=False)
+    username = Column(String(30), nullable=False)
     email = Column(String(100), nullable=False)
+    password = Column(String(100), nullable=False)
 
     @property
     def serialize(self):
         return {
             'id': self.id,
-            'name': self.name,
+            'username': self.username,
             'email': self.email,
+            'password': self.password
         }
 
 
