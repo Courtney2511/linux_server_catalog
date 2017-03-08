@@ -33,20 +33,21 @@ def signup():
     email = data['email']
 
     # check for valid data
+    message = dict(username=username, email=email)
     success = True
-    errors = dict(username=username, email=email)
+
     if not valid_username(username):
-        errors['error_username'] = "Username is not valid"
+        message['error_username'] = "Username is not valid"
         success = False
     if not valid_password(password):
-        errors['error_password'] = "Password is not valid"
+        message['error_password'] = "Password is not valid"
         success = False
     if not valid_email(email):
-        errors['error_email'] = "Email is not valid"
+        message['error_email'] = "Email is not valid"
         success = False
     if success is False:
-        print jsonify(errors=errors)
-        return jsonify(errors=errors)
+        message['success'] = "False"
+        return jsonify(message=message)
 
     # hash the password for db storage
     pw_hash = make_pw_hash(username, password)
