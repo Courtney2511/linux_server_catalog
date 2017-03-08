@@ -30,11 +30,29 @@ def signup():
     data = request.get_json()
     username = data['username']
     password = data['password']
+    email = data['email']
+
+    # check for valid data
+    success = True
+    errors = dict(username=username, email=email)
+    if not valid_username(username):
+        errors['error_username'] = "Username is not valid"
+        success = False
+    if not valid_password(password):
+        errors['error_password'] = "Password is not valid"
+        success = False
+    if not valid_email(email):
+        errors['error_email'] = "Email is not valid"
+        success = False
+    if success is False:
+        print jsonify(errors=errors)
+        return jsonify(errors=errors)
+
     # hash the password for db storage
     pw_hash = make_pw_hash(username, password)
     # create new user object with hashed password
     new_user = User(username=username,
-                    email=data['email'],
+                    email=email,
                     password=pw_hash
                     )
     session.add(new_user)
@@ -46,7 +64,7 @@ def signup():
 
 @app.route('/test')
 def test():
-
+    return "test page"
 
 
 # returns none is password is not 5-20 char long
@@ -64,6 +82,7 @@ def valid_email(email):
 # returns none if password not 8-20 characters
 def valid_password(password):
     password_regex = re.compile(r"^.{8,20}$")
+    return password and password_regex.match(password)
 
 
 # user by name
