@@ -23,12 +23,14 @@ session = DBSession()
 def signup():
     data = request.get_json()
     # add user instance to db from POST request data
-    new_user = User(name=data['username'],
+    new_user = User(username=data['username'],
                     email=data['email'],
+                    password=data['password']
                     )
-    print new_user
-    print new_user.name
-    print new_user.email
+    session.add(new_user)
+    session.commit()
+    session.refresh(new_user)
+    return jsonify(user=new_user.serialize), 200
 
 
 # -- PHOTO -- #
