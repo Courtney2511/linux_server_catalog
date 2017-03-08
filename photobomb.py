@@ -36,8 +36,11 @@ def signup():
     message = dict(username=username, email=email)
     success = True
 
-    if not valid_username(username):
+    if not valid_username(str(username)):
         message['error_username'] = "Username is not valid"
+        success = False
+    if user_by_name(username) is not None:
+        message['error_username'] = "Username is taken"
         success = False
     if not valid_password(password):
         message['error_password'] = "Password is not valid"
@@ -45,6 +48,8 @@ def signup():
     if not valid_email(email):
         message['error_email'] = "Email is not valid"
         success = False
+    if user_by_email(str(email)) is not None:
+        message['error_email'] = "Email already in use"
     if success is False:
         message['success'] = "False"
         return jsonify(message=message)
@@ -88,8 +93,13 @@ def valid_password(password):
 
 # user by name
 def user_by_name(username):
-    user = session.query(User).filter_by(username="Courtney").one()
-    print user
+    user = session.query(User).filter_by(username=username).one()
+    print user.username
+    return user
+
+
+def user_by_email(email):
+    user = session.query(User).filter_by(email=email).one()
     return user
 
 
