@@ -1,6 +1,6 @@
 import React from 'react'
 import {Router, Route, browserHistory} from 'react-router'
-import '../styles/index.scss'
+import '../styles/main.scss'
 import Photos from './photos.jsx'
 import NewPhoto from './newPhoto.jsx'
 import mainLayout from './mainLayout.jsx'
