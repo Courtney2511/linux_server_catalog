@@ -1,3 +1,7 @@
+import random
+import string
+import hashlib
+import hmac
 from flask import Flask, render_template, url_for, request, redirect, \
     flash, jsonify
 from flask import session as login_session
@@ -21,11 +25,16 @@ session = DBSession()
 
 @app.route('/signup', methods=['POST'])
 def signup():
+
     data = request.get_json()
-    # add user instance to db from POST request data
-    new_user = User(username=data['username'],
+    # hash user password
+    username = data['username']
+    password = data['password']
+    pw_hash = make_pw_hash(username, password)
+    # create new user object
+    new_user = User(username=username,
                     email=data['email'],
-                    password=data['password']
+                    password=pw_hash
                     )
     session.add(new_user)
     session.commit()
@@ -33,6 +42,15 @@ def signup():
     return jsonify(user=new_user.serialize), 200
 
 
+# creates a random 5 letter salt
+def make_salt():
+    return ''.join(random.choice(string.letters) for x in xrange(5))
+
+def make_pw_hash(name, password, salt=None):
+    if not salt:
+        salt = make_salt()
+    pw_hash = hashlib.sha256(name + password + salt).hexdigest()
+    return '%s,%s' % (pw_hash, salt)
 # -- PHOTO -- #
 
 # ALL Photos
