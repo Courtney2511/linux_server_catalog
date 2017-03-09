@@ -99,7 +99,7 @@ def login():
     if user:
         # add user to login_session
         login_session['username'] = username
-        # create a cookie and send it to client
+        # create a JSON message and send it to client
         message['state'] = state
         message['success'] = 'True'
         return jsonify(message=message), 200
