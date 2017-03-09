@@ -93,13 +93,13 @@ def valid_password(password):
 
 # user by name
 def user_by_name(username):
-    user = User.query.filter_by(username=username).one()
-    print user.username
+    user = User.query.filter(User.username == username).one_or_none()
+    print user
     return user
 
 
 def user_by_email(email):
-    user = User.query.filter_by(email=email).one()
+    user = User.query.filter(User.email == email).one_or_none()
     return user
 
 
