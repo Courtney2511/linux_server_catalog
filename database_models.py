@@ -46,7 +46,7 @@ class User(Base):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email,
+            'email': self.email
         }
 
 
