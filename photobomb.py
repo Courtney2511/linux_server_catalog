@@ -6,8 +6,7 @@ import re
 from flask import Flask, render_template, url_for, request, redirect, \
     flash, jsonify
 from flask import session as login_session
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from database import db_session
 from database_models import Base, Category, User, Photo
 from flask_cors import CORS, cross_origin
 
@@ -16,21 +15,19 @@ app = Flask(__name__)
 CORS(app)
 
 
-engine = create_engine('sqlite:///photocatalogue.db')
-Base.metadata.bind = engine
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
-
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
 
 
 # DELETE USER
 @app.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
-    user = session.query(User).get(user_id)
+    user = User.query.get(user_id)
     if user is None:
         return jsonify(Message="Not Found"), 404
-    session.delete(user)
-    session.commit()
+    db_session.delete(user)
+    db_session.commit()
     return jsonify(success=True)
 
 
@@ -68,13 +65,10 @@ def signup():
     # hash the password for db storage
     pw_hash = make_pw_hash(username, password)
     # create new user object with hashed password
-    new_user = User(username=username,
-                    email=email,
-                    password=pw_hash
-                    )
-    session.add(new_user)
-    session.commit()
-    session.refresh(new_user)
+    new_user = User(username, email, pw_hash)
+    db_session.add(new_user)
+    db_session.commit()
+    db_session.refresh(new_user)
     # return user JSON and status code
     return jsonify(user=new_user.serialize), 200
 
@@ -99,13 +93,13 @@ def valid_password(password):
 
 # user by name
 def user_by_name(username):
-    user = session.query(User).filter_by(username=username).one()
+    user = User.query.filter_by(username=username).one()
     print user.username
     return user
 
 
 def user_by_email(email):
-    user = session.query(User).filter_by(email=email).one()
+    user = User.query.filter_by(email=email).one()
     return user
 
 
@@ -140,7 +134,6 @@ def login():
     return "working on this still"
 
 
-
 # checks password given at login against stored hashed password
 def valid_login_password(username, password, pw_hash):
     salt = pw_hash.split(',')[1]
@@ -152,53 +145,52 @@ def valid_login_password(username, password, pw_hash):
 
 # ALL Photos
 @app.route('/photos', methods=['GET'])
-def photosJSON():
-    photos = session.query(Photo).all()
+def get_photos():
+    photos = Photo.query.all()
     return jsonify(photos=[photo.serialize for photo in photos])
 
 
 # Photo By Id
 @app.route('/photos/<int:photo_id>', methods=['GET'])
-def photoJSON(photo_id):
-    photo = session.query(Photo).get(photo_id)
+def get_photo(photo_id):
+    photo = Photo.query.get(photo_id)
     return jsonify(photo=photo.serialize)
 
 
 # NEW photo
 @app.route('/photos', methods=['POST'])
-def newPhoto():
+def new_photo():
     data = request.get_json()
     # adds photo instance to db from POST request data
-    newPhoto = Photo(description=data['description'],
-                     picture=data['picture'],
-                     category_id=data['category_id'],
-                     user_id=data['user_id'])
-    session.add(newPhoto)
-    session.commit()
-    session.refresh(newPhoto)
+    newPhoto = Photo(data['description'], data['picture'], data['category_id'],
+                     data['user_id'])
+    db_session.add(newPhoto)
+    db_session.commit()
+    db_session.refresh(newPhoto)
     return jsonify(photo=newPhoto.serialize)
 
 
 # EDIT Photo
 @app.route('/photos/<int:photo_id>', methods=['PUT'])
-def editPhoto(photo_id):
-    photo = session.query(Photo).get(photo_id)
+def edit_photo(photo_id):
+    photo = Photo.query.get(photo_id)
+    data = request.get_json()
     photo.description = data['description']
     photo.picture = data['picture']
     photo.category_id = data['category_id']
-    session.add(Photo)
-    session.commit()
+    db_session.add(photo)
+    db_session.commit()
     return jsonify(photo=photo.serialize)
 
 
 # DELETE photo
 @app.route('/photos/<int:photo_id>', methods=['DELETE'])
-def deletePhoto(photo_id):
-    photo = session.query(Photo).get(photo_id)
+def delete_photo(photo_id):
+    photo = Photo.query.get(photo_id)
     if photo is None:
         return jsonify(Message="Not Found"), 404
-    session.delete(photo)
-    session.commit()
+    db_session.delete(photo)
+    db_session.commit()
     return jsonify(success=true)
 
 # -- CATEGORY -- #
@@ -206,22 +198,22 @@ def deletePhoto(photo_id):
 
 # Categories
 @app.route('/categories')
-def categoriesJSON():
-    categories = session.query(Category).all()
+def get_categories():
+    categories = Category.query.all()
     return jsonify(categories=[category.serialize for category in categories])
 
 
 # Category
 @app.route('/categories/<int:category_id>')
-def categoryJSON(category_id):
-    category = session.query(Category).get(category_id)
+def get_category(category_id):
+    category = Category.query.get(category_id)
     return jsonify(category.serialize)
 
 
 # Photos by Category
 @app.route('/categories/<int:category_id>/photos')
-def categoryPhotosJSON(category_id):
-    category = session.query(Category).get(category_id)
+def get_category_photos(category_id):
+    category = Category.query.get(category_id)
     return jsonify(photos=[photo.serialize for photo in category.photos])
 
 
@@ -229,27 +221,25 @@ def categoryPhotosJSON(category_id):
 
 # all users
 @app.route('/users')
-def users():
-    users = session.query(User).all()
+def get_users():
+    users = User.query.all()
     return jsonify(users=[user.serialize for user in users])
 
 
 # New User
 @app.route('/users/new', methods=['GET', 'POST'])
-def newUser():
+def new_user():
     if request.method == 'POST':
-        newUser = User(name=request.form['name'],
-                       email=request.form['email'])
-        session.add(newUser)
-        session.commit()
+        newUser = User(request.form['name'], request.form['email'],
+                       request.form['password'])
+        db_session.add(newUser)
+        db_session.commit()
 
 
 # home
 @app.route('/')
 def home():
-    categories = session.query(Category).all()
-    print categories
-    return render_template('testpage.html', categories=categories)
+    print "this is the home page"
 
 # Helper Methods:
 

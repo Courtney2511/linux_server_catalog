@@ -1,11 +1,8 @@
 import sys
 from datetime import datetime, timedelta
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine
-
-Base = declarative_base()
+from database import Base
 
 
 class Category(Base):
@@ -13,6 +10,12 @@ class Category(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(80), nullable=False)
     photos = relationship("Photo", back_populates="category")
+
+    def __init__(self, name=None):
+        self.name = name
+
+    def __repr__(self):
+        return '<Category %r>' % (self.name)
 
     @property
     def serialize(self):
@@ -30,6 +33,14 @@ class User(Base):
     email = Column(String(100), nullable=False)
     password = Column(String(100), nullable=False)
 
+    def __init__(self, username=None, email=None, password=None):
+        self.username = username
+        self.email = email
+        self.password = password
+
+    def __repr__(self):
+        return '<User %r>' % (self.username)
+
     @property
     def serialize(self):
         return {
@@ -42,6 +53,7 @@ class User(Base):
 class Photo(Base):
     __tablename__ = 'item'
     id = Column(Integer, primary_key=True)
+    name = Column(String(80), nullable=False)
     description = Column(String(250))
     category_id = Column(Integer, ForeignKey('category.id'), nullable=False)
     category = relationship("Category", back_populates="photos")
@@ -49,6 +61,17 @@ class Photo(Base):
     date_created = Column(DateTime, default=datetime.utcnow)
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     user = relationship(User)
+
+    def __init__(self, name=None, description=None, category_id=None,
+                 picture=None, user_id=None):
+        self.name = name
+        self.description = description
+        self.category_id = category_id
+        self.picture = picture
+        self.user_id = user_id
+
+    def __repr__(self):
+        return '<Photo %r>' % self.name
 
     @property
     def serialize(self):
@@ -61,8 +84,3 @@ class Photo(Base):
             'date_created': self.date_created,
             'user': self.user.serialize,
         }
-
-
-engine = create_engine('sqlite:///photocatalogue.db')
-
-Base.metadata.create_all(engine)
