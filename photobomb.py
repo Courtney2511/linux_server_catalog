@@ -22,8 +22,19 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-# -- Signup -- #
 
+# DELETE USER
+@app.route('/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    user = session.query(User).get(user_id)
+    if user is None:
+        return jsonify(Message="Not Found"), 404
+    session.delete(user)
+    session.commit()
+    return jsonify(success=True)
+
+
+# NEW USER
 @app.route('/signup', methods=['POST'])
 def signup():
 
@@ -68,11 +79,6 @@ def signup():
     return jsonify(user=new_user.serialize), 200
 
 
-@app.route('/test')
-def test():
-    return "test page"
-
-
 # returns none is password is not 5-20 char long
 def valid_username(username):
     user_regex = re.compile(r"^.{5,20}$")
@@ -113,6 +119,34 @@ def make_pw_hash(name, password, salt=None):
         salt = make_salt()
     pw_hash = hashlib.sha256(name + password + salt).hexdigest()
     return '%s,%s' % (pw_hash, salt)
+
+
+@app.route('/test')
+def test():
+    return "test page"
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    # create a state token to prevent forgery
+    state = ''.join(random.choice(string.ascii_uppercase +
+                                  string.digits) for x in xrange(32))
+    # store token in the session
+    login_session['state'] = state
+    # get login data from request
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
+    return "working on this still"
+
+
+
+# checks password given at login against stored hashed password
+def valid_login_password(username, password, pw_hash):
+    salt = pw_hash.split(',')[1]
+    return pw_hash == make_pw_hash(username, password, salt)
+
+
 # -- PHOTO -- #
 
 
@@ -157,7 +191,7 @@ def editPhoto(photo_id):
     return jsonify(photo=photo.serialize)
 
 
-# delete photo
+# DELETE photo
 @app.route('/photos/<int:photo_id>', methods=['DELETE'])
 def deletePhoto(photo_id):
     photo = session.query(Photo).get(photo_id)
