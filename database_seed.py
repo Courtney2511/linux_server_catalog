@@ -1,8 +1,10 @@
 import datetime
 from database_models import Category, User, Photo
-from database import init_db, db_session
+from database import create_db, db_session, drop_db
 
-init_db()
+drop_db()
+
+create_db()
 
 # set up categories:
 categories = ['Animals', 'Black and White', 'Landscape', 'People', 'Food']

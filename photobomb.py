@@ -239,7 +239,7 @@ def new_user():
 # home
 @app.route('/')
 def home():
-    print "this is the home page"
+    return "this is the home page"
 
 # Helper Methods:
 
