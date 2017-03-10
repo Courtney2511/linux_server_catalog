@@ -6,6 +6,7 @@ import NewPhoto from './newPhoto.jsx'
 import mainLayout from './mainLayout.jsx'
 import PhotoDetail from './photoDetail.jsx'
 import PhotosByCategory from './PhotosByCategory.jsx'
+import signUp from './signUp.jsx'
 
 
 export default class App extends React.Component {
@@ -14,11 +15,11 @@ export default class App extends React.Component {
       <Router history={browserHistory}>
         <Route component={mainLayout}>
           <Route path="/" component={Photos} />
+          <Route path="/photos/new" component={NewPhoto} />
           <Route path="/photos/:photo_id" component={PhotoDetail} />
           <Route path="/categories/:category_id" component={PhotosByCategory} />
-          <Route path="/photos/new" component={NewPhoto} />
+          <Route path="/signup" component={signUp} />
         </Route>
-        <Route></Route>
       </Router>
     )
   }
