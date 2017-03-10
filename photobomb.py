@@ -73,14 +73,12 @@ def signup():
     return jsonify(user=new_user.serialize), 200
 
 
-
-
-
 @app.route('/test')
 def test():
     return "test page"
 
 
+# LOGIN
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # create a state token to prevent forgery
@@ -115,21 +113,21 @@ def login():
 # -- PHOTO -- #
 
 
-# ALL Photos
+# ALL PHOTOS
 @app.route('/photos', methods=['GET'])
 def get_photos():
     photos = Photo.query.all()
     return jsonify(photos=[photo.serialize for photo in photos])
 
 
-# Photo By Id
+# PHOTO BY ID
 @app.route('/photos/<int:photo_id>', methods=['GET'])
 def get_photo(photo_id):
     photo = Photo.query.get(photo_id)
     return jsonify(photo=photo.serialize)
 
 
-# NEW photo
+# NEW PHOTO
 @app.route('/photos', methods=['POST'])
 def new_photo():
     data = request.get_json()
@@ -142,7 +140,7 @@ def new_photo():
     return jsonify(photo=newPhoto.serialize)
 
 
-# EDIT Photo
+# EDIT PHOTO
 @app.route('/photos/<int:photo_id>', methods=['PUT'])
 def edit_photo(photo_id):
     photo = Photo.query.get(photo_id)
@@ -155,7 +153,7 @@ def edit_photo(photo_id):
     return jsonify(photo=photo.serialize)
 
 
-# DELETE photo
+# DELETE PHOTO
 @app.route('/photos/<int:photo_id>', methods=['DELETE'])
 def delete_photo(photo_id):
     photo = Photo.query.get(photo_id)
@@ -168,21 +166,21 @@ def delete_photo(photo_id):
 # -- CATEGORY -- #
 
 
-# Categories
+# ALL CATEGORIES
 @app.route('/categories')
 def get_categories():
     categories = Category.query.all()
     return jsonify(categories=[category.serialize for category in categories])
 
 
-# Category
+# CATEGORY BY ID
 @app.route('/categories/<int:category_id>')
 def get_category(category_id):
     category = Category.query.get(category_id)
     return jsonify(category.serialize)
 
 
-# Photos by Category
+# PHOTOS BY CATEGORY
 @app.route('/categories/<int:category_id>/photos')
 def get_category_photos(category_id):
     category = Category.query.get(category_id)
@@ -191,24 +189,14 @@ def get_category_photos(category_id):
 
 # -- USER -- #
 
-# all users
+# ALL USERS
 @app.route('/users')
 def get_users():
     users = User.query.all()
     return jsonify(users=[user.serialize for user in users])
 
 
-# New User
-@app.route('/users/new', methods=['GET', 'POST'])
-def new_user():
-    if request.method == 'POST':
-        newUser = User(request.form['name'], request.form['email'],
-                       request.form['password'])
-        db_session.add(newUser)
-        db_session.commit()
-
-
-# home
+# HOME
 @app.route('/')
 def home():
     return "this is the home page"
