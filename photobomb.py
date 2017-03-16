@@ -1,8 +1,4 @@
-import random
-import string
-import hashlib
 import hmac
-import re
 from helpers import *
 from flask import Flask, render_template, url_for, request, redirect, \
     flash, jsonify
@@ -37,8 +33,14 @@ def delete_user(user_id):
 def signup():
 
     data = request.get_json()
+    if 'username' not in data:
+        raise ValueError("username is required")
     username = data['username']
+    if 'password' not in data:
+        raise ValueError("password is required")
     password = data['password']
+    if 'email' not in data:
+        raise ValueError("email is required")
     email = data['email']
 
     # check for valid data
