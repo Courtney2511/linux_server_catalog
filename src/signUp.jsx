@@ -1,7 +1,5 @@
 import React from 'react'
-
 import '../styles/main.scss'
-import FieldGroup from 'react-bootstrap'
 
 
 export default class SignUp extends React.Component {
@@ -11,11 +9,15 @@ export default class SignUp extends React.Component {
 
   render() {
     return (
-      <div className = "signup">
+      <div className = "form-container">
+        <h2>Join our community!</h2>
         <form>
-	         <FieldGroup id="formControlsText" type="text" label="Text" placeholder="Enter text"/>
-	         <FieldGroup id="formControlsEmail" type="email" label="Email address" placeholder="Enter email"/>
-	         <FieldGroup id="formControlsPassword" label="Password" type="password"/>
+	         <input type="text" name="username" placeholder="name"/>
+           <input type="text" name="email" placeholder="email"/>
+	         <input type="text" name="password" placeholder="password"/>
+          <div className="form-submit">
+            <input className="submit-button" type="submit" value="Let's Go!"></input>
+          </div>
         </form>
       </div>
     )

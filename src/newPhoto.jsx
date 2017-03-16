@@ -1,6 +1,5 @@
 import React from 'react'
-import axios from 'axios'
-import '../styles/newphoto.scss'
+import '../styles/form.scss'
 
 
 export default class NewPhoto extends React.Component {
@@ -13,23 +12,13 @@ export default class NewPhoto extends React.Component {
 
   render() {
     return (
-      <div className="new-photo-container">
-      <h2>Submit Your Photo</h2>
+      <div className="form-container">
+      <h2>Show us your art.</h2>
       <form method='POST'>
-        <label>url
-          <input type="text" name="picture-url" placeholder="url for photo"></input>
-        </label>
-        <br></br>
-        <label>Title
-          <input type="text" name="title"></input>
-        </label>
-        <br></br>
-        <label>Description
-          <textarea  name="description"></textarea>
-        </label>
-        <br></br>
-        <div className="new-photo-submit">
-          <label>Category:
+          <input type="text" name="picture-url" placeholder="url to your photo photo"></input>
+          <input type="text" name="title" placeholder="Title"></input>
+          <textarea  name="story" placeholder="Tell us the story..."></textarea>
+          <br></br>
             <select>
               <option value="animals">Animals</option>
               <option value="Black & White">Black & White</option>
@@ -37,8 +26,8 @@ export default class NewPhoto extends React.Component {
               <option value="People">People</option>
               <option value="Food">Food</option>
             </select>
-          </label>
-          <input className="submit-button" type="submit" value="Submit"></input>
+        <div className="form-submit">
+          <input className="submit-button" type="submit" value="Share"></input>
         </div>
       </form>
       </div>
