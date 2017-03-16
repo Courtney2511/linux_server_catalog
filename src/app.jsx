@@ -8,6 +8,7 @@ import PhotoDetail from './photoDetail.jsx'
 import PhotosByCategory from './PhotosByCategory.jsx'
 import signUpForm from './signUpForm.jsx'
 import masonryLayout from './masonryLayout.jsx'
+import loginForm from './loginForm.jsx'
 
 
 export default class App extends React.Component {
@@ -20,6 +21,7 @@ export default class App extends React.Component {
           <Route path="/photos/:photo_id" component={PhotoDetail} />
           <Route path="/categories/:category_id" component={PhotosByCategory} />
           <Route path="/signup" component={signUpForm} />
+          <Route path="/login" component={loginForm} />
           <Route path="/masonry" component={masonryLayout} />
         </Route>
       </Router>
