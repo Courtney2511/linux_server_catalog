@@ -55,9 +55,12 @@ export default class SignUpForm extends React.Component {
       <div className = "form-container">
         <h2>Join our community!</h2>
         <form action="" method="POST" onSubmit={ this.handleSubmit }>
-	         <input type="text" name="username" value={ this.state.username } onChange={ this.handleChange } placeholder="name"/> { this.state.error_username }
-           <input type="text" name="email" value={ this.state.email } onChange={ this.handleChange } placeholder="email"/> { this.state.error_email}
-	         <input type="text" name="password" value={ this.state.password } onChange= { this.handleChange } placeholder="password"/> { this.state.error_password}
+	         <input type="text" name="username" value={ this.state.username } onChange={ this.handleChange } placeholder="name"/>
+              <div className="form-error">{ this.state.error_username }</div>
+           <input type="text" name="email" value={ this.state.email } onChange={ this.handleChange } placeholder="email"/>
+              <div className="form-error">{ this.state.error_email}</div>
+	         <input type="text" name="password" value={ this.state.password } onChange= { this.handleChange } placeholder="password"/>
+              <div className="form-error">{ this.state.error_password}</div>
           <div className="form-submit">
             <input className="submit-button" type="submit" value="Let's Go!"></input>
           </div>
