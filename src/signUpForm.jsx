@@ -44,7 +44,6 @@ export default class SignUpForm extends React.Component {
           error_password: data.error_password
         })
       }
-      console.log(response)
     }).catch(function(error) {
       console.log(error)
     })
