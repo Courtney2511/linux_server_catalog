@@ -1,11 +1,11 @@
-import hmac
-from helpers import *
-from flask import Flask, render_template, url_for, request, redirect, \
-    flash, jsonify
+import helpers
+import random
+import string
+from flask import Flask, request, jsonify
 from flask import session as login_session
 from database import db_session
-from database_models import Base, Category, User, Photo
-from flask_cors import CORS, cross_origin
+from database_models import Category, User, Photo
+from flask_cors import CORS
 
 
 app = Flask(__name__)
@@ -33,6 +33,8 @@ def delete_user(user_id):
 def signup():
 
     data = request.get_json()
+    print "the username in request data is:"
+    print data
     if 'username' not in data:
         raise ValueError("username is required")
     username = data['username']
@@ -47,26 +49,26 @@ def signup():
     message = dict(username=username, email=email)
     success = True
 
-    if not valid_username(str(username)):
+    if not helpers.valid_username(str(username)):
         message['error_username'] = "Username is not valid"
         success = False
-    if user_by_name(username) is not None:
+    if helpers.user_by_name(username) is not None:
         message['error_username'] = "Username is taken"
         success = False
-    if not valid_password(password):
+    if not helpers.valid_password(password):
         message['error_password'] = "Password is not valid"
         success = False
-    if not valid_email(email):
+    if not helpers.valid_email(email):
         message['error_email'] = "Email is not valid"
         success = False
-    if user_by_email(str(email)) is not None:
+    if helpers.user_by_email(str(email)) is not None:
         message['error_email'] = "Email already in use"
     if success is False:
         message['success'] = "False"
         return jsonify(message=message)
 
     # hash the password for db storage
-    pw_hash = make_pw_hash(username, password)
+    pw_hash = helpers.make_pw_hash(username, password)
     # create new user object with hashed password
     new_user = User(username, email, pw_hash)
     db_session.add(new_user)
@@ -94,7 +96,7 @@ def login():
     username = data['username']
     password = data['password']
     # use login data to verify if the info is valid
-    user = valid_login(username, password)
+    user = helpers.valid_login(username, password)
     message = {}
     # if valid:
     if user:
@@ -164,7 +166,7 @@ def delete_photo(photo_id):
         return jsonify(Message="Not Found"), 404
     db_session.delete(photo)
     db_session.commit()
-    return jsonify(success=true)
+    return jsonify(success=True)
 
 # -- CATEGORY -- #
 

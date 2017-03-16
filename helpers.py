@@ -1,4 +1,4 @@
-from database_models import Base, Category, User, Photo
+from database_models import User
 import re
 import random
 import string
