@@ -2,7 +2,7 @@ import React from 'react'
 import '../styles/form.scss'
 
 
-export default class NewPhoto extends React.Component {
+export default class NewPhotoForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
