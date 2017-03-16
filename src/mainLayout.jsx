@@ -21,7 +21,7 @@ export default class MainLayout extends React.Component {
             </div>
             <div className="sign-up">
               <i className="fa fa-user-o" aria-hidden="true"></i>
-              <p>Sign Up</p>
+              <Link to="/signup">Sign Up</Link>
             </div>
           </div>
         </div>

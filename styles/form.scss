@@ -28,12 +28,6 @@ textarea {
   height: 8em;
 }
 
-input:focus,
-textarea:focus {
-  /* To give a little highlight on active elements */
-  border-color: pink;
-}
-
 .form-error {
   color: red;
 }
@@ -46,4 +40,8 @@ textarea:focus {
   margin-top: 10px;
   margin-bottom: 10px;
   width: 80px;
+  background-color: blue;
+  border: none;
+  border-radius: 5px;
+  color: white;
 }

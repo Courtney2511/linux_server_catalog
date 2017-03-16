@@ -59,7 +59,7 @@ export default class SignUpForm extends React.Component {
               <div className="form-error">{ this.state.error_username }</div>
            <input type="text" name="email" value={ this.state.email } onChange={ this.handleChange } placeholder="email"/>
               <div className="form-error">{ this.state.error_email}</div>
-	         <input type="text" name="password" value={ this.state.password } onChange= { this.handleChange } placeholder="password"/>
+	         <input type="password" name="password" value={ this.state.password } onChange= { this.handleChange } placeholder="password"/>
               <div className="form-error">{ this.state.error_password}</div>
           <div className="form-submit">
             <input className="submit-button" type="submit" value="Let's Go!"></input>
