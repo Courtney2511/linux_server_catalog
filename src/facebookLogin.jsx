@@ -1,5 +1,6 @@
 import React from 'react'
 import '../styles/form.scss'
+import axios from 'axios'
 
 export default class FacebookLogin extends React.Component {
   constructor(props) {
@@ -8,9 +9,8 @@ export default class FacebookLogin extends React.Component {
 
   componentDidMount() {
     window.fbAsyncInit = () => {
-    // subscribe to to authorization status change
       FB.Event.subscribe('auth.statusChange', (response) => {  // eslint-disable-line no-undef
-        // send the response to statusChangeCallback
+        console.log('auth status change was called with status ' + response.status)
         this.statusChangeCallback(response)
       })
 
@@ -33,18 +33,34 @@ export default class FacebookLogin extends React.Component {
      }(document, 'script', 'facebook-jssdk'))
   }
 
-  // run a test of Graph API after a successful login
-  getUserInfo() {
-    console.log('Welcome!  Fetching your information.... ')
-    FB.api('/me', {fields: 'first_name, last_name, email, name, age_range, birthday, cover, gender, hometown, location, significant_other, picture'}, function(response) {  // eslint-disable-line no-undef
-      console.log('Successful login for: ' + response.name)
-      document.getElementById('status').innerHTML =
-      'Thanks for logging in, ' + response.name + '!'
-    })
+  handleUserResponse(response) {
+    console.log(response)
+    console.log('Successful login for: ' + response.name)
+    document.getElementById('status').innerHTML =
+    'Thanks for logging in, ' + response.name + '!'
+
+    var data = response
+
+    axios.post('http://localhost:5000/fblogin', { data })
+    .then(function (response) {
+    console.log(response)
+  })
+  .catch(function (error) {
+    console.log(error)
+  })
+
   }
 
-  // callback to test connection to Graph API after login
+  // get user info from Graph API after a successful login
+  getUserInfo() {
+    console.log('Welcome!  Fetching your information.... ')
+    FB.api('/me', {fields: 'first_name, last_name, email, name, age_range, birthday, cover, gender, hometown, location, significant_other'}, this.handleUserResponse)
+  }
+
+  // callback to test the Graph API after login
   statusChangeCallback(response) {
+    console.log('status change callback was called with status ' + response.status)
+    console.log(response)
     if (response.status === 'connected') {
       this.getUserInfo()
     } else if (response.status === 'not authorized') {
@@ -60,7 +76,6 @@ export default class FacebookLogin extends React.Component {
     return(
       <div>
         <h1>Facebook Login</h1>
-        // Link to call FB.login()
         <a href="#" onClick={this.handleClick}>Login</a>
         <span id="status"></span>
       </div>
