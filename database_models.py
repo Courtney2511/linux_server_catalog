@@ -78,6 +78,7 @@ class Photo(Base):
         "Return object data in serializable format"
         return {
             'id': self.id,
+            'name': self.name,
             'description': self.description,
             'category': self.category.serialize,
             'picture': self.picture,
