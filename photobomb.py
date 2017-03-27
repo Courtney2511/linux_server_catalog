@@ -64,8 +64,8 @@ def signup():
     if helpers.user_by_email(str(email)) is not None:
         message['error_email'] = "Email already in use"
     if success is False:
-        message['success'] = "False"
-        return jsonify(message=message)
+        message['success'] = False
+        return jsonify(message)
 
     # hash the password for db storage
     pw_hash = helpers.make_pw_hash(username, password)
@@ -84,7 +84,7 @@ def test():
 
 
 # LOGIN
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def login():
     # create a state token to prevent forgery
     state = ''.join(random.choice(string.ascii_uppercase +
@@ -93,6 +93,8 @@ def login():
     login_session['state'] = state
     # get login data from request
     data = request.get_json()
+    print "data from request is:"
+    print data
     username = data['username']
     password = data['password']
     # use login data to verify if the info is valid
@@ -104,17 +106,39 @@ def login():
         login_session['username'] = username
         # create a JSON message and send it to client
         message['state'] = state
-        message['success'] = 'True'
-        return jsonify(message=message), 200
+        message['success'] = True
+        return jsonify(message), 200
 
     # if not valid, send failure response with redirect
     if user is None:
         print "invalid user"
         message['error'] = "Username or Password are incorrect"
-        message['success'] = 'False'
-        return jsonify(message=message), 400
+        message['success'] = False
+        return jsonify(message), 200
 
 
+@app.route('/fblogin', methods=['POST'])
+def fblogin():
+    # create a state token to prevent forgery
+    state = ''.join(random.choice(string.ascii_uppercase +
+                                  string.digits) for x in xrange(32))
+    # store token in the session
+    login_session['state'] = state
+    # get login data from request
+    data = request.get_json()
+    print "data from request is"
+    print data
+    message = {}
+    message['message'] = "facebook login in received"
+
+    email = data['data']['email']
+
+    return jsonify(message), 200
+
+    user = helpers.user_by_email(email)
+
+    if user:
+        print "this user "
 # -- PHOTO -- #
 
 
