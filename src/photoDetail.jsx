@@ -1,12 +1,16 @@
 import React from 'react'
 import '../styles/photo_index.scss'
 import axios from 'axios'
+import moment from 'moment'
 
 function Photo(props) {
   return (
-    <div>
-      <h2>{props.photo.description} ({props.photo.date_created})</h2>
+    <div className="photo-detail-div">
+      <h2>{props.photo.name}</h2>
+      <small>Posted: {moment.unix(props.photo.date_created).format("MMM D, YYYY")} by: {props.photo.user.username}</small>
       <img className="photo" src={props.photo.picture} />
+      <p>{props.photo.description}</p>
+      <p></p>
     </div>
     )
 }
@@ -33,7 +37,7 @@ export default class PhotoDetail extends React.Component {
 
   render() {
     return (
-      <div className="photo">
+      <div>
         {(this.state.photo) ? <Photo photo={this.state.photo} /> : null}
       </div>
     )

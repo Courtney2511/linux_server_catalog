@@ -17,7 +17,7 @@ export default class MainLayout extends React.Component {
           <div className="header-right">
             <div className="log-in">
               <i className="fa fa-sign-in" aria-hidden="true"></i>
-              <p>Log In</p>
+              <Link to="/login">Log In</Link>
             </div>
             <div className="sign-up">
               <i className="fa fa-user-o" aria-hidden="true"></i>
