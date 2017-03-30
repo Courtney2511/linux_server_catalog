@@ -82,6 +82,6 @@ class Photo(Base):
             'description': self.description,
             'category': self.category.serialize,
             'picture': self.picture,
-            'date_created': self.date_created,
+            'date_created': float(self.date_created.strftime("%s")),
             'user': self.user.serialize,
         }

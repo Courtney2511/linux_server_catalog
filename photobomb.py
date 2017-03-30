@@ -78,11 +78,6 @@ def signup():
     return jsonify(user=new_user.serialize), 200
 
 
-@app.route('/test')
-def test():
-    return "test page"
-
-
 # LOGIN
 @app.route('/login', methods=['POST'])
 def login():
