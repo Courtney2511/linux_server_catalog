@@ -1,6 +1,7 @@
 import React from 'react'
 import '../styles/form.scss'
 import axios from 'axios'
+import {browserHistory} from 'react-router'
 
 export default class LoginForm extends React.Component {
   constructor(props) {
@@ -28,12 +29,16 @@ export default class LoginForm extends React.Component {
   handleSubmit(event) {
     const self = this
     event.preventDefault()
+    // POST login credentias to server
     axios.post('http://localhost:5000/login', {
       username: this.state.username,
       password: this.state.password
     }).then(function(response) {
+      // if successful store token in local storage
       const data = response.data
-        console.log(response.data)
+      sessionStorage.setItem('jwtToken', data.auth_token)
+      browserHistory.push('/')
+      // handle error:
         if (!data.success) {
           console.log("NOT SUCCESSFUL")
           self.setState({
