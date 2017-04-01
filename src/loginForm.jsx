@@ -29,7 +29,7 @@ export default class LoginForm extends React.Component {
   handleSubmit(event) {
     const self = this
     event.preventDefault()
-    // POST login credentias to server
+    // POST login credentials to server
     axios.post('http://localhost:5000/login', {
       username: this.state.username,
       password: this.state.password
@@ -37,6 +37,7 @@ export default class LoginForm extends React.Component {
       // if successful store token in local storage
       const data = response.data
       sessionStorage.setItem('jwtToken', data.auth_token)
+      // redirect to index page
       browserHistory.push('/')
       // handle error:
         if (!data.success) {

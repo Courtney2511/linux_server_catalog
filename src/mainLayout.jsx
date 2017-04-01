@@ -1,11 +1,65 @@
 import React from 'react'
-// import '../styles/common/reset.scss'
 import '../styles/main.scss'
+import MainNavigation from './MainNavigation.jsx'
 import { Link } from 'react-router'
+import jwt_decode from 'jwt-decode'
+
+
+function LoginPanel() {
+  return(
+  <div>
+    <div className="log-in">
+      <i className="fa fa-sign-in" aria-hidden="true"></i>
+      <Link to="/login">Log In</Link>
+    </div>
+
+    <div className="sign-up">
+      <i className="fa fa-user-o" aria-hidden="true"></i>
+      <Link to="/signup">Sign Up</Link>
+    </div>
+  </div>
+)}
+
+function Dashboard(props) {
+  return(
+    <div>
+      <h3>Welcome {props.username}</h3>
+    </div>
+  )
+}
 
 export default class MainLayout extends React.Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      isLoggedIn: false,
+      username: ''
+    }
+  }
+
+  componentDidMount() {
+
+    const token = sessionStorage.getItem('jwtToken')
+    var decoded = jwt_decode(token)
+    // controls state based on log in status
+    this.setState({
+      isLoggedIn: decoded.isLoggedIn,
+      username: decoded.username
+    })
+  }
+
+
   render() {
+    const isLoggedIn = this.state.isLoggedIn
+    const username = this.state.username
+    let panel = null
+
+    if (isLoggedIn) {
+      panel = <Dashboard username={username}/>
+    } else {
+      panel = <LoginPanel />
+    }
     return (
       <container>
       <header>
@@ -15,40 +69,10 @@ export default class MainLayout extends React.Component {
             <h1 className="title">PHOTOBOMB</h1>
           </div>
           <div className="header-right">
-            <div className="log-in">
-              <i className="fa fa-sign-in" aria-hidden="true"></i>
-              <Link to="/login">Log In</Link>
-            </div>
-            <div className="sign-up">
-              <i className="fa fa-user-o" aria-hidden="true"></i>
-              <Link to="/signup">Sign Up</Link>
-            </div>
+            {panel}
           </div>
         </div>
-        <div className="navigation">
-        <nav>
-          <ul className="nav-bar">
-            <li className="nav-item">
-              <Link to={"/"}>ALL</Link>
-            </li>
-            <li className="nav-item">
-              <Link to={"/categories/1"}>ANIMALS</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/categories/2">BLACK &amp; WHITE</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/categories/3">LANDSCAPE</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/categories/4">PEOPLE</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/categories/5">FOOD</Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+        <MainNavigation />
       </header>
       <main>
         {this.props.children}
