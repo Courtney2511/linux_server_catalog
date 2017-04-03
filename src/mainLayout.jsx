@@ -5,6 +5,11 @@ import { Link } from 'react-router'
 import jwt_decode from 'jwt-decode'
 
 
+function logout() {
+  sessionStorage.removeItem('jwtToken')
+  console.log(sessionStorage)
+}
+
 function LoginPanel() {
   return(
   <div>
@@ -24,6 +29,7 @@ function Dashboard(props) {
   return(
     <div>
       <h3>Welcome {props.username}</h3>
+      <button id="logout" onClick={logout}>Log Out</button>
     </div>
   )
 }
@@ -38,17 +44,18 @@ export default class MainLayout extends React.Component {
     }
   }
 
-  componentDidMount() {
 
+  componentWillMount() {
     const token = sessionStorage.getItem('jwtToken')
-    var decoded = jwt_decode(token)
-    // controls state based on log in status
-    this.setState({
-      isLoggedIn: decoded.isLoggedIn,
-      username: decoded.username
-    })
+    if (token) {
+      var decoded = jwt_decode(token)
+      // controls state based on log in status
+      this.setState({
+        isLoggedIn: decoded.isLoggedIn,
+        username: decoded.username
+      })
+    }
   }
-
 
   render() {
     const isLoggedIn = this.state.isLoggedIn
