@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/form.scss'
+import '../../styles/form.scss'
 import axios from 'axios'
 import {browserHistory} from 'react-router'
 

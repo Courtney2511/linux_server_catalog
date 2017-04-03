@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/masonry.scss'
+import '../../styles/masonry.scss'
 
 
 let brakePoints = [350, 500, 750]

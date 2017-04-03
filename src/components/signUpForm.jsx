@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/main.scss'
+import '../../styles/main.scss'
 import axios from 'axios'
 
 

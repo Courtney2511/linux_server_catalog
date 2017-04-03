@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/photo_index.scss'
+import '../../styles/photo_index.scss'
 import axios from 'axios'
 import Photo from './photo.jsx'
 

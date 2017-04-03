@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/main.scss'
+import '../../styles/main.scss'
 import MainNavigation from './MainNavigation.jsx'
 import { Link } from 'react-router'
 import jwt_decode from 'jwt-decode'
