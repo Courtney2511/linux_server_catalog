@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
 import '../../styles/main.scss'
 import MainNavigation from './MainNavigation.jsx'
 import { Link } from 'react-router'
@@ -34,16 +36,7 @@ function Dashboard(props) {
   )
 }
 
-export default class MainLayout extends React.Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      isLoggedIn: false,
-      username: ''
-    }
-  }
-
+class MainLayout extends React.Component {
 
   componentWillMount() {
     const token = sessionStorage.getItem('jwtToken')
@@ -58,8 +51,9 @@ export default class MainLayout extends React.Component {
   }
 
   render() {
-    const isLoggedIn = this.state.isLoggedIn
-    const username = this.state.username
+    // const isLoggedIn = this.state.isLoggedIn
+    // const username = this.state.username
+    const { username, isLoggedIn } = this.props.user
     let panel = null
 
     if (isLoggedIn) {
@@ -88,3 +82,15 @@ export default class MainLayout extends React.Component {
     )
   }
 }
+
+MainLayout.propTypes = {
+  user: React.PropTypes.object
+}
+
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(MainLayout)

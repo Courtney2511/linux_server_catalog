@@ -11,7 +11,6 @@ import masonryLayout from '../components/masonryLayout.jsx'
 import loginForm from '../components/loginForm.jsx'
 import facebookLogin from '../components/facebookLogin.jsx'
 
-
 export default class App extends React.Component {
   render() {
     return (
