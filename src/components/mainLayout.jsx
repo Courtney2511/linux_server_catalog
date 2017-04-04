@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import '../../styles/main.scss'
 import MainNavigation from './MainNavigation.jsx'
 import { Link } from 'react-router'
-import jwt_decode from 'jwt-decode'
 
 
 function logout() {
@@ -38,21 +37,7 @@ function Dashboard(props) {
 
 class MainLayout extends React.Component {
 
-  componentWillMount() {
-    const token = sessionStorage.getItem('jwtToken')
-    if (token) {
-      var decoded = jwt_decode(token)
-      // controls state based on log in status
-      this.setState({
-        isLoggedIn: decoded.isLoggedIn,
-        username: decoded.username
-      })
-    }
-  }
-
   render() {
-    // const isLoggedIn = this.state.isLoggedIn
-    // const username = this.state.username
     const { username, isLoggedIn } = this.props.user
     let panel = null
 

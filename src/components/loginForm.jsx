@@ -1,53 +1,20 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { browserHistory } from 'react-router'
+import * as Actions from '../actions'
 import '../../styles/form.scss'
-import axios from 'axios'
-import {browserHistory} from 'react-router'
 
-export default class LoginForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      username: '',
-      password: '',
-      error: ''
-    }
+class LoginForm extends React.Component {
 
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  handleChange(event) {
-    const target = event.target
-    const name = target.name
-    const value = target.value
-
-    this.setState({
-      [name]: value
-    })
-  }
 
   handleSubmit(event) {
-    const self = this
     event.preventDefault()
-    // POST login credentials to server
-    axios.post('http://localhost:5000/login', {
-      username: this.state.username,
-      password: this.state.password
-    }).then(function(response) {
-      // if successful store token in local storage
-      const data = response.data
-      sessionStorage.setItem('jwtToken', data.auth_token)
-      // redirect to index page
-      browserHistory.push('/')
-      // handle error:
-        if (!data.success) {
-          console.log("NOT SUCCESSFUL")
-          self.setState({
-            error: data.error
-          })
-        }
-    }).catch(function(error) {
-      console.log(error)
+    this.props.actions.logInUser(event.target.username.value, event.target.password.value)
+    .then(() => {
+      if (this.props.user.isLoggedIn) {
+        browserHistory.push('/')
+      }
     })
   }
 
@@ -55,14 +22,32 @@ export default class LoginForm extends React.Component {
     return (
       <div className="form-container">
         <h2>Sign In</h2>
-        <form action="" method='POST' onSubmit= {this.handleSubmit}>
-          <input type="text" name="username" value={ this.state.username } onChange={ this.handleChange } placeholder="username"></input>
+        <form action="" method='POST' onSubmit={event => this.handleSubmit(event)}>
+          <input type="text" name="username" placeholder="username"></input>
             <div className="form-error"></div>
-          <input type="password" name="password" value={ this.state.password } onChange={ this.handleChange } placeholder="pasword"></input>
-            <div className="form-error">{this.state.error}</div>
+          <input type="password" name="password" placeholder="pasword"></input>
+            <div className="form-error">{this.props.user.login.error}</div>
           <input className="submit-button" type="submit" value="ok"></input>
         </form>
       </div>
     )
   }
 }
+
+LoginForm.PropTypes = {
+  user: React.PropTypes.object
+}
+
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)
