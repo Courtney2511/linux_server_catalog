@@ -1,11 +1,14 @@
 import helpers
 import random
 import string
+import datetime
 from flask import Flask, request, jsonify
-from flask import session as login_session
+from flask import make_response
 from database import db_session
 from database_models import Category, User, Photo
 from flask_cors import CORS
+import json
+import jwt
 
 
 app = Flask(__name__)
@@ -33,8 +36,6 @@ def delete_user(user_id):
 def signup():
 
     data = request.get_json()
-    print "the username in request data is:"
-    print data
     if 'username' not in data:
         raise ValueError("username is required")
     username = data['username']
@@ -78,38 +79,55 @@ def signup():
     return jsonify(user=new_user.serialize), 200
 
 
-# LOGIN
+# LOGIN ENDPOINT
 @app.route('/login', methods=['POST'])
 def login():
-    # create a state token to prevent forgery
-    state = ''.join(random.choice(string.ascii_uppercase +
-                                  string.digits) for x in xrange(32))
-    # store token in the session
-    login_session['state'] = state
     # get login data from request
     data = request.get_json()
-    print "data from request is:"
-    print data
     username = data['username']
     password = data['password']
     # use login data to verify if the info is valid
     user = helpers.valid_login(username, password)
     message = {}
-    # if valid:
-    if user:
-        # add user to login_session
-        login_session['username'] = username
-        # create a JSON message and send it to client
-        message['state'] = state
-        message['success'] = True
-        return jsonify(message), 200
-
     # if not valid, send failure response with redirect
     if user is None:
-        print "invalid user"
         message['error'] = "Username or Password are incorrect"
         message['success'] = False
         return jsonify(message), 200
+    # if valid:
+    if user:
+        # create JWT token
+        token_data = {
+            'iat': datetime.datetime.utcnow(),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=30),
+            'username': username,
+            'isLoggedIn': True,
+        }
+        auth_token = jwt.encode(token_data, app.secret_key,
+                                algorithm='HS256')
+        # create a JSON message with JWT and send it to client
+        message['auth_token'] = auth_token
+        message['success'] = True
+        return jsonify(message), 200
+
+
+# LOGOUT ENDPOINT
+@app.route('/logout', methods=['POST'])
+def logout():
+    data = request.get_json()
+    token = data['auth_token']
+    message = {}
+    try:
+        jwt.decode(token, app.secret_key)
+    except jwt.exceptions.ExpiredSignatureError:
+        pass
+    except jwt.exceptions.InvalidTokenError:
+        message['error'] = 'token is invalid'
+        return jsonify(message), 400
+
+    message['message'] = 'Successfully logged out'
+    message['success'] = True
+    return jsonify(message), 200
 
 
 @app.route('/fblogin', methods=['POST'])
@@ -137,14 +155,14 @@ def fblogin():
 # -- PHOTO -- #
 
 
-# ALL PHOTOS
+# ALL PHOTOS ENDPOINT
 @app.route('/photos', methods=['GET'])
 def get_photos():
     photos = Photo.query.all()
     return jsonify(photos=[photo.serialize for photo in photos])
 
 
-# PHOTO BY ID
+# PHOTO BY ID ENDPOINT
 @app.route('/photos/<int:photo_id>', methods=['GET'])
 def get_photo(photo_id):
     photo = Photo.query.get(photo_id)
@@ -154,10 +172,21 @@ def get_photo(photo_id):
 # NEW PHOTO
 @app.route('/photos', methods=['POST'])
 def new_photo():
+    # get post data from client
     data = request.get_json()
+    # make sure all required data is present
+    if ['name'] not in data:
+        raise ValueError("you must provide a name")
+    if ['description'] not in data:
+        raise ValueError("you must provide a description")
+    if ['category_id'] not in data:
+        raise ValueError("please choose a cateogry")
+    if ['picture'] not in data:
+        raise ValueError("provide a url for your picture")
+
     # adds photo instance to db from POST request data
-    newPhoto = Photo(data['description'], data['picture'], data['category_id'],
-                     data['user_id'])
+    newPhoto = Photo(data['name'], data['description'], data['category_id'],
+                     data['picture'], data['user_id'])
     db_session.add(newPhoto)
     db_session.commit()
     db_session.refresh(newPhoto)
