@@ -47,10 +47,13 @@ body {
 /* login panel */
 
 .log-in,
-.sign-up,
-.logout {
+.sign-up {
   display: inline-block;
   width: 100px;
+}
+
+p {
+  margin: 0;
 }
 
 .fa {
@@ -59,9 +62,17 @@ body {
 
 /* Dashboard */
 
+.logout,
+.add-post,
 .welcome {
   display: inline-block;
+  margin-left: 15px;
 }
+
+
+// .hello {
+//   display: inline-block;
+// }
 
 #logout {
   color: inherit;
