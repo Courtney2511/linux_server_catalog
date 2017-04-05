@@ -1,49 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as Actions from '../actions'
 
 import '../../styles/main.scss'
 import MainNavigation from './MainNavigation.jsx'
-import { Link } from 'react-router'
+import Dashboard from './Dashboard.jsx'
+import LoginPanel from './loginPanel.jsx'
 
 
-function logout() {
-  sessionStorage.removeItem('jwtToken')
-  console.log(sessionStorage)
-}
-
-function LoginPanel() {
-  return(
-  <div>
-    <div className="log-in">
-      <i className="fa fa-sign-in" aria-hidden="true"></i>
-      <Link to="/login">Log In</Link>
-    </div>
-
-    <div className="sign-up">
-      <i className="fa fa-user-o" aria-hidden="true"></i>
-      <Link to="/signup">Sign Up</Link>
-    </div>
-  </div>
-)}
-
-function Dashboard(props) {
-  return(
-    <div>
-      <h3>Welcome {props.username}</h3>
-      <button id="logout" onClick={logout}>Log Out</button>
-    </div>
-  )
-}
 
 class MainLayout extends React.Component {
 
   render() {
-    const { username, isLoggedIn } = this.props.user
     let panel = null
 
-    if (isLoggedIn) {
-      panel = <Dashboard username={username}/>
+    if (this.props.user.isLoggedIn) {
+      // displays the dashboard panel if logged in
+      panel = <Dashboard user={this.props.user} actions={{ logOutUser: this.props.actions.logOutUser }}/>
     } else {
+      // displays the login panel if not logged in
       panel = <LoginPanel />
     }
     return (
@@ -72,10 +48,19 @@ MainLayout.propTypes = {
   user: React.PropTypes.object
 }
 
+// maps the store state for user to MainLayout props
 function mapStateToProps(state) {
   return {
     user: state.user
   }
 }
 
-export default connect(mapStateToProps)(MainLayout)
+// binds actions
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  }
+}
+
+// subscribes MainLayout to the Redux store
+export default connect(mapStateToProps, mapDispatchToProps)(MainLayout)

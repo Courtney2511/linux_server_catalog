@@ -7,10 +7,11 @@ import '../../styles/form.scss'
 
 class LoginForm extends React.Component {
 
-
+  // on LoginForm submit calls the logInUser action and passes username and password
   handleSubmit(event) {
     event.preventDefault()
     this.props.actions.logInUser(event.target.username.value, event.target.password.value)
+    // redirects to the index page if user.isLoggedIn = true
     .then(() => {
       if (this.props.user.isLoggedIn) {
         browserHistory.push('/')
@@ -18,6 +19,7 @@ class LoginForm extends React.Component {
     })
   }
 
+  // renders LoginForm
   render() {
     return (
       <div className="form-container">
@@ -38,12 +40,14 @@ LoginForm.PropTypes = {
   user: React.PropTypes.object
 }
 
+// maps the store state for user to LoginForm
 function mapStateToProps(state) {
   return {
     user: state.user
   }
 }
 
+// binds actions
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(Actions, dispatch)
