@@ -9,7 +9,7 @@ body {
 
 /* Header */
 
-// div, h1, h2, h3, p {
+// * {
 //   border: 1px solid red !important;
 // }
 
@@ -44,14 +44,37 @@ body {
   text-align: right;
 }
 
+/* login panel */
+
 .log-in,
-.sign-up {
+.sign-up,
+.logout {
   display: inline-block;
   width: 100px;
 }
 
 .fa {
   margin-right: 5px;
+}
+
+/* Dashboard */
+
+.welcome {
+  display: inline-block;
+}
+
+#logout {
+  color: inherit;
+  display: inline-block;
+  border: none;
+  background-color: white;
+  font-size: 16px;
+  margin: 0;
+  padding-left: 0;
+
+  &:hover {
+    border-bottom: 2px solid darkblue;
+  }
 }
 
 /* Navigation */
