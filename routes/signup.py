@@ -9,22 +9,32 @@ signup_api = Blueprint('signup_api', __name__)
 # NEW USER API
 @signup_api.route('/signup', methods=['POST'])
 def signup():
-
     data = request.get_json()
-    if 'username' not in data:
-        raise ValueError("username is required")
-    username = data['username']
-    if 'password' not in data:
-        raise ValueError("password is required")
-    password = data['password']
-    if 'email' not in data:
-        raise ValueError("email is required")
-    email = data['email']
-
-    # check for valid data
-    message = dict(username=username, email=email)
+    print "data from client is:"
+    print data
+    print "end of data"
+    # make sure all required data is present
+    message = {}
     success = True
 
+    username = data['username']
+    password = data['password']
+    email = data['email']
+
+    if username == '':
+        message['error_username'] = "username is required"
+        success = False
+    if password == '':
+        message['error_password'] = "password is required"
+        success = False
+    if email == '':
+        message['error_email'] = "email is required"
+        success = False
+    if success is False:
+        message['success'] = False
+        return jsonify(message), 400
+
+    # check for valid data
     if not helpers.valid_username(str(username)):
         message['error_username'] = "Username is not valid"
         success = False
@@ -41,7 +51,7 @@ def signup():
         message['error_email'] = "Email already in use"
     if success is False:
         message['success'] = False
-        return jsonify(message)
+        return jsonify(message), 200
 
     # hash the password for db storage
     pw_hash = helpers.make_pw_hash(username, password)
@@ -50,5 +60,8 @@ def signup():
     db_session.add(new_user)
     db_session.commit()
     db_session.refresh(new_user)
+    message['success'] = True
+    message['user'] = new_user.serialize
+
     # return user JSON and status code
-    return jsonify(user=new_user.serialize), 200
+    return jsonify(message), 200
