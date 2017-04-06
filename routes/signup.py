@@ -32,7 +32,7 @@ def signup():
         success = False
     if success is False:
         message['success'] = False
-        return jsonify(message), 400
+        return jsonify(message), 200
 
     # check for valid data
     if not helpers.valid_username(str(username)):
