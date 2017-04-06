@@ -15,12 +15,13 @@ def signup():
     print "end of data"
     # make sure all required data is present
     message = {}
-    success = True
+    success = ''
 
     username = data['username']
     password = data['password']
     email = data['email']
 
+    # check for missing data
     if username == '':
         message['error_username'] = "username is required"
         success = False
@@ -55,13 +56,11 @@ def signup():
 
     # hash the password for db storage
     pw_hash = helpers.make_pw_hash(username, password)
-    # create new user object with hashed password
+    # create new instance of user
     new_user = User(username, email, pw_hash)
     db_session.add(new_user)
     db_session.commit()
     db_session.refresh(new_user)
     message['success'] = True
     message['user'] = new_user.serialize
-
-    # return user JSON and status code
     return jsonify(message), 200

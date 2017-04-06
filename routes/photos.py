@@ -9,7 +9,7 @@ photos_api = Blueprint('photos_api', __name__)
 @photos_api.route('/photos', methods=['GET'])
 def get_photos():
     photos = Photo.query.all()
-    return jsonify(photos=[photo.serialize for photo in photos])
+    return jsonify(photos=[photo.serialize for photo in photos]), 200
 
 
 # NEW PHOTO
@@ -17,20 +17,35 @@ def get_photos():
 def new_photo():
     # get post data from client
     data = request.get_json()
-    # make sure all required data is present
-    if ['name'] not in data:
-        raise ValueError("you must provide a name")
-    if ['description'] not in data:
-        raise ValueError("you must provide a description")
-    if ['category_id'] not in data:
-        raise ValueError("please choose a cateogry")
-    if ['picture'] not in data:
-        raise ValueError("provide a url for your picture")
+    name = data['name']
+    description = data['description']
+    category_id = data['category_id']
+    picture = data['picture']
 
-    # adds photo instance to db from POST request data
+    message = {}
+    success = ''
+
+    # check for missing data
+    if name == '':
+        message['error_name'] = "you must provide a name"
+        success = False
+    if description == '':
+        message['error_descrption'] = "you must provide a description"
+        success = False
+    if category_id == '':
+        message['error_category'] = "please choose a cateogry"
+        success = False
+    if picture == '':
+        message['error_picture'] = "provide a url for your picture"
+        success = False
+    if success is False:
+        return jsonify(message), 200
+
+    # create a new photo instance
     newPhoto = Photo(data['name'], data['description'], data['category_id'],
                      data['picture'], data['user_id'])
     db_session.add(newPhoto)
     db_session.commit()
     db_session.refresh(newPhoto)
-    return jsonify(photo=newPhoto.serialize)
+    message['photo'] = newPhoto.serialize
+    return jsonify(message), 200
