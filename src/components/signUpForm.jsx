@@ -8,30 +8,16 @@ import * as Actions from '../actions'
 
 class SignUpForm extends React.Component {
 
+  // prepares form data for signUpUser action
   handleSubmit(event) {
-    // const self = this
     event.preventDefault()
     this.props.actions.signUpUser(event.target.username.value, event.target.email.value, event.target.password.value)
     .then(()=> {
+      // if success signUp, redirect to login
       if (this.props.user.isSignedUp) {
         browserHistory.push('/login')
       }
-    })    // axios.post('http://localhost:5000/signup', {
-    //   username: this.state.username,
-    //   email: this.state.email,
-    //   password: this.state.password
-    // }).then(function(response) {
-    //   const data = response.data
-    //   if (!data.success) {
-    //     self.setState({
-    //       error_username: data.error_username,
-    //       error_email: data.error_email,
-    //       error_password: data.error_password
-    //     })
-    //   }
-    // }).catch(function(error) {
-    //   console.log(error)
-    // })
+    })
   }
 
   render() {
