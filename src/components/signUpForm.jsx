@@ -1,65 +1,50 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { browserHistory } from 'react-router'
 import '../../styles/main.scss'
-import axios from 'axios'
+import * as Actions from '../actions'
 
 
-export default class SignUpForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      username: '',
-      email: '',
-      password: '',
-      error_username: '',
-      error_email: '',
-      error_password: ''
-    }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  handleChange(event) {
-    const target = event.target
-    const value = target.value
-    const name = target.name
-
-    this.setState({
-      [name]: value
-    })
-  }
+class SignUpForm extends React.Component {
 
   handleSubmit(event) {
-    const self = this
+    // const self = this
     event.preventDefault()
-    axios.post('http://localhost:5000/signup', {
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password
-    }).then(function(response) {
-      const data = response.data
-      if (!data.success) {
-        self.setState({
-          error_username: data.error_username,
-          error_email: data.error_email,
-          error_password: data.error_password
-        })
+    this.props.actions.signUpUser(event.target.username.value, event.target.email.value, event.target.password.value)
+    .then(()=> {
+      if (this.props.user.isSignedUp) {
+        browserHistory.push('/login')
       }
-    }).catch(function(error) {
-      console.log(error)
-    })
+    })    // axios.post('http://localhost:5000/signup', {
+    //   username: this.state.username,
+    //   email: this.state.email,
+    //   password: this.state.password
+    // }).then(function(response) {
+    //   const data = response.data
+    //   if (!data.success) {
+    //     self.setState({
+    //       error_username: data.error_username,
+    //       error_email: data.error_email,
+    //       error_password: data.error_password
+    //     })
+    //   }
+    // }).catch(function(error) {
+    //   console.log(error)
+    // })
   }
 
   render() {
     return (
       <div className = "form-container">
         <h2>Join our community!</h2>
-        <form action="" method="POST" onSubmit={ this.handleSubmit }>
-	         <input type="text" name="username" value={ this.state.username } onChange={ this.handleChange } placeholder="name"/>
-              <div className="form-error">{ this.state.error_username }</div>
-           <input type="text" name="email" value={ this.state.email } onChange={ this.handleChange } placeholder="email"/>
-              <div className="form-error">{ this.state.error_email}</div>
-	         <input type="password" name="password" value={ this.state.password } onChange= { this.handleChange } placeholder="password"/>
-              <div className="form-error">{ this.state.error_password}</div>
+        <form action="" method="POST" onSubmit={event => this.handleSubmit(event) }>
+	         <input type="text" name="username" placeholder="name"/>
+              <div className="form-error">{this.props.user.signup.errors.error_username}</div>
+           <input type="text" name="email" placeholder="email"/>
+              <div className="form-error">{this.props.user.signup.errors.error_email}</div>
+	         <input type="password" name="password" placeholder="password"/>
+              <div className="form-error">{this.props.user.signup.errors.error_password}</div>
           <div className="form-submit">
             <input className="submit-button" type="submit" value="Let's Go!"></input>
           </div>
@@ -69,3 +54,23 @@ export default class SignUpForm extends React.Component {
 
   }
 }
+
+SignUpForm.PropTypes = {
+  user: React.PropTypes.object
+}
+
+// maps the store state for user to LoginForm
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  }
+}
+
+// binds actions
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm)
