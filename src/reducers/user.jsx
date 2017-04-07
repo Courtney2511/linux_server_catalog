@@ -34,8 +34,6 @@ export default function user(state = initialState, action) {
                             }
         }
       } else {
-          const response = action.payload.data
-          console.log(response)
           return {
             ...state, isSignedUp: true
           }
@@ -65,9 +63,11 @@ export default function user(state = initialState, action) {
           ...state, isLoggedIn: true,
                     jwtToken: action.payload.data.auth_token,
                     login: {error: '', success: true},
-                    username: decoded.username
+                    username: decoded.username,
+                    userId: decoded.userId
         }
       }
+
     case LOGOUT_USER:
       //handles successful log out
       if (action.payload.data.success) {

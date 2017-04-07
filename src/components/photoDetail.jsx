@@ -29,7 +29,6 @@ export default class PhotoDetail extends React.Component {
     // requests JSON object for photo_id
     this.serverRequest =
       axios.get(url).then((result) => {
-        console.log(result)
         // sets state of PhotoDetail to result data
         this.setState(Object.assign({}, this.state, {photo: result.data.photo}))
       })

@@ -4,6 +4,23 @@ import axios from 'axios'
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const SIGNUP_USER = 'SIGNUP_USER'
+export const ADD_NEW_PHOTO = 'ADD_NEW_PHOTO'
+
+export function addNewPhoto(userId, name, description, category, url) {
+
+  const data = axios.post('http://localhost:5000/photos', {
+    userId: userId,
+    name: name,
+    description: description,
+    category: category,
+    url: url
+  })
+
+  return {
+    type: ADD_NEW_PHOTO,
+    payload: data
+  }
+}
 
 export function signUpUser(username, email, password) {
 
@@ -12,7 +29,6 @@ export function signUpUser(username, email, password) {
     email: email,
     password: password
   })
-  console.log(data)
 
   return {
     type: SIGNUP_USER,
