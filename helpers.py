@@ -1,5 +1,6 @@
 from database_models import User
 from database_models import Category
+from database_models import Photo
 import re
 import random
 import string
@@ -7,6 +8,10 @@ import hashlib
 
 
 # Helper Methods:
+
+def photos_by_user(user_id):
+    photos = Photo.query.filter(Photo.user_id == user_id).all()
+    return photos
 
 
 # checks password given at login against stored hashed password
@@ -54,6 +59,11 @@ def user_by_name(username):
 
 def user_by_email(email):
     user = User.query.filter(User.email == email).one_or_none()
+    return user
+
+
+def user_by_id(user_id):
+    user = User.query.filter(User.id == user_id).one_or_none()
     return user
 
 
