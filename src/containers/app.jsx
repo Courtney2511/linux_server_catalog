@@ -12,12 +12,14 @@ import signUpForm from '../components/signUpForm.jsx'
 import masonryLayout from '../components/masonryLayout.jsx'
 import loginForm from '../components/loginForm.jsx'
 import facebookLogin from '../components/facebookLogin.jsx'
+import UserProfile from '../components/UserProfile.jsx'
 
 export default class App extends React.Component {
   render() {
     return (
       <Router history={ browserHistory }>
         <Route component={ mainLayout }>
+          <Route path="/users/:user_id" component={ UserProfile } />
           <Route path="/" component={ Photos } />
           <Route path="/photos/new" component={ newPhotoForm } />
           <Route path="/photos/:photo_id" component={ PhotoDetail } />
