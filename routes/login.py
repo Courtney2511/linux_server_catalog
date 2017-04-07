@@ -23,12 +23,13 @@ def login():
         message['success'] = False
         return jsonify(message), 200
     # if valid:
-    if user:
+    if user:        
         # create JWT token
         token_data = {
             'iat': datetime.datetime.utcnow(),
             'exp': datetime.datetime.utcnow() + datetime.timedelta(days=30),
             'username': username,
+            'userId': user.id,
             'isLoggedIn': True,
         }
         auth_token = jwt.encode(token_data, constants.SECRET_KEY,

@@ -1,4 +1,5 @@
 from database_models import User
+from database_models import Category
 import re
 import random
 import string
@@ -40,10 +41,14 @@ def valid_password(password):
     return password and password_regex.match(password)
 
 
+def get_category_id(category):
+    category = Category.query.filter(Category.name == category).one_or_none()
+    return category.id
+
+
 # user by name
 def user_by_name(username):
     user = User.query.filter(User.username == username).one_or_none()
-    print user
     return user
 
 

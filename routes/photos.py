@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from database_models import Photo
 from database import db_session
+import helpers
 
 photos_api = Blueprint('photos_api', __name__)
 
@@ -19,8 +20,10 @@ def new_photo():
     data = request.get_json()
     name = data['name']
     description = data['description']
-    category_id = data['category_id']
-    picture = data['picture']
+    category = data['category']
+    url = data['url']
+    user_id = data['userId']
+    category_id = helpers.get_category_id(category)
 
     message = {}
     success = ''
@@ -32,18 +35,18 @@ def new_photo():
     if description == '':
         message['error_descrption'] = "you must provide a description"
         success = False
-    if category_id == '':
+    if category == '':
         message['error_category'] = "please choose a cateogry"
         success = False
-    if picture == '':
+    if url == '':
         message['error_picture'] = "provide a url for your picture"
         success = False
     if success is False:
         return jsonify(message), 200
 
     # create a new photo instance
-    newPhoto = Photo(data['name'], data['description'], data['category_id'],
-                     data['picture'], data['user_id'])
+    newPhoto = Photo(name, description, category_id,
+                     url, user_id)
     db_session.add(newPhoto)
     db_session.commit()
     db_session.refresh(newPhoto)
