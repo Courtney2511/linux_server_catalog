@@ -125,3 +125,54 @@ a:hover {
 .photo-info {
   display: inline-block;
 }
+
+/* User Profile */
+
+.photolist-div {
+  font-size: 18px;
+  background-color: white;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
+
+  div {
+    display: inline-block;
+  }
+}
+
+.date {
+  padding-left: 20px;
+}
+
+.user-actions {
+  float: right;
+}
+
+#edit-button {
+  color: inherit;
+  display: inline-block;
+  border: none;
+  background-color: white;
+  font-size: 16px;
+  margin: 0;
+  padding-left: 0;
+
+  &:hover {
+    border-bottom: 2px solid darkblue;
+  }
+}
+
+#delete-button {
+  color: inherit;
+  display: inline-block;
+  border: none;
+  background-color: white;
+  font-size: 16px;
+  margin: 0;
+  padding-left: 0;
+
+  &:hover {
+    border-bottom: 2px solid darkblue;
+  }
+}
