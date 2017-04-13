@@ -1,13 +1,13 @@
 import React from 'react'
 import '../../styles/photo_index.scss'
+import { formatUnixShortDate } from '../helpers/date'
 import axios from 'axios'
-import moment from 'moment'
 
 function Photo(props) {
   return (
     <div className="photo-detail-div">
       <h2>{props.photo.name}</h2>
-      <small>Posted: {moment.unix(props.photo.date_created).format("MMM D, YYYY")} by: {props.photo.user.username}</small>
+      <small>Posted: {formatUnixShortDate(props.photo.date_created)} by: {props.photo.user.username}</small>
       <img className="photo" src={props.photo.picture} />
       <p>{props.photo.description}</p>
       <p></p>
