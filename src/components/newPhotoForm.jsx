@@ -10,6 +10,7 @@ class NewPhotoForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    // calls the new photo action
     this.props.actions.addNewPhoto(this.props.user.userId, event.target.name.value, event.target.description.value, event.target.category.value, event.target.pictureUrl.value)
     .then(() => {
       if (this.props.user.isLoggedIn) {

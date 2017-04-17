@@ -1,31 +1,42 @@
 import React from 'react'
 import '../../styles/photo_index.scss'
-import axios from 'axios'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as Actions from '../actions'
 import Photo from './photo.jsx'
 
-export default class Photos extends React.Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      photos: []
-    }
-  }
+class Photos extends React.Component {
 
   componentDidMount() {
-    const url = 'http://localhost:5000/photos'
-    this.serverRequest =
-      axios.get(url).then((result) => {
-        this.setState(Object.assign({}, this.state, {photos: result.data.photos}))
-      })
+    this.props.actions.getPhotos()
   }
 
   render() {
+
     return (
       <div className="photos">
-        {this.state.photos.map(photo => <Photo key={photo.id} photo={photo} />)}
+        {this.props.photos.list.map(photo => <Photo key={photo.id} photo={photo} />)}
       </div>
     )
   }
-
 }
+
+Photos.propTypes = {
+  photos: React.PropTypes.object
+}
+
+//maps the store state for photos to photos Component
+function mapStateToProps(state) {
+  return {
+    photos: state.photos
+  }
+}
+
+//binds actions
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Photos)
