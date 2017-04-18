@@ -1,7 +1,10 @@
 import React from 'react'
 import '../../styles/photo_index.scss'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as Actions from '../actions'
 import { formatUnixShortDate } from '../helpers/date'
-import axios from 'axios'
+// import Photo from './photo.jsx'
 
 function Photo(props) {
   return (
@@ -15,31 +18,46 @@ function Photo(props) {
     )
 }
 
-export default class PhotoDetail extends React.Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      photo: null
-    }
-  }
+class PhotoDetail extends React.Component {
 
   componentDidMount() {
-    const url = `http://localhost:5000/photos/${this.props.params.photo_id}`
-    // requests JSON object for photo_id
-    this.serverRequest =
-      axios.get(url).then((result) => {
-        // sets state of PhotoDetail to result data
-        this.setState(Object.assign({}, this.state, {photo: result.data.photo}))
-      })
+    this.props.actions.clearPhoto()
+    this.props.actions.getPhotoDetail(this.props.params.photoId)
   }
+
+  // render() {
+  //   return (
+  //     (this.props.photos.photoDetail) ?
+  //     <div>
+  //       <h3>{this.props.photos.photoDetail.description}</h3>
+  //     </div>
+  //     : <div><h3>Loading...</h3></div>
+  //   )
+  // }
 
   render() {
     return (
       <div>
-        {(this.state.photo) ? <Photo photo={this.state.photo} /> : null}
+        {(this.props.photos.photoDetail) ? <Photo photo={this.props.photos.photoDetail} /> : null}
       </div>
     )
   }
-
 }
+
+PhotoDetail.PropTypes = {
+  photos: React.PropTypes.object
+}
+
+function mapStateToProps(state) {
+  return {
+    photos: state.photos
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PhotoDetail)

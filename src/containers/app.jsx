@@ -19,11 +19,11 @@ export default class App extends React.Component {
     return (
       <Router history={ browserHistory }>
         <Route component={ mainLayout }>
-          <Route path="/users/:user_id" component={ UserProfile } />
+          <Route path="/users/:userId" component={ UserProfile } />
           <Route path="/" component={ Photos } />
           <Route path="/photos/new" component={ newPhotoForm } />
-          <Route path="/photos/:photo_id" component={ PhotoDetail } />
-          <Route path="/categories/:category_id" component={ PhotosByCategory } />
+          <Route path="/photos/:photoId" component={ PhotoDetail } />
+          <Route path="/categories/:categoryId" component={ PhotosByCategory } />
           <Route path="/signup" component={ signUpForm } />
           <Route path="/login" component={ loginForm } />
           <Route path="/facebooklogin" component={ facebookLogin } />

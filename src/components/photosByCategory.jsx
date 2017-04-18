@@ -17,13 +17,13 @@ export default class PhotosByCategory extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.params.category_id !== this.props.params.category_id) {
+    if (prevProps.params.categoryId !== this.props.params.categoryId) {
       this.loadPhotos()
     }
   }
 
   loadPhotos() {
-    const url = `http://localhost:5000/categories/${this.props.params.category_id}/photos`
+    const url = `http://localhost:5000/categories/${this.props.params.categoryId}/photos`
     this.serverRequest =
       axios.get(url).then((result) => {
         this.setState(Object.assign({}, this.state, {photos: result.data.photos}))

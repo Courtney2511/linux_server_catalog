@@ -6,13 +6,33 @@ export const LOGOUT_USER = 'LOGOUT_USER'
 export const SIGNUP_USER = 'SIGNUP_USER'
 export const ADD_NEW_PHOTO = 'ADD_NEW_PHOTO'
 export const GET_PHOTOS = 'GET_PHOTOS'
+export const GET_PHOTO_DETAIL = 'GET_PHOTO_DETAIL'
+export const CLEAR_PHOTO = 'CLEAR_PHOTO'
 
 export function getPhotos() {
 
   const url = 'http://localhost:5000/photos'
   const data = axios.get(url)
+
   return {
     type: GET_PHOTOS,
+    payload: data
+  }
+}
+
+export function clearPhoto() {
+  return {
+    type: CLEAR_PHOTO
+  }
+}
+
+export function getPhotoDetail(photoId) {
+
+  const url = 'http://localhost:5000/photos/' + photoId
+  const data = axios.get(url)
+
+  return {
+    type: GET_PHOTO_DETAIL,
     payload: data
   }
 }
