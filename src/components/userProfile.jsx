@@ -13,7 +13,7 @@ export default class UserProfile extends React.Component {
   }
 
   componentDidMount() {
-    const url = 'http://localhost:5000/users/1/photos'
+    const url = `http://localhost:5000/users/${this.props.params.userId}/photos`
     this.serverRequest =
       axios.get(url).then((result) => {
         this.setState(Object.assign({}, this.state, {photos: result.data.photos}))

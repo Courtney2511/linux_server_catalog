@@ -7,7 +7,11 @@ export default function Dashboard(props) {
   return(
     <div>
       <div className="welcome">
-        <p className="hello">Hello {props.user.username} :)</p>
+        <p className="hello">Hello
+          <Link to={"/users/" + props.user.userId}>
+            {props.user.username}
+          </Link>
+        </p>
       </div>
       <div className="add-post">
         <i className="fa fa-camera" aria-hidden="true"></i>
