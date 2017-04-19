@@ -1,13 +1,14 @@
 import React from 'react'
-import '../../styles/form.scss'
+import '../../../styles/form.scss'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as Actions from '../actions'
+import * as Actions from '../../actions'
 import { browserHistory } from 'react-router'
 
 
-class NewPhotoForm extends React.Component {
+class EditPhotoForm extends React.Component {
 
+  // NEED TO UPDATE THIS FOR PHOTO EDIT
   handleSubmit(event) {
     event.preventDefault()
     // calls the new photo action
@@ -22,11 +23,11 @@ class NewPhotoForm extends React.Component {
   render() {
     return (
       <div className="form-container">
-      <h2>Show us your art.</h2>
-      <form method='POST' onSubmit={event => this.handleSubmit(event)}>
-          <input type="text" name="pictureUrl" placeholder="url to your photo photo"></input>
-          <input type="text" name="name" placeholder="Title"></input>
-          <textarea  name="description" placeholder="Tell us the story..."></textarea>
+      <h2>Need to make some changes?</h2>
+      <form method='PUT' onSubmit={event => this.handleSubmit(event)}>
+          <input type="text" name="pictureUrl" value="url to picture"></input>
+          <input type="text" name="name" value="name"></input>
+          <textarea  name="description" value="description"></textarea>
           <br></br>
             <select name="category">
               <option value="Animals">Animals</option>
@@ -36,7 +37,8 @@ class NewPhotoForm extends React.Component {
               <option value="Food">Food</option>
             </select>
         <div className="form-submit">
-          <input className="submit-button" type="submit" value="Share"></input>
+          <input className="submit-button" type="submit" value="Change"></input>
+          <input className="submit-button" type="submit" value="Cancel"></input>
         </div>
       </form>
       </div>
@@ -44,11 +46,11 @@ class NewPhotoForm extends React.Component {
   }
 }
 
-NewPhotoForm.PropTypes = {
+EditPhotoForm.PropTypes = {
   user: React.PropTypes.object
 }
 
-// maps the store state for user to NewPhotoForm
+// maps the store state for user to EditPhotoForm
 function mapStateToProps(state) {
   return {
     user: state.user
@@ -62,4 +64,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPhotoForm)
+export default connect(mapStateToProps, mapDispatchToProps)(EditPhotoForm)

@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { browserHistory } from 'react-router'
-import * as Actions from '../actions'
-import '../../styles/form.scss'
+import * as Actions from '../../actions'
+import '../../../styles/form.scss'
 
 class LoginForm extends React.Component {
 

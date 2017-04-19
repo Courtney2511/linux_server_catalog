@@ -3,6 +3,7 @@
 import { LOGIN_USER } from '../actions'
 import { LOGOUT_USER } from '../actions'
 import { SIGNUP_USER } from '../actions'
+import { GET_USER_PHOTO_LIST } from '../actions'
 import jwt_decode from 'jwt-decode'
 
 
@@ -12,11 +13,18 @@ const initialState = {
   username: '',
   login: {error: '', success: false},
   jwtToken: null,
-  signup: {errors: ''}
+  signup: {errors: ''},
+  photos: []
 }
 
 export default function user(state = initialState, action) {
   switch (action.type) {
+
+    case GET_USER_PHOTO_LIST:
+
+      return {
+        ...state, photos: action.payload.data.photos
+      }
 
     case SIGNUP_USER:
       if (action.error) {
