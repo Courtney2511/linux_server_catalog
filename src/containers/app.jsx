@@ -13,7 +13,7 @@ import masonryLayout from '../components/masonryLayout.jsx'
 import loginForm from '../components/forms/loginForm.jsx'
 import facebookLogin from '../components/facebookLogin.jsx'
 import UserPhotoList from '../components/UserPhotoList.jsx'
-import EditPhotoForm from '../components/forms/EditPhotoForm.jsx'
+import EditPhotoForm from '../components/editPhoto.jsx'
 
 export default class App extends React.Component {
   render() {

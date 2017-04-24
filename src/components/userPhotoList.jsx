@@ -7,24 +7,9 @@ import PhotoUserProfile from './photoUserProfile.jsx'
 
 class UserPhotoList extends React.Component {
 
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {
-  //     photos: []
-  //   }
-  // }
-  //
-  // componentDidMount() {
-  //   const url = `http://localhost:5000/users/${this.props.params.userId}/photos`
-  //   this.serverRequest =
-  //     axios.get(url).then((result) => {
-  //       this.setState(Object.assign({}, this.state, {photos: result.data.photos}))
-  //     })
-  // }
 
   componentDidMount() {
     this.props.actions.getUserPhotoList(this.props.user.userId)
-    console.log(this.props)
   }
 
   render() {

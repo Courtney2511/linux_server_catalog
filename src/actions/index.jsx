@@ -9,6 +9,8 @@ export const GET_PHOTOS = 'GET_PHOTOS'
 export const GET_PHOTO_DETAIL = 'GET_PHOTO_DETAIL'
 export const CLEAR_PHOTO = 'CLEAR_PHOTO'
 export const GET_USER_PHOTO_LIST = 'GET_USER_PHOTO_LIST'
+export const DELETE_PHOTO = 'DELETE_PHOTO'
+export const EDIT_PHOTO = 'EDIT_PHOTO'
 
 
 // gets photos by user
@@ -50,6 +52,31 @@ export function getPhotoDetail(photoId) {
 
   return {
     type: GET_PHOTO_DETAIL,
+    payload: data
+  }
+}
+
+// delete photo
+
+export function deletePhoto(photoId) {
+
+  const url = 'http://localhost:5000/photos/' + photoId
+  const data = axios.delete(url)
+
+  return {
+    type: DELETE_PHOTO,
+    payload: data
+  }
+}
+
+// updates photo detail
+export function editPhoto(photoID) {
+
+  const url = 'http://localhost:5000/photos' + photoId
+  const data = axios.put(url)
+
+  return {
+    type: EDIT_PHOTO,
     payload: data
   }
 }

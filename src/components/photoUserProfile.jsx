@@ -13,7 +13,7 @@ export default function PhotoUserProfile(props) {
           <small className="date">posted {formatUnixShortDate(props.photo.date_created)} </small>
       </div>
       <div className="user-actions">
-        <button id="edit-button">Edit</button>
+        <Link to={`/users/${props.photo.user.id}/photos/${props.photo.id}`}>Edit</Link>
         <button id="delete-button">Delete</button>
       </div>
     </div>
