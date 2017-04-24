@@ -28,6 +28,10 @@ def valid_login(username, password):
         return user
 
 
+def valid_url(url):
+    url_regex = re.compile(r"https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}")
+    return url and url_regex.match(url)
+
 # returns none is password is not 5-20 char long
 def valid_username(username):
     user_regex = re.compile(r"^.{5,20}$")

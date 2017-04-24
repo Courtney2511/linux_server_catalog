@@ -10,9 +10,7 @@ signup_api = Blueprint('signup_api', __name__)
 @signup_api.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
-    print "data from client is:"
-    print data
-    print "end of data"
+
     # make sure all required data is present
     message = {}
     success = ''

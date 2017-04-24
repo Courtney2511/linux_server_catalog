@@ -11,6 +11,7 @@ from routes.photos import photos_api
 from routes.fblogin import fblogin_api
 from routes.photo import photo_api
 from routes.user import user_api
+from routes.users import users_api
 from routes.photos_by_user import photos_by_user_api
 
 app = Flask(__name__)
@@ -22,6 +23,7 @@ app.register_blueprint(photos_api)
 app.register_blueprint(fblogin_api)
 app.register_blueprint(photo_api)
 app.register_blueprint(user_api)
+app.register_blueprint(users_api)
 CORS(app)
 
 
