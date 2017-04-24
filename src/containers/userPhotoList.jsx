@@ -17,7 +17,7 @@ class UserPhotoList extends React.Component {
       <div>
         <h3>User Profile</h3>
         <div className="photos">
-          {this.props.user.photos.map(photo => <PhotoUserProfile key={photo.id} photo={photo} />)}
+          {this.props.user.photos.map(photo => <PhotoUserProfile key={photo.id} photo={photo} deletePhoto={this.props.actions.deletePhoto } />)}
         </div>
       </div>
     )

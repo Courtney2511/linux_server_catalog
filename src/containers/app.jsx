@@ -9,7 +9,6 @@ import mainLayout from '../containers/mainLayout.jsx'
 import PhotoDetail from '../containers/photoDetail.jsx'
 import PhotosByCategory from '../components/PhotosByCategory.jsx'
 import signUpForm from '../components/forms/signUpForm.jsx'
-import masonryLayout from '../components/masonryLayout.jsx'
 import loginForm from '../components/forms/loginForm.jsx'
 import facebookLogin from '../components/facebookLogin.jsx'
 import UserPhotoList from './userPhotoList.jsx'
@@ -29,7 +28,6 @@ export default class App extends React.Component {
           <Route path="/signup" component={ signUpForm } />
           <Route path="/login" component={ loginForm } />
           <Route path="/facebooklogin" component={ facebookLogin } />
-          <Route path="/masonry" component={ masonryLayout } />
         </Route>
       </Router>
     )

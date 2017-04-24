@@ -21,6 +21,14 @@ export default function user(state = initialState, action) {
   switch (action.type) {
 
     case GET_USER_PHOTO_LIST:
+      if (action.error) {
+        return {
+          ...state, error: {
+                              success: false,
+                              error: "a server error occured"
+                            }
+        }
+      }
 
       return {
         ...state, photos: action.payload.data.photos
@@ -80,8 +88,7 @@ export default function user(state = initialState, action) {
       //handles successful log out
       if (action.payload.data.success) {
         return {
-          ...state, isLoggedIn: false,
-                    logout: { success: true, message: action.payload.data.message }
+          ...initialState,
         }
       } else {
         return {

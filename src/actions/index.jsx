@@ -29,7 +29,6 @@ export function getPhotos() {
 
   const url = 'http://localhost:5000/photos'
   const data = axios.get(url)
-
   return {
     type: GET_PHOTOS,
     payload: data
@@ -70,7 +69,7 @@ export function deletePhoto(photoId) {
 }
 
 // updates photo detail
-export function editPhoto(photoID) {
+export function editPhoto(photoId) {
 
   const url = 'http://localhost:5000/photos' + photoId
   const data = axios.put(url)

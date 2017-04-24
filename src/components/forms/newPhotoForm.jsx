@@ -13,8 +13,9 @@ class NewPhotoForm extends React.Component {
     // calls the new photo action
     this.props.actions.addNewPhoto(this.props.user.userId, event.target.name.value, event.target.description.value, event.target.category.value, event.target.pictureUrl.value)
     .then(() => {
-      if (this.props.user.isLoggedIn) {
-        browserHistory.push('/')
+      // if post is successful, redirect to photoDetail
+      if (this.props.photos.newPhoto) {
+        browserHistory.push(`/photos/${this.props.photos.newPhoto.id}`)
       }
     })
   }
@@ -51,7 +52,8 @@ NewPhotoForm.PropTypes = {
 // maps the store state for user to NewPhotoForm
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    photos: state.photos
   }
 }
 

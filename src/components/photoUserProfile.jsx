@@ -14,7 +14,7 @@ export default function PhotoUserProfile(props) {
       </div>
       <div className="user-actions">
         <Link to={`/users/${props.photo.user.id}/photos/${props.photo.id}`}>Edit</Link>
-        <button id="delete-button">Delete</button>
+        <button id="delete-button" onClick={props.deletePhoto(props.photo.id)}>Delete</button>
       </div>
     </div>
     )
