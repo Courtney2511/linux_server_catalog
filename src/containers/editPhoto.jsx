@@ -3,7 +3,7 @@ import '../../styles/form.scss'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from '../actions'
-import EditPhotoForm from './forms/editPhotoForm'
+import EditPhotoForm from '../components/forms/editPhotoForm'
 
 class EditPhoto extends React.Component {
 

@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux'
 import * as Actions from '../actions'
 
 import '../../styles/main.scss'
-import MainNavigation from './MainNavigation.jsx'
-import Dashboard from './Dashboard.jsx'
-import LoginPanel from './loginPanel.jsx'
+import MainNavigation from '../components/MainNavigation.jsx'
+import Dashboard from '../components/Dashboard.jsx'
+import LoginPanel from '../components/loginPanel.jsx'
 
 
 

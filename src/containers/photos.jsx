@@ -3,7 +3,7 @@ import '../../styles/photo_index.scss'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as Actions from '../actions'
-import Photo from './photo.jsx'
+import Photo from '../components/photo.jsx'
 
 class Photos extends React.Component {
 
