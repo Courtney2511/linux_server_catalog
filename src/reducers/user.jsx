@@ -85,7 +85,6 @@ export default function user(state = initialState, action) {
       }
 
     case LOGOUT_USER:
-      //handles successful log out
       if (action.payload.data.success) {
         return {
           ...initialState,

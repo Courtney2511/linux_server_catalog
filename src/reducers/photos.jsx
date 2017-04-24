@@ -5,7 +5,7 @@ import { GET_PHOTOS, GET_PHOTO_DETAIL, CLEAR_PHOTO, ADD_NEW_PHOTO } from '../act
 //set initial state for photos
 const initialState = {
   list: [],
-  errors: null
+  errors: ''
 }
 
 export default function photos(state = initialState, action) {
