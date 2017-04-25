@@ -15,10 +15,7 @@ export default function photos(state = initialState, action) {
 
       if (action.error) {
         return {
-          ...state, errors: {
-                              success: false,
-                              error: "A server error occured"
-          }
+          ...state, errors: "A server error occured"
         }
       } else if (!action.payload.data.success) {
 
@@ -36,23 +33,16 @@ export default function photos(state = initialState, action) {
 
     case GET_PHOTO_DETAIL: {
 
-      return {
-        ...state, photoDetail: action.payload.data.photo
+      if (action.error) {
+        return {
+          ...state, errors: "A server error occurred",
+                    list: []
+        }
+        } else {
+        return {
+          ...state, PhotoDetail: action.payload.data.photo
+        }
       }
-
-      // if (action.error) {
-      //   return {
-      //     ...state, errors: {
-      //                       success: false,
-      //                       error: "A server error occurred"
-      //                       }
-      //   }
-      // } else {
-      //   return {
-      //     ...state, PhotoDetail: action.payload.data.photo
-      //   }
-      // }
-
     }
 
     case CLEAR_PHOTO: {
@@ -64,10 +54,8 @@ export default function photos(state = initialState, action) {
     case GET_PHOTOS:
       if (action.error) {
         return {
-          ...state, errors: {
-                            success: false,
-                            error: "A server error occurred"
-                            }
+          ...state, errors: "A server error occurred",
+                    list: []
         }
       } else {
         return {

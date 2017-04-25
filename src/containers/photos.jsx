@@ -15,6 +15,7 @@ class Photos extends React.Component {
 
     return (
       <div className="photos">
+        <div className="server-errors">{this.props.photos.errors}</div>
         {this.props.photos.list.map(photo => <Photo key={photo.id} photo={photo} />)}
       </div>
     )
@@ -28,7 +29,7 @@ Photos.propTypes = {
 //maps the store state for photos to photos Component
 function mapStateToProps(state) {
   return {
-    photos: state.photos
+    photos: state.photos,
   }
 }
 
