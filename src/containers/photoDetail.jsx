@@ -25,20 +25,18 @@ class PhotoDetail extends React.Component {
     this.props.actions.getPhotoDetail(this.props.params.photoId)
   }
 
-  // render() {
-  //   return (
-  //     (this.props.photos.photoDetail) ?
-  //     <div>
-  //       <h3>{this.props.photos.photoDetail.description}</h3>
-  //     </div>
-  //     : <div><h3>Loading...</h3></div>
-  //   )
-  // }
+
 
   render() {
+    let errors = null
+
+    if (this.props.photos.errors) {
+      <div className="server-errors">{this.props.photos.errors}</div>
+    }
+
     return (
       <div>
-        <div className="server-errors">{this.props.photos.errors}</div>
+        {errors}
         {(this.props.photos.photoDetail) ? <Photo photo={this.props.photos.photoDetail} /> : null}
       </div>
     )

@@ -7,8 +7,7 @@ export default function Dashboard(props) {
   return(
     <div>
       <div className="welcome">
-        <p className="hello">Hello
-          <Link to={"/users/" + props.user.userId}>
+        <p className="hello">Hello <Link to={"/users/" + props.user.userId}>
             {props.user.username} :)
           </Link>
         </p>

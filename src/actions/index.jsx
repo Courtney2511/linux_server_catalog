@@ -11,6 +11,7 @@ export const CLEAR_PHOTO = 'CLEAR_PHOTO'
 export const GET_USER_PHOTO_LIST = 'GET_USER_PHOTO_LIST'
 export const DELETE_PHOTO = 'DELETE_PHOTO'
 export const EDIT_PHOTO = 'EDIT_PHOTO'
+export const CLEAR_NEW_PHOTO = 'CLEAR_NEW_PHOTO'
 
 
 // gets photos by user
@@ -32,6 +33,12 @@ export function getPhotos() {
   return {
     type: GET_PHOTOS,
     payload: data
+  }
+}
+
+export function clearNewPhoto() {
+  return {
+    type: CLEAR_NEW_PHOTO
   }
 }
 

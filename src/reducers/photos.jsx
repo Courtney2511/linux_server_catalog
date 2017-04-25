@@ -1,11 +1,11 @@
 // Photos Reducer
 
-import { GET_PHOTOS, GET_PHOTO_DETAIL, CLEAR_PHOTO, ADD_NEW_PHOTO } from '../actions'
+import { GET_PHOTOS, GET_PHOTO_DETAIL, CLEAR_PHOTO, ADD_NEW_PHOTO, CLEAR_NEW_PHOTO } from '../actions'
 
 //set initial state for photos
 const initialState = {
+  errors: '',
   list: [],
-  errors: ''
 }
 
 export default function photos(state = initialState, action) {
@@ -18,17 +18,21 @@ export default function photos(state = initialState, action) {
           ...state, errors: "A server error occured"
         }
       } else if (!action.payload.data.success) {
-
         return {
           ...state, errors: action.payload.data
         }
       } else {
-
         return {
           ...state, success: true,
                     newPhoto: action.payload.data.photo
-                }
-              }
+        }
+      }
+    }
+
+    case CLEAR_NEW_PHOTO: {
+      return {
+        ...state, newPhoto: null
+      }
     }
 
     case GET_PHOTO_DETAIL: {
@@ -38,9 +42,10 @@ export default function photos(state = initialState, action) {
           ...state, errors: "A server error occurred",
                     list: []
         }
-        } else {
+      } else {
         return {
-          ...state, PhotoDetail: action.payload.data.photo
+          ...state, photoDetail: action.payload.data.photo,
+                    errors: null
         }
       }
     }
@@ -59,7 +64,8 @@ export default function photos(state = initialState, action) {
         }
       } else {
         return {
-          ...state, list: action.payload.data.photos
+          ...state, list: action.payload.data.photos,
+                    errors: null
         }
       }
     default:

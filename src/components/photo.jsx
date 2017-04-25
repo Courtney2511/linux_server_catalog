@@ -13,8 +13,7 @@ export default function Photo(props) {
       <p className="photo-desc">{props.photo.description}</p>
       <div className="user">
         <span>
-          <small>by:
-            <Link to={`/users/${props.photo.user.id}`}>
+          <small>by: <Link to={`/users/${props.photo.user.id}`}>
               {props.photo.user.username}
             </Link>
           </small><br></br>

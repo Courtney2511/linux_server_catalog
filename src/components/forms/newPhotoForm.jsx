@@ -8,6 +8,10 @@ import { browserHistory } from 'react-router'
 
 class NewPhotoForm extends React.Component {
 
+  componentDidMount() {
+    this.props.actions.clearNewPhoto()
+  }
+
   handleSubmit(event) {
     event.preventDefault()
     // calls the new photo action
@@ -21,6 +25,7 @@ class NewPhotoForm extends React.Component {
   }
 
   render() {
+
     return (
       <div className="form-container">
       <h2>Show us your art.</h2>
