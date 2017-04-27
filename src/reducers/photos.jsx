@@ -1,6 +1,6 @@
 // Photos Reducer
 
-import { GET_PHOTOS, GET_PHOTO_DETAIL, CLEAR_PHOTO, ADD_NEW_PHOTO, CLEAR_NEW_PHOTO, EDIT_PHOTO } from '../actions'
+import { GET_PHOTOS, GET_PHOTO_DETAIL, CLEAR_PHOTO, ADD_NEW_PHOTO, CLEAR_NEW_PHOTO, EDIT_PHOTO, LOGOUT_USER } from '../actions'
 
 //set initial state for photos
 const initialState = {
@@ -73,6 +73,13 @@ export default function photos(state = initialState, action) {
         return {
           ...state, list: action.payload.data.photos,
                     errors: null
+        }
+      }
+
+    case LOGOUT_USER:
+      if (action.payload.data.success) {
+        return {
+          ...initialState,
         }
       }
     default:
