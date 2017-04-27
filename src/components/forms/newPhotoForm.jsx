@@ -18,7 +18,7 @@ class NewPhotoForm extends React.Component {
     this.props.actions.addNewPhoto(this.props.user.userId, event.target.name.value, event.target.description.value, event.target.category.value, event.target.pictureUrl.value)
     .then(() => {
       // if post is successful, redirect to photoDetail
-      if (this.props.photos.newPhoto) {
+      if (this.props.photos.newPhoto.success) {
         browserHistory.push(`/photos/${this.props.photos.newPhoto.id}`)
       }
     })
@@ -31,11 +31,11 @@ class NewPhotoForm extends React.Component {
       <h2>Show us your art.</h2>
       <form method='POST' onSubmit={event => this.handleSubmit(event)}>
           <input type="text" name="pictureUrl" placeholder="url to your photo photo"></input>
-            <div className="form-error">{this.props.photos.errors.error_picture}</div>
+            <div className="form-error">{this.props.photos.newPhoto.errors.error_picture}</div>
           <input type="text" name="name" placeholder="Title"></input>
-            <div className="form-error">{this.props.photos.errors.error_name}</div>
+            <div className="form-error">{this.props.photos.newPhoto.errors.error_name}</div>
           <textarea  name="description" placeholder="Tell us the story..."></textarea>
-            <div className="form-error">{this.props.photos.errors.error_description}</div>
+            <div className="form-error">{this.props.photos.newPhoto.errors.error_description}</div>
           <br></br>
             <select name="category">
               <option value="Animals">Animals</option>
@@ -44,7 +44,6 @@ class NewPhotoForm extends React.Component {
               <option value="People">People</option>
               <option value="Food">Food</option>
             </select>
-              <div className="form-error">{this.props.user.signup.errors.error_category}</div>
         <div className="form-submit">
           <input className="submit-button" type="submit" value="Share"></input>
         </div>

@@ -2,6 +2,7 @@ import React from 'react'
 import '../../styles/form.scss'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 import * as Actions from '../actions'
 import EditPhotoForm from '../components/forms/editPhotoForm'
 
@@ -12,7 +13,9 @@ class EditPhoto extends React.Component {
   }
 
   handleSubmit(values) {
+    this.props.actions.editPhoto(values.id, values.user.id, values.name, values.description, values.category, values.picture)
     console.log(values)
+    browserHistory.push(`/photos/${values.id}`)
   }
 
   render() {

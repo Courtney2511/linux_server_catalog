@@ -1,15 +1,22 @@
 // Photos Reducer
 
-import { GET_PHOTOS, GET_PHOTO_DETAIL, CLEAR_PHOTO, ADD_NEW_PHOTO, CLEAR_NEW_PHOTO } from '../actions'
+import { GET_PHOTOS, GET_PHOTO_DETAIL, CLEAR_PHOTO, ADD_NEW_PHOTO, CLEAR_NEW_PHOTO, EDIT_PHOTO } from '../actions'
 
 //set initial state for photos
 const initialState = {
   errors: '',
   list: [],
+  newPhoto: {errors: ''},
 }
 
 export default function photos(state = initialState, action) {
   switch (action.type) {
+
+    case EDIT_PHOTO: {
+      return {
+        ...state, photoDetail: action.payload.data
+      }
+    }
 
     case ADD_NEW_PHOTO: {
 
@@ -19,7 +26,7 @@ export default function photos(state = initialState, action) {
         }
       } else if (!action.payload.data.success) {
         return {
-          ...state, errors: action.payload.data
+          ...state, newPhoto: {errors: action.payload.data}
         }
       } else {
         return {

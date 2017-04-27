@@ -12,7 +12,7 @@ export const GET_USER_PHOTO_LIST = 'GET_USER_PHOTO_LIST'
 export const DELETE_PHOTO = 'DELETE_PHOTO'
 export const EDIT_PHOTO = 'EDIT_PHOTO'
 export const CLEAR_NEW_PHOTO = 'CLEAR_NEW_PHOTO'
-
+export const SET_NEW_PHOTO_ERRORS = 'SET_NEW_PHOTO_ERRORS'
 
 // gets photos by user
 export function getUserPhotoList(userId) {
@@ -76,10 +76,17 @@ export function deletePhoto(photoId) {
 }
 
 // updates photo detail
-export function editPhoto(photoId) {
+export function editPhoto(photoId, userId, name, description, category, url) {
 
-  const url = 'http://localhost:5000/photos' + photoId
-  const data = axios.put(url)
+  const serverUrl = 'http://localhost:5000/photos/' + photoId
+  const data = axios.put(serverUrl, {
+    photoId: photoId,
+    userId: userId,
+    name: name,
+    description: description,
+    category: category,
+    url: url,
+  })
 
   return {
     type: EDIT_PHOTO,
@@ -98,6 +105,8 @@ export function addNewPhoto(userId, name, description, category, url) {
     category: category,
     url: url
   })
+  console.log("data sent to server is:")
+  console.log(data)
 
   return {
     type: ADD_NEW_PHOTO,

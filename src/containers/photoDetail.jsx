@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as Actions from '../actions'
 import { formatUnixShortDate } from '../helpers/date'
-// import Photo from './photo.jsx'
 
 function Photo(props) {
   return (
