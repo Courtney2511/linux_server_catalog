@@ -29,7 +29,7 @@ API:
         "id": 1,
         "username": "Courtney"
       }
-    },  ]```
+    } ]```
 
   • POST:
 
