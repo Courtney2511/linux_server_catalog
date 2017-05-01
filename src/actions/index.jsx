@@ -104,8 +104,6 @@ export function addNewPhoto(userId, name, description, category, url) {
     category: category,
     url: url
   })
-  console.log("data sent to server is:")
-  console.log(data)
 
   return {
     type: ADD_NEW_PHOTO,
