@@ -18,7 +18,7 @@ class NewPhotoForm extends React.Component {
     this.props.actions.addNewPhoto(this.props.user.userId, event.target.name.value, event.target.description.value, event.target.category.value, event.target.pictureUrl.value)
     .then(() => {
       // if post is successful, redirect to photoDetail
-      if (this.props.photos.success === true) {
+      if (this.props.photos.newPhoto) {
         browserHistory.push(`/photos/${this.props.photos.newPhoto.id}`)
       }
     })
@@ -29,7 +29,16 @@ class NewPhotoForm extends React.Component {
     return (
       <div className="form-container">
       <h2>Show us your art.</h2>
-      <form method='POST' onSubmit={event => this.handleSubmit(event)}>
+      {
+        (this.props.photos.errors)
+        ? <div className="server-errors">{this.props.photos.errors}</div>
+        : null
+      }
+      { // conditionaly displays form if logged in
+        (!this.props.user.isLoggedIn)
+        ? <div>You must be logged in to post new photos</div>
+
+        : <form method='POST' onSubmit={event => this.handleSubmit(event)}>
           <input type="text" name="pictureUrl" placeholder="url to your photo photo"></input>
             { // displays url errors, if any
               (this.props.photos.errors && this.props.photos.errors.error_picture)
@@ -50,16 +59,17 @@ class NewPhotoForm extends React.Component {
             }
           <br></br>
             <select name="category">
-              <option value="Animals">Animals</option>
-              <option value="Black & White">Black & White</option>
-              <option value="Landscape">Landscape</option>
-              <option value="People">People</option>
-              <option value="Food">Food</option>
+              <option value="1">Animals</option>
+              <option value="2">Black & White</option>
+              <option value="3">Landscape</option>
+              <option value="4">People</option>
+              <option value="5">Food</option>
             </select>
         <div className="form-submit">
           <input className="submit-button" type="submit" value="Share"></input>
         </div>
       </form>
+    }
       </div>
     )
   }
