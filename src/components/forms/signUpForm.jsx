@@ -24,6 +24,11 @@ class SignUpForm extends React.Component {
     return (
       <div className = "form-container">
         <h2>Join our community!</h2>
+        {
+          (this.props.user.errors)
+          ? <div className="server-errors">{this.props.user.errors}</div>
+          : null
+        }
         <form action="" method="POST" onSubmit={event => this.handleSubmit(event) }>
 	         <input type="text" name="username" placeholder="name"/>
             { //displays username errors, if any
