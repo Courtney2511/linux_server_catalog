@@ -27,16 +27,18 @@ class PhotoDetail extends React.Component {
 
 
   render() {
-    let errors = null
-
-    if (this.props.photos.errors) {
-      <div className="server-errors">{this.props.photos.errors}</div>
-    }
-
     return (
       <div>
-        {errors}
-        {(this.props.photos.photoDetail) ? <Photo photo={this.props.photos.photoDetail} /> : null}
+        { // displays errrors
+          (this.props.photos.errors)
+          ? <div className="server-errors">{this.props.photos.errors}</div>
+          : null
+        }
+        { // displays photo detail 
+          (this.props.photos.photoDetail)
+          ? <Photo photo={this.props.photos.photoDetail} />
+          : null
+        }
       </div>
     )
   }

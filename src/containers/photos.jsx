@@ -13,15 +13,18 @@ class Photos extends React.Component {
 
   render() {
 
-    let errors = null
-
-    if (this.props.photos.errors){
-      errors = <div className="server-errors">{this.props.photos.errors}</div>
-      }
     return (
       <div className="photos">
-        {errors}
-        {this.props.photos.list.map(photo => <Photo key={photo.id} photo={photo} />)}
+        { // checks for error messages
+          (this.props.photos.errors)
+          ? <div className="server-errors">{this.props.photos.errors}</div>
+          : null
+        }
+        { // if photos exist, displays photos
+          (this.props.photos.list && this.props.photos.list.length > 0)
+          ? this.props.photos.list.map(photo => <Photo key={photo.id} photo={photo} />)
+          : null
+        }
       </div>
     )
   }

@@ -26,11 +26,23 @@ class SignUpForm extends React.Component {
         <h2>Join our community!</h2>
         <form action="" method="POST" onSubmit={event => this.handleSubmit(event) }>
 	         <input type="text" name="username" placeholder="name"/>
-              <div className="form-error">{this.props.user.signup.errors.error_username}</div>
+            { //displays username errors, if any
+              (this.props.user.errors && this.props.user.errors.error_username)
+              ? <div className="form-error">{this.props.user.errors.error_username}</div>
+              : null
+            }
            <input type="text" name="email" placeholder="email"/>
-              <div className="form-error">{this.props.user.signup.errors.error_email}</div>
+            { // displays email errors, if any
+              (this.props.user.errors && this.props.user.errors.error_email)
+              ? <div className="form-error">{this.props.user.errors.error_email}</div>
+              : null
+            }
 	         <input type="password" name="password" placeholder="password"/>
-              <div className="form-error">{this.props.user.signup.errors.error_password}</div>
+           { // displays password errors, if any
+             (this.props.user.errors) && (this.props.user.errors.error_password)
+             ? <div className="form-error">{this.props.user.errors.error_password}</div>
+             : null
+           }
           <div className="form-submit">
             <input className="submit-button" type="submit" value="Let's Go!"></input>
           </div>

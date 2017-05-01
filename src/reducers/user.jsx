@@ -37,17 +37,11 @@ export default function user(state = initialState, action) {
     case SIGNUP_USER:
       if (action.error) {
         return {
-          ...state, signup: {
-                              success: false,
-                              error: "A server error occurred"
-                            }
+          ...state, errors: "A server error occurred"
         }
       } else if (!action.payload.data.success) {
         return {
-          ...state, signup: {
-                              success: false,
-                              errors: action.payload.data
-                            }
+          ...state, errors: action.payload.data
         }
       } else {
           return {

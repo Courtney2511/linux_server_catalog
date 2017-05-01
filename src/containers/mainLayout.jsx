@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as Actions from '../actions'
-
 import '../../styles/main.scss'
 import MainNavigation from '../components/MainNavigation.jsx'
 import Dashboard from '../components/Dashboard.jsx'
@@ -13,15 +12,6 @@ import LoginPanel from '../components/loginPanel.jsx'
 class MainLayout extends React.Component {
 
   render() {
-    let panel = null
-
-    if (this.props.user.isLoggedIn) {
-      // displays the dashboard panel if logged in
-      panel = <Dashboard user={this.props.user} actions={{ logOutUser: this.props.actions.logOutUser }}/>
-    } else {
-      // displays the login panel if not logged in
-      panel = <LoginPanel />
-    }
     return (
       <container>
       <header>
@@ -31,7 +21,11 @@ class MainLayout extends React.Component {
             <h1 className="title">PHOTOBOMB</h1>
           </div>
           <div className="header-right">
-            {panel}
+            { // displays dashboard or login panel based on log in status
+              (this.props.user.isLoggedIn)
+              ? <Dashboard user={this.props.user} actions={{ logOutUser: this.props.actions.logOutUser }}/>
+              : <LoginPanel />
+            }
           </div>
         </div>
         <MainNavigation />

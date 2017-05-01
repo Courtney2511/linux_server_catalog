@@ -42,7 +42,6 @@ export function clearNewPhoto() {
   }
 }
 
-
 // clears photo
 export function clearPhoto() {
   return {

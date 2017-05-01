@@ -18,7 +18,7 @@ class NewPhotoForm extends React.Component {
     this.props.actions.addNewPhoto(this.props.user.userId, event.target.name.value, event.target.description.value, event.target.category.value, event.target.pictureUrl.value)
     .then(() => {
       // if post is successful, redirect to photoDetail
-      if (this.props.photos.newPhoto.success) {
+      if (this.props.photos.success === true) {
         browserHistory.push(`/photos/${this.props.photos.newPhoto.id}`)
       }
     })
@@ -31,11 +31,23 @@ class NewPhotoForm extends React.Component {
       <h2>Show us your art.</h2>
       <form method='POST' onSubmit={event => this.handleSubmit(event)}>
           <input type="text" name="pictureUrl" placeholder="url to your photo photo"></input>
-            <div className="form-error">{this.props.photos.newPhoto.errors.error_picture}</div>
+            { // displays url errors, if any
+              (this.props.photos.errors && this.props.photos.errors.error_picture)
+              ? <div className="form-error">this.props.photos.errors.error_picture </div>
+              : null
+            }
           <input type="text" name="name" placeholder="Title"></input>
-            <div className="form-error">{this.props.photos.newPhoto.errors.error_name}</div>
+           {  // displays name errors, if any
+             (this.props.photos.errors && this.props.photos.errors.error_name)
+             ? <div className="form-error">{this.props.photos.errors.error_name}</div>
+             : null
+           }
           <textarea  name="description" placeholder="Tell us the story..."></textarea>
-            <div className="form-error">{this.props.photos.newPhoto.errors.error_description}</div>
+            { // displays description errors, if any
+              (this.props.photos.errors && this.props.photos.errors.error_description)
+              ? <div className="form-error">{this.props.photos.errors.error_description}</div>
+              : null
+            }
           <br></br>
             <select name="category">
               <option value="Animals">Animals</option>
