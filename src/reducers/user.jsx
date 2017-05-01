@@ -17,6 +17,8 @@ const initialState = {
   photos: []
 }
 
+const serverError = "A server error occured.  Please try again later"
+
 export default function user(state = initialState, action) {
   switch (action.type) {
 
@@ -25,7 +27,7 @@ export default function user(state = initialState, action) {
         return {
           ...state, error: {
                               success: false,
-                              error: "a server error occured"
+                              error: serverError
                             }
         }
       }
@@ -37,7 +39,7 @@ export default function user(state = initialState, action) {
     case SIGNUP_USER:
       if (action.error) {
         return {
-          ...state, errors: "A server error occurred"
+          ...state, errors: serverError
         }
       } else if (!action.payload.data.success) {
         return {
@@ -55,7 +57,7 @@ export default function user(state = initialState, action) {
         return {
           ...state, login: {
             success: false,
-            error: "A server error occurred."
+            error: serverError
           }
         }
       // handles input error
