@@ -16,8 +16,14 @@ class UserPhotoList extends React.Component {
     return (
       <div>
         <h3>User Profile</h3>
+        {
+          (this.props.photos.success)
+          ? <div>{this.props.photos.message}</div>
+          : null
+        }
         <div className="photos">
-          {this.props.user.photos.map(photo => <PhotoUserProfile key={photo.id} photo={photo} deletePhoto={this.props.actions.deletePhoto } />)}
+          {this.props.user.photos.map(photo => <PhotoUserProfile key={photo.id} photo={photo} deletePhoto={() => {this.props.actions.deletePhoto(photo.id)
+              this.props.actions.getUserPhotoList(this.props.user.userId)}} />)}
         </div>
       </div>
     )
@@ -31,7 +37,8 @@ UserPhotoList.propTypes = {
 // maps the store state for user to UserPhotoList props
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    photos: state.photos
   }
 }
 

@@ -95,13 +95,13 @@ export function editPhoto(photoId, userId, name, description, categoryId, url) {
 
 
 // posts new photo to server
-export function addNewPhoto(userId, name, description, category, url) {
+export function addNewPhoto(userId, name, description, categoryId, url) {
 
   const data = axios.post('http://localhost:5000/photos', {
     userId: userId,
     name: name,
     description: description,
-    category: category,
+    categoryId: categoryId,
     url: url
   })
 

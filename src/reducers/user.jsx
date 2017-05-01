@@ -30,11 +30,17 @@ export default function user(state = initialState, action) {
                               error: serverError
                             }
         }
+      } else if (!action.payload.data.success) {
+        return {
+          ...state, error: 'This resource does not exist'
+        }
+      } else {
+        return {
+          ...state, photos: action.payload.data.photos,
+                    success: action.payload.data.success
+          }
       }
 
-      return {
-        ...state, photos: action.payload.data.photos
-      }
 
     case SIGNUP_USER:
       if (action.error) {
