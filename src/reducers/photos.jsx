@@ -12,7 +12,7 @@ export default function photos(state = initialState, action) {
 
     case EDIT_PHOTO: {
       return {
-        ...state, photoDetail: action.payload.data
+        ...state, photoDetail: action.payload.data.photo
       }
     }
 
