@@ -9,11 +9,13 @@ import EditPhotoForm from '../components/forms/editPhotoForm'
 class EditPhoto extends React.Component {
 
   componentDidMount() {
+    this.props.actions.clearPhoto()
     this.props.actions.getPhotoDetail(this.props.params.photoId)
   }
 
   handleSubmit(values) {
     this.props.actions.editPhoto(values.id, values.user.id, values.name, values.description, values.category.id, values.picture)
+    console.log(values)
     this.props.actions.getUserPhotoList(values.user.id)
     browserHistory.push(`/photos/${values.id}`)
   }
@@ -23,9 +25,10 @@ class EditPhoto extends React.Component {
       <div className="form-container">
         <h2>Need to make some changes?</h2>
         {
-          (this.props.photos.photoDetail)
+          (this.props.photos.photoDetail && this.props.user.isLoggedIn)
           ? <EditPhotoForm photo={this.props.photos.photoDetail} handleSubmit={event => this.handleSubmit(event)} />
-          : 'Loading....'}
+        : <div>Log in to edit your photos</div>
+        }
       </div>
     )
   }
@@ -33,7 +36,8 @@ class EditPhoto extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    photos: state.photos
+    photos: state.photos,
+    user: state.user
   }
 }
 
