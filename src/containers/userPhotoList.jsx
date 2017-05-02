@@ -7,7 +7,6 @@ import PhotoUserProfile from '../components/photoUserProfile.jsx'
 
 class UserPhotoList extends React.Component {
 
-
   componentDidMount() {
     this.props.actions.getUserPhotoList(this.props.user.userId)
   }
@@ -15,15 +14,14 @@ class UserPhotoList extends React.Component {
   render() {
     return (
       <div>
-        <h3>User Profile</h3>
-        {
+        <h3>Your Posts</h3>
+        { // displays message when a photo is deleted
           (this.props.photos.success)
-          ? <div>{this.props.photos.message}</div>
+          ? <div className="message">{this.props.photos.message}</div>
           : null
         }
         <div className="photos">
-          {this.props.user.photos.map(photo => <PhotoUserProfile key={photo.id} photo={photo} deletePhoto={() => {this.props.actions.deletePhoto(photo.id)
-              this.props.actions.getUserPhotoList(this.props.user.userId)}} />)}
+          {this.props.user.photos.map(photo => <PhotoUserProfile key={photo.id} photo={photo} deletePhoto={() => this.props.actions.deletePhoto(photo.id)} />)}
         </div>
       </div>
     )
