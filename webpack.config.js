@@ -66,5 +66,10 @@ module.exports = {
 				js: [ "bundle.js"],
 			}
 		}),
+    new webpack.DefinePlugin({
+			'process.env': {
+				API_SERVER: `"${process.env.API_SERVER || "http://localhost:5000"}"`
+			}
+		}),
 	]
 };

@@ -16,7 +16,8 @@ export const SET_NEW_PHOTO_ERRORS = 'SET_NEW_PHOTO_ERRORS'
 
 // gets photos by user
 export function getUserPhotoList(userId) {
-  const url = 'http://localhost:5000/users/' + userId + '/photos'
+  const url = `${process.env.API_SERVER}/users/${userId}/photos`
+  // const url = 'http://localhost:5000/users/' + userId + '/photos'
   const data = axios.get(url)
 
   return {
@@ -28,7 +29,7 @@ export function getUserPhotoList(userId) {
 // gets all photos
 export function getPhotos() {
 
-  const url = 'http://localhost:5000/photos'
+  const url = `${process.env.API_SERVER}/photos`
   const data = axios.get(url)
   return {
     type: GET_PHOTOS,
@@ -52,7 +53,8 @@ export function clearPhoto() {
 // gets photo by id
 export function getPhotoDetail(photoId) {
 
-  const url = 'http://localhost:5000/photos/' + photoId
+  const url = `${process.env.API_SERVER}/photos/${photoId}`
+  // const url = 'http://localhost:5000/photos/' + photoId
   const data = axios.get(url)
 
   return {
@@ -62,10 +64,10 @@ export function getPhotoDetail(photoId) {
 }
 
 // delete photo
-
 export function deletePhoto(photoId) {
 
-  const url = 'http://localhost:5000/photos/' + photoId
+  const url = `${process.env.API_SERVER}/photos/${photoId}`
+  // const url = 'http://localhost:5000/photos/' + photoId
   const data = axios.delete(url)
 
   return {
@@ -77,7 +79,8 @@ export function deletePhoto(photoId) {
 // updates photo detail
 export function editPhoto(photoId, userId, name, description, categoryId, url) {
 
-  const serverUrl = 'http://localhost:5000/photos/' + photoId
+  const serverUrl = `${process.env.API_SERVER}/photos/${photoId}`
+  // const serverUrl = 'http://localhost:5000/photos/' + photoId
   const data = axios.put(serverUrl, {
     photoId: photoId,
     userId: userId,
@@ -97,7 +100,8 @@ export function editPhoto(photoId, userId, name, description, categoryId, url) {
 // posts new photo to server
 export function addNewPhoto(userId, name, description, categoryId, url) {
 
-  const data = axios.post('http://localhost:5000/photos', {
+  const serverUrl = `${process.env.API_SERVER}/photos`
+  const data = axios.post(serverUrl, {
     userId: userId,
     name: name,
     description: description,
@@ -111,11 +115,11 @@ export function addNewPhoto(userId, name, description, categoryId, url) {
   }
 }
 
-
 // posts new user to server
 export function signUpUser(username, email, password) {
 
-  const data = axios.post('http://localhost:5000/signup', {
+  const url = `${process.env.API_SERVER}/signup`
+  const data = axios.post(url, {
     username: username,
     email: email,
     password: password
@@ -131,7 +135,8 @@ export function signUpUser(username, email, password) {
 export function logInUser(username, password) {
 
   // POST login credentials to server
-  const data = axios.post('http://localhost:5000/login', {
+  const url = `${process.env.API_SERVER}/login`
+  const data = axios.post(url, {
     username: username,
     password: password
   })
@@ -142,7 +147,6 @@ export function logInUser(username, password) {
   }
 }
 
-
 // log out user
 export function logOutUser(jwtToken) {
 
@@ -150,7 +154,8 @@ export function logOutUser(jwtToken) {
     auth_token: jwtToken
   }
 
-  const data = axios.post('http://localhost:5000/logout', options)
+  const url = `${process.env.API_SERVER}/logout`
+  const data = axios.post(url, options)
 
   return {
     type: LOGOUT_USER,
