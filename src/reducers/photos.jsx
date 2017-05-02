@@ -1,6 +1,6 @@
   // Photos Reducer
 
-import { GET_PHOTOS, GET_PHOTO_DETAIL, CLEAR_PHOTO, ADD_NEW_PHOTO, CLEAR_NEW_PHOTO, EDIT_PHOTO, LOGOUT_USER, DELETE_PHOTO } from '../actions'
+import { GET_PHOTOS, GET_PHOTO_DETAIL, CLEAR_PHOTO, ADD_NEW_PHOTO, CLEAR_NEW_PHOTO, EDIT_PHOTO, LOGOUT_USER, DELETE_PHOTO, CLEAR_MESSAGE } from '../actions'
 
 //set initial state for photos
 const initialState = {
@@ -32,6 +32,13 @@ export default function photos(state = initialState, action) {
       return {
         ...state, message: "photo deleted"
       }
+    }
+
+    case CLEAR_MESSAGE: {
+      return {
+        ...state, message: null
+      }
+
     }
 
     case ADD_NEW_PHOTO: {

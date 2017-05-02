@@ -13,6 +13,7 @@ export const DELETE_PHOTO = 'DELETE_PHOTO'
 export const EDIT_PHOTO = 'EDIT_PHOTO'
 export const CLEAR_NEW_PHOTO = 'CLEAR_NEW_PHOTO'
 export const SET_NEW_PHOTO_ERRORS = 'SET_NEW_PHOTO_ERRORS'
+export const CLEAR_MESSAGE = 'CLEAR_MESSAGE'
 
 // gets photos by user
 export function getUserPhotoList(userId) {
@@ -47,6 +48,13 @@ export function clearNewPhoto() {
 export function clearPhoto() {
   return {
     type: CLEAR_PHOTO
+  }
+}
+
+//clear photo message
+export function clearMessage() {
+  return {
+    type: CLEAR_MESSAGE
   }
 }
 
