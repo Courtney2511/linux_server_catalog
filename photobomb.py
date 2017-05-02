@@ -1,6 +1,5 @@
-from flask import Flask, jsonify
+from flask import Flask
 from database import db_session
-from database_models import Category
 from flask_cors import CORS
 import constants
 
@@ -30,27 +29,6 @@ CORS(app)
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     db_session.remove()
-
-
-# ALL CATEGORIES
-@app.route('/categories')
-def get_categories():
-    categories = Category.query.all()
-    return jsonify(categories=[category.serialize for category in categories])
-
-
-# CATEGORY BY ID
-@app.route('/categories/<int:category_id>')
-def get_category(category_id):
-    category = Category.query.get(category_id)
-    return jsonify(category.serialize)
-
-
-# PHOTOS BY CATEGORY
-@app.route('/categories/<int:category_id>/photos')
-def get_category_photos(category_id):
-    category = Category.query.get(category_id)
-    return jsonify(photos=[photo.serialize for photo in category.photos])
 
 
 # HOME
