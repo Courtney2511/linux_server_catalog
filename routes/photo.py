@@ -16,20 +16,14 @@ def get_photo(photo_id):
 @photo_api.route('/photos/<int:photo_id>', methods=['PUT'])
 def edit_photo(photo_id):
     photo = Photo.query.get(photo_id)
-    print "incoming photo is:"
-    print photo.name
     data = request.get_json()
     photo.name = data['name']
     photo.description = data['description']
     photo.picture = data['url']
     photo.category_id = data['categoryId']
-    print "outgoing photo is:"
-    print photo.name
     db_session.add(photo)
     db_session.commit()
     db_session.refresh(photo)
-    print "refreshed photo is:"
-    print photo.name
     return jsonify(photo=photo.serialize), 200
 
 

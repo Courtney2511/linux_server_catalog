@@ -24,11 +24,9 @@ def new_photo():
 
     name = data['name']
     description = data['description']
-    category = data['category']
+    category_id = data['categoryId']
     url = data['url']
     user_id = data['userId']
-    if category:
-        category_id = helpers.get_category_id(category)
 
     # check for missing data
     if name == '':
@@ -37,7 +35,7 @@ def new_photo():
     if description == '':
         message['error_description'] = "you must provide a description"
         success = False
-    if category == '':
+    if category_id == '':
         message['error_category'] = "please choose a cateogry"
         success = False
     if url == '':
