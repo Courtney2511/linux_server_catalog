@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from database_models import Photo
-from database import db_session
+from database.models import Photo
+from database.database import db_session
 
 photo_api = Blueprint('photo_api', __name__)
 

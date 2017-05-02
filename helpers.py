@@ -1,6 +1,6 @@
-from database_models import User
-from database_models import Category
-from database_models import Photo
+from database.models import User
+from database.models import Category
+from database.models import Photo
 import re
 import random
 import string

@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 import helpers
-from database_models import User
-from database import db_session
+from database.models import User
+from database.database import db_session
 
 signup_api = Blueprint('signup_api', __name__)
 

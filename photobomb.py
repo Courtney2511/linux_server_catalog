@@ -1,5 +1,5 @@
 from flask import Flask
-from database import db_session
+from database.database import db_session
 from flask_cors import CORS
 import constants
 

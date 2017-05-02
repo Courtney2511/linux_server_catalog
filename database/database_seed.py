@@ -1,4 +1,4 @@
-from database_models import Category, User, Photo
+from database.models import Category, User, Photo
 from database import create_db, db_session, drop_db
 
 drop_db()
