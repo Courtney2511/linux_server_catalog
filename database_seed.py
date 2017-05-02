@@ -1,4 +1,3 @@
-import datetime
 from database_models import Category, User, Photo
 from database import create_db, db_session, drop_db
 
@@ -31,9 +30,13 @@ db_session.commit()
 
 # set up photos
 photo1 = Photo(name="two giraffe heads in the sky",
-                description="This is my awesome photo.   It is not the only photo, but it is my favourite... well except for that other one, but it is nsfw",
+               description=""""
+                This is my awesome photo.   It is not the only photo, but it
+                is my favourite... well except for that other one, but it is
+                nsfw
+                """,
                category_id=1,
-               picture="https://static.pexels.com/photos/34482/giraffe-animals-zoo-funny.jpg",
+               picture="""https://static.pexels.com/photos/34482/giraffe-animals-zoo-funny.jpg""",
                user_id=1)
 db_session.add(photo1)
 

@@ -9,13 +9,16 @@ photos_api = Blueprint('photos_api', __name__)
 # GET Photos
 @photos_api.route('/photos', methods=['GET'])
 def get_photos():
+    """ Returns all photos """
     photos = Photo.query.all()
-    return jsonify(photos=[photo.serialize for photo in photos]), 200
+    photos = [photo.serialize for photo in photos]
+    return jsonify(photos), 200
 
 
 # NEW PHOTO
 @photos_api.route('/photos', methods=['POST'])
 def new_photo():
+    """ Creates a new photo """
     data = request.get_json()
 
     # initialze return message

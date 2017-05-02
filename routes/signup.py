@@ -9,6 +9,7 @@ signup_api = Blueprint('signup_api', __name__)
 # NEW USER API
 @signup_api.route('/signup', methods=['POST'])
 def signup():
+    """ Creates a new User """
     data = request.get_json()
 
     # make sure all required data is present

@@ -4,9 +4,9 @@ import helpers
 fblogin_api = Blueprint('fblogin_api', __name__)
 
 
-# facebook login endpoint
 @fblogin_api.route('/fblogin', methods=['POST'])
 def fblogin():
+    """ Handles login requests through facebook login"""
     data = request.get_json()
     print "data from request is"
     print data

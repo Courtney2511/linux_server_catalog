@@ -1,1 +1,1 @@
-SECRET_KEY="super_secret_key"
+SECRET_KEY = "super_secret_key"

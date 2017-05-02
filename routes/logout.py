@@ -8,6 +8,7 @@ logout_api = Blueprint('logout_api', __name__)
 # LOGOUT ENDPOINT
 @logout_api.route('/logout', methods=['POST'])
 def logout():
+    """ Posts to application with logout parameters"""
     data = request.get_json()
     token = data['auth_token']
     message = {}

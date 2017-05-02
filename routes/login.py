@@ -10,6 +10,7 @@ login_api = Blueprint('login_api', __name__)
 # LOGIN ENDPOINT
 @login_api.route('/login', methods=['POST'])
 def login():
+    """ Posts to application with login parameters """
     # get login data from request
     data = request.get_json()
     username = data['username']
@@ -23,7 +24,7 @@ def login():
         message['success'] = False
         return jsonify(message), 200
     # if valid:
-    if user:        
+    if user:
         # create JWT token
         token_data = {
             'iat': datetime.datetime.utcnow(),
