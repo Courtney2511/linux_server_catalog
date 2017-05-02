@@ -24,6 +24,11 @@ export default function photos(state = initialState, action) {
     }
 
     case DELETE_PHOTO: {
+      if (action.error) {
+        return {
+          ...state, errors: serverError
+        }
+      } else
       return {
         ...state, message: "photo deleted"
       }

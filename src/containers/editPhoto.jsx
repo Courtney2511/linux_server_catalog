@@ -23,7 +23,7 @@ class EditPhoto extends React.Component {
     return (
       <div className="form-container">
         <h2>Need to make some changes?</h2>
-        {
+        { // displays server error, if any
           (this.props.photos.error)
           ? <div>{this.props.photos.error}</div>
           : null

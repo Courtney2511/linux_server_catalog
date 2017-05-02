@@ -29,7 +29,7 @@ class NewPhotoForm extends React.Component {
     return (
       <div className="form-container">
       <h2>Show us your art.</h2>
-      {
+      { // displays server errors, if any
         (this.props.photos.errors)
         ? <div className="server-errors">{this.props.photos.errors}</div>
         : null

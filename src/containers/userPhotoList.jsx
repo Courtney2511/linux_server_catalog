@@ -20,6 +20,11 @@ class UserPhotoList extends React.Component {
           ? <div className="message">{this.props.photos.message}</div>
           : null
         }
+        {
+          (this.props.photos.errors)
+          ? <div className="server-errors">{this.props.photos.errors}</div>
+          : null
+        }
         <div className="photos">
           {this.props.user.photos.map(photo => <PhotoUserProfile key={photo.id} photo={photo} deletePhoto={() => this.props.actions.deletePhoto(photo.id)} />)}
         </div>
