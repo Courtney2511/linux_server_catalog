@@ -12,8 +12,10 @@ from routes.photo import photo_api
 from routes.user import user_api
 from routes.users import users_api
 from routes.photos_by_user import photos_by_user_api
+from routes.categories import categories_api
 
 app = Flask(__name__)
+app.register_blueprint(categories_api)
 app.register_blueprint(photos_by_user_api)
 app.register_blueprint(signup_api)
 app.register_blueprint(login_api)
