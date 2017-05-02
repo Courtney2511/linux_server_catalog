@@ -7,10 +7,17 @@ const initialState = {
   list: [],
 }
 
+const serverError = "a server error occured, please try again"
+
 export default function photos(state = initialState, action) {
   switch (action.type) {
 
     case EDIT_PHOTO: {
+      if (action.error) {
+        return {
+          ...state, errors: serverError
+        }
+      } else
       return {
         ...state, photoDetail: action.payload.data
       }
@@ -26,7 +33,7 @@ export default function photos(state = initialState, action) {
 
       if (action.error) {
         return {
-          ...state, errors: "A server error occured"
+          ...state, errors: serverError
         }
       } else if (!action.payload.data.success) {
         return {
@@ -50,7 +57,7 @@ export default function photos(state = initialState, action) {
 
       if (action.error) {
         return {
-          ...state, errors: "A server error occurred",
+          ...state, errors: serverError,
                     list: []
         }
       } else {
@@ -70,7 +77,7 @@ export default function photos(state = initialState, action) {
     case GET_PHOTOS:
       if (action.error) {
         return {
-          ...state, errors: "A server error occurred",
+          ...state, errors: serverError,
                     list: []
         }
       } else {
