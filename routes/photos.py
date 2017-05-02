@@ -11,6 +11,8 @@ photos_api = Blueprint('photos_api', __name__)
 def get_photos():
     """ Returns all photos """
     photos = Photo.query.all()
+    if len(photos) == 0:
+        return jsonify(message="resource not found"), 404
     photos = [photo.serialize for photo in photos]
     return jsonify(photos), 200
 
@@ -65,4 +67,4 @@ def new_photo():
     db_session.refresh(newPhoto)
     message['photo'] = newPhoto.serialize
     message['success'] = True
-    return jsonify(message), 200
+    return jsonify(message), 201

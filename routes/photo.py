@@ -10,6 +10,8 @@ photo_api = Blueprint('photo_api', __name__)
 def get_photo(photo_id):
     """ returns a photo instance by id """
     photo = Photo.query.get(photo_id)
+    if photo is None:
+        return jsonify(message="resource not found"), 404
     return jsonify(photo=photo.serialize)
 
 
@@ -17,6 +19,8 @@ def get_photo(photo_id):
 def edit_photo(photo_id):
     """ Updates a photo instance """
     photo = Photo.query.get(photo_id)
+    if photo is None:
+        return jsonify(message="resource not found"), 404
     data = request.get_json()
     photo.name = data['name']
     photo.description = data['description']
@@ -25,7 +29,7 @@ def edit_photo(photo_id):
     db_session.add(photo)
     db_session.commit()
     db_session.refresh(photo)
-    return jsonify(photo=photo.serialize), 200
+    return jsonify(photo=photo.serialize), 201
 
 
 @photo_api.route('/photos/<int:photo_id>', methods=['DELETE'])

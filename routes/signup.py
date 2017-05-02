@@ -62,4 +62,4 @@ def signup():
     db_session.refresh(new_user)
     message['success'] = True
     message['user'] = new_user.serialize
-    return jsonify(message), 200
+    return jsonify(message), 201
