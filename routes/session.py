@@ -4,11 +4,11 @@ import jwt
 import datetime
 import constants
 
-login_api = Blueprint('login_api', __name__)
+session_api = Blueprint('session_api', __name__)
 
 
 # LOGIN ENDPOINT
-@login_api.route('/login', methods=['POST'])
+@session_api.route('/session/new', methods=['POST'])
 def login():
     """ Posts to application with login parameters """
     # get login data from request
@@ -39,3 +39,41 @@ def login():
         message['auth_token'] = auth_token
         message['success'] = True
         return jsonify(message), 200
+
+
+@session_api.route('/session/end', methods=['POST'])
+def logout():
+    """ Posts to application with logout parameters"""
+    data = request.get_json()
+    token = data['auth_token']
+    message = {}
+    try:
+        jwt.decode(token, constants.SECRET_KEY)
+    except jwt.exceptions.ExpiredSignatureError:
+        pass
+    except jwt.exceptions.InvalidTokenError:
+        message['error'] = 'token is invalid'
+        return jsonify(message), 400
+
+    message['message'] = 'Successfully logged out'
+    message['success'] = True
+    return jsonify(message), 200
+
+
+@session_api.route('/session/fb', methods=['POST'])
+def fblogin():
+    """ Handles login requests through facebook login"""
+    data = request.get_json()
+    print "data from request is"
+    print data
+    message = {}
+    message['message'] = "facebook login in received"
+
+    email = data['data']['email']
+
+    return jsonify(message), 200
+
+    user = helpers.user_by_email(email)
+
+    if user:
+        print "this user "

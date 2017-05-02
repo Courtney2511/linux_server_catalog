@@ -6,7 +6,6 @@ import helpers
 photos_api = Blueprint('photos_api', __name__)
 
 
-# GET Photos
 @photos_api.route('/photos', methods=['GET'])
 def get_photos():
     """ Returns all photos """
@@ -17,7 +16,6 @@ def get_photos():
     return jsonify(photos), 200
 
 
-# NEW PHOTO
 @photos_api.route('/photos', methods=['POST'])
 def new_photo():
     """ Creates a new photo """
@@ -68,3 +66,40 @@ def new_photo():
     message['photo'] = newPhoto.serialize
     message['success'] = True
     return jsonify(message), 201
+
+
+@photos_api.route('/photos/<int:photo_id>', methods=['GET'])
+def get_photo(photo_id):
+    """ returns a photo instance by id """
+    photo = Photo.query.get(photo_id)
+    if photo is None:
+        return jsonify(message="resource not found"), 404
+    return jsonify(photo=photo.serialize)
+
+
+@photos_api.route('/photos/<int:photo_id>', methods=['PUT'])
+def edit_photo(photo_id):
+    """ Updates a photo instance """
+    photo = Photo.query.get(photo_id)
+    if photo is None:
+        return jsonify(message="resource not found"), 404
+    data = request.get_json()
+    photo.name = data['name']
+    photo.description = data['description']
+    photo.picture = data['url']
+    photo.category_id = data['categoryId']
+    db_session.add(photo)
+    db_session.commit()
+    db_session.refresh(photo)
+    return jsonify(photo=photo.serialize), 201
+
+
+@photos_api.route('/photos/<int:photo_id>', methods=['DELETE'])
+def delete_photo(photo_id):
+    """ Deletes a photo """
+    photo = Photo.query.get(photo_id)
+    if photo is None:
+        return jsonify(Message="Not Found"), 404
+    db_session.delete(photo)
+    db_session.commit()
+    return jsonify(success=True)
