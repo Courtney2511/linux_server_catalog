@@ -14,8 +14,7 @@ class EditPhoto extends React.Component {
   }
 
   handleSubmit(values) {
-    this.props.actions.editPhoto(values.id, values.user.id, values.name, values.description, values.category.id, values.picture)
-    console.log(values)
+    this.props.actions.editPhoto(values.id, values.user.id, values.name, values.description, values.category, values.picture)
     this.props.actions.getUserPhotoList(values.user.id)
     browserHistory.push(`/photos/${values.id}`)
   }
@@ -24,6 +23,11 @@ class EditPhoto extends React.Component {
     return (
       <div className="form-container">
         <h2>Need to make some changes?</h2>
+        {
+          (this.props.photos.error)
+          ? <div>{this.props.photos.error}</div>
+          : null
+        }
         {
           (this.props.photos.photoDetail && this.props.user.isLoggedIn)
           ? <EditPhotoForm photo={this.props.photos.photoDetail} handleSubmit={event => this.handleSubmit(event)} />

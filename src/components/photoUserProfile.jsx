@@ -15,7 +15,7 @@ export default function PhotoUserProfile(props) {
       <div className="user-actions">
         <Link to={`/users/${props.photo.user.id}/photos/${props.photo.id}`}>Edit</Link>
         <button id="delete-button" onClick={() =>
-            { alert("Are you sure?")
+            { alert("Are you sure you want to delete?")
               props.deletePhoto()
             }}>Delete</button>
       </div>
