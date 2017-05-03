@@ -40,21 +40,23 @@ export default function photos(state = initialState, action) {
       }
 
     }
-
+    // FIXED!!
     case ADD_NEW_PHOTO: {
-
+      // handles server error
       if (action.error) {
         return {
           ...state, errors: serverError
         }
-      } else if (!action.payload.data.success) {
+      // handles ok request with errors
+    } else if (action.payload && action.payload.status === 200 ) {
         return {
-          ...state, errors: action.payload.data
+          ...state, errors: action.payload.data.errors
         }
+      // handles success
       } else {
         return {
           ...state, success: true,
-                    newPhoto: action.payload.data.photo
+                    newPhoto: action.payload.data
         }
       }
     }
@@ -64,17 +66,25 @@ export default function photos(state = initialState, action) {
         ...state, newPhoto: null
       }
     }
-
+    // FIXED!!
     case GET_PHOTO_DETAIL: {
-
       if (action.error) {
-        return {
-          ...state, errors: serverError,
-                    list: []
-        }
+          // handles 404
+          if (action.payload.response && action.payload.response.status === 404) {
+            return {
+              ...state, errors: action.payload.response.data.errors,
+                        photoDetail: null
+            }
+            // handles 500
+          } else {
+            return {
+              ...state, errors: serverError
+            }
+          }
+      // handles success
       } else {
         return {
-          ...state, photoDetail: action.payload.data.photo,
+          ...state, photoDetail: action.payload.data,
                     errors: null
         }
       }
@@ -85,16 +95,26 @@ export default function photos(state = initialState, action) {
         ...state, photoDetail: null
       }
     }
-
+    // FIXED!!!!
     case GET_PHOTOS:
       if (action.error) {
-        return {
-          ...state, errors: serverError,
-                    list: []
+        // handles 404
+        if (action.payload.response && action.payload.response.status === 404) {
+          return {
+            ...state, errors: action.payload.response.data.errors,
+                      list: []
+          }
+        // handles 500
+        } else {
+          return {
+            ...state, errors: "Server Error",
+                      list: []
+          }
         }
+      // handles success
       } else {
         return {
-          ...state, list: action.payload.data.photos,
+          ...state, list: action.payload.data,
                     errors: null
         }
       }

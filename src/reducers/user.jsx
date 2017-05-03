@@ -21,8 +21,9 @@ const serverError = "A server error occured.  Please try again later"
 
 export default function user(state = initialState, action) {
   switch (action.type) {
-
+    // FIXED!!!
     case GET_USER_PHOTO_LIST:
+      // handles server error
       if (action.error) {
         return {
           ...state, error: {
@@ -30,33 +31,38 @@ export default function user(state = initialState, action) {
                               error: serverError
                             }
         }
-      } else if (!action.payload.data.success) {
+      // handles bad request
+      } else if (action.payload.status !== 200) {
         return {
           ...state, error: 'This resource does not exist'
         }
+      // handles success
       } else {
         return {
-          ...state, photos: action.payload.data.photos,
-                    success: action.payload.data.success
+          ...state, photos: action.payload.data
           }
       }
-
-
+    // FIXED!!!
     case SIGNUP_USER:
       if (action.error) {
+      // handles server errors
         return {
-          ...state, errors: serverError
+          ...state, errors: serverError,
+                    isSignedUp: false
         }
+      //handles validation errors
       } else if (!action.payload.data.success) {
         return {
-          ...state, errors: action.payload.data
+          ...state, errors: action.payload.data.errors,
+                    isSignedUp: false
         }
+      // handles success
       } else {
           return {
             ...state, isSignedUp: true
           }
         }
-
+    // appears to be working
     case LOGIN_USER:
       // handles server error
       if (action.error) {
@@ -85,7 +91,7 @@ export default function user(state = initialState, action) {
                     userId: decoded.userId
         }
       }
-
+    // appears to be working
     case LOGOUT_USER:
       if (action.payload.data.success) {
         return {
@@ -93,7 +99,7 @@ export default function user(state = initialState, action) {
         }
       } else {
         return {
-        ...state, logout: { success: false, error: action.payload.data.error }
+        ...state, logout: { success: false, error: action.payload.data.errors }
         }
       }
     default:

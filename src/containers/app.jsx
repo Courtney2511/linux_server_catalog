@@ -20,7 +20,7 @@ export default class App extends React.Component {
       <Router history={ browserHistory }>
         <Route component={ mainLayout }>
           <Route path="/users/:userId" component={ UserPhotoList } />
-            <Route path="users/:userId/photos/:photoId" component= { EditPhotoForm } />
+            <Route path="/users/:userId/photos/:photoId" component= { EditPhotoForm } />
           <Route path="/" component={ Photos } />
           <Route path="/photos/new" component={ newPhotoForm } />
           <Route path="/photos/:photoId" component={ PhotoDetail } />

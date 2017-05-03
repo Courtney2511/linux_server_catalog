@@ -31,18 +31,17 @@ class NewPhotoForm extends React.Component {
       <h2>Show us your art.</h2>
       { // displays server errors, if any
         (this.props.photos.errors)
-        ? <div className="server-errors">{this.props.photos.errors}</div>
+        ? <div className="server-errors">server error should go here</div>
         : null
       }
       { // conditionaly displays form if logged in
         (!this.props.user.isLoggedIn)
         ? <div>You must be logged in to post new photos</div>
-
         : <form method='POST' onSubmit={event => this.handleSubmit(event)}>
           <input type="text" name="pictureUrl" placeholder="url to your photo photo"></input>
             { // displays url errors, if any
               (this.props.photos.errors && this.props.photos.errors.error_picture)
-              ? <div className="form-error">this.props.photos.errors.error_picture </div>
+              ? <div className="form-error">{this.props.photos.errors.error_picture}</div>
               : null
             }
           <input type="text" name="name" placeholder="Title"></input>

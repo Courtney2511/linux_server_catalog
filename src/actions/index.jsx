@@ -17,6 +17,7 @@ export const CLEAR_MESSAGE = 'CLEAR_MESSAGE'
 
 // gets photos by user
 export function getUserPhotoList(userId) {
+  console.log(userId)
   const url = `${process.env.API_SERVER}/users/${userId}/photos`
   // const url = 'http://localhost:5000/users/' + userId + '/photos'
   const data = axios.get(url)
@@ -126,7 +127,7 @@ export function addNewPhoto(userId, name, description, categoryId, url) {
 // posts new user to server
 export function signUpUser(username, email, password) {
 
-  const url = `${process.env.API_SERVER}/signup`
+  const url = `${process.env.API_SERVER}/users`
   const data = axios.post(url, {
     username: username,
     email: email,
@@ -143,7 +144,7 @@ export function signUpUser(username, email, password) {
 export function logInUser(username, password) {
 
   // POST login credentials to server
-  const url = `${process.env.API_SERVER}/login`
+  const url = `${process.env.API_SERVER}/session/new`
   const data = axios.post(url, {
     username: username,
     password: password
@@ -162,7 +163,7 @@ export function logOutUser(jwtToken) {
     auth_token: jwtToken
   }
 
-  const url = `${process.env.API_SERVER}/logout`
+  const url = `${process.env.API_SERVER}/session/end`
   const data = axios.post(url, options)
 
   return {
