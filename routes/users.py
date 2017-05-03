@@ -11,7 +11,7 @@ users_api = Blueprint('users_api', __name__)
 def get_users():
     """ Returns all Users """
     users = User.query.all()
-    return jsonify(users=[user.serialize for user in users])
+    return jsonify([user.serialize for user in users]), 200
 
 
 @users_api.route('/users/<int:user_id>/photos', methods=['GET'])
@@ -19,9 +19,9 @@ def get_photos(user_id):
     """ returns photos belonging to a user """
     photos = helpers.photos_by_user(user_id)
     if len(photos) == 0:
-        return jsonify(message="resource not found"), 404
+        return jsonify(message="resource not found", status=404), 404
     photos = [photo.serialize for photo in photos]
-    return jsonify(photos, success=True), 200
+    return jsonify(photos), 200
 
 
 @users_api.route('/users/<int:user_id>', methods=['DELETE'])
@@ -60,7 +60,7 @@ def signup():
         success = False
     if success is False:
         message['success'] = False
-        return jsonify(message), 200
+        return jsonify(errors=message), 200
 
     # check for valid data
     if not helpers.valid_username(str(username)):
@@ -79,7 +79,7 @@ def signup():
         message['error_email'] = "Email already in use"
     if success is False:
         message['success'] = False
-        return jsonify(message), 200
+        return jsonify(errors=message), 200
 
     # hash the password for db storage
     pw_hash = helpers.make_pw_hash(username, password)

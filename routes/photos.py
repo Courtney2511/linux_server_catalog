@@ -9,9 +9,10 @@ photos_api = Blueprint('photos_api', __name__)
 @photos_api.route('/photos', methods=['GET'])
 def get_photos():
     """ Returns all photos """
-    photos = Photo.query.all()
+    # photos = Photo.query.all()
+    photos = []
     if len(photos) == 0:
-        return jsonify(message="resource not found"), 404
+        return jsonify(errors="resource not found", status="404"), 404
     photos = [photo.serialize for photo in photos]
     return jsonify(photos), 200
 
@@ -45,7 +46,7 @@ def new_photo():
         message['error_picture'] = "provide a url for your picture"
         success = False
     if success is False:
-        return jsonify(message), 200
+        return jsonify(errors=message), 200
 
     # validate data
     url_is_valid = helpers.valid_url(url)
@@ -55,7 +56,7 @@ def new_photo():
         success = False
 
     if success is False:
-        return jsonify(message), 200
+        return jsonify(errors=message), 200
 
     # create a new photo instance
     newPhoto = Photo(name, description, category_id,
@@ -73,8 +74,8 @@ def get_photo(photo_id):
     """ returns a photo instance by id """
     photo = Photo.query.get(photo_id)
     if photo is None:
-        return jsonify(message="resource not found"), 404
-    return jsonify(photo=photo.serialize)
+        return jsonify(errors="resource not found", status=404), 404
+    return jsonify(photo.serialize)
 
 
 @photos_api.route('/photos/<int:photo_id>', methods=['PUT'])
@@ -91,7 +92,7 @@ def edit_photo(photo_id):
     db_session.add(photo)
     db_session.commit()
     db_session.refresh(photo)
-    return jsonify(photo=photo.serialize), 201
+    return jsonify(photo.serialize), 201
 
 
 @photos_api.route('/photos/<int:photo_id>', methods=['DELETE'])
@@ -99,7 +100,7 @@ def delete_photo(photo_id):
     """ Deletes a photo """
     photo = Photo.query.get(photo_id)
     if photo is None:
-        return jsonify(Message="Not Found"), 404
+        return jsonify(errors="Not Found", status=404), 404
     db_session.delete(photo)
     db_session.commit()
     return jsonify(success=True)
