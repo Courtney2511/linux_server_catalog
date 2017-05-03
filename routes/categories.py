@@ -7,8 +7,8 @@ categories_api = Blueprint('categories_api', __name__)
 # ALL CATEGORIES
 @categories_api.route('/categories')
 def get_categories():
-    categories = Category.query.all()
-    return jsonify(categories=[category.serialize for category in categories])
+    result = [category.serialize for category in Category.query.all()]
+    return jsonify(result), 200
 
 
 # CATEGORY BY ID

@@ -38,6 +38,7 @@ def login():
         # create a JSON message with JWT and send it to client
         message['auth_token'] = auth_token
         message['success'] = True
+        print message
         return jsonify(message), 200
 
 
