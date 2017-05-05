@@ -4,7 +4,8 @@ import {
   LOGOUT_USER,
   SIGNUP_USER,
   GET_USER_PHOTO_LIST,
-  DELETE_PHOTO
+  DELETE_PHOTO,
+  LOGIN_WITH_FACEBOOK
 } from '../actions'
 import jwt_decode from 'jwt-decode'
 
@@ -23,7 +24,6 @@ const serverError = "A server error occured.  Please try again later"
 
 export default function user(state = initialState, action) {
   switch (action.type) {
-    // FIXED!!!
     case GET_USER_PHOTO_LIST:
       // handles server error
       if (action.error) {
@@ -44,7 +44,6 @@ export default function user(state = initialState, action) {
           ...state, photos: action.payload.data
           }
       }
-    // FIXED!!!
     case SIGNUP_USER:
       if (action.error) {
       // handles server errors
@@ -64,7 +63,6 @@ export default function user(state = initialState, action) {
             ...state, isSignedUp: true
           }
         }
-    // appears to be working
     case LOGIN_USER:
       // handles server error
       if (action.error) {
@@ -84,6 +82,7 @@ export default function user(state = initialState, action) {
         }
       // handles success
       } else {
+        console.log(action.payload.data)
         const decoded = jwt_decode(action.payload.data.auth_token)
         return {
           ...state, isLoggedIn: true,
@@ -93,7 +92,15 @@ export default function user(state = initialState, action) {
                     userId: decoded.userId
         }
       }
-    // appears to be working
+    case LOGIN_WITH_FACEBOOK:
+      const decoded = jwt_decode(action.payload.data.auth_token)
+      return {
+        ...state, isLoggedIn: true,
+                  jwtToken: action.payload.data.auth_token,
+                  login: {error: '', success: true},
+                  username: decoded.username,
+                  userId: decoded.userId
+      }
     case LOGOUT_USER:
       if (action.payload.data.success) {
         return {

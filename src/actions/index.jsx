@@ -14,12 +14,22 @@ export const EDIT_PHOTO = 'EDIT_PHOTO'
 export const CLEAR_NEW_PHOTO = 'CLEAR_NEW_PHOTO'
 export const SET_NEW_PHOTO_ERRORS = 'SET_NEW_PHOTO_ERRORS'
 export const CLEAR_MESSAGE = 'CLEAR_MESSAGE'
+export const LOGIN_WITH_FACEBOOK = 'LOGIN_WITH_FACEBOOK'
+
+// log in with Facebook
+export function loginWithFacebook(fb_data) {
+  const url = "http://localhost:5000/session/fblogin"
+  const data = axios.post(url, fb_data)
+
+  return {
+    type: LOGIN_WITH_FACEBOOK,
+    payload: data
+  }
+}
 
 // gets photos by user
 export function getUserPhotoList(userId) {
-  console.log(userId)
   const url = `${process.env.API_SERVER}/users/${userId}/photos`
-  // const url = 'http://localhost:5000/users/' + userId + '/photos'
   const data = axios.get(url)
 
   return {

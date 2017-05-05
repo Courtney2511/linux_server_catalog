@@ -13,7 +13,6 @@ import loginForm from '../components/forms/loginForm.jsx'
 import facebookLogin from '../components/facebookLogin.jsx'
 import UserPhotoList from './userPhotoList.jsx'
 import EditPhotoForm from '../containers/editPhoto.jsx'
-import FbLogin from '../components/FbLogin.jsx'
 
 export default class App extends React.Component {
   render() {
@@ -29,7 +28,6 @@ export default class App extends React.Component {
           <Route path="/signup" component={ signUpForm } />
           <Route path="/login" component={ loginForm } />
           <Route path="/facebooklogin" component={ facebookLogin } />
-          <Route path="/fblogin" component={ FbLogin } />
         </Route>
       </Router>
     )

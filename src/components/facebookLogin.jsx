@@ -1,19 +1,22 @@
 import React from 'react'
 import '../../styles/form.scss'
-import axios from 'axios'
+// import axios from 'axios'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as Actions from '../actions'
+import { browserHistory } from 'react-router'
 
-export default class FacebookLogin extends React.Component {
+
+class FacebookLogin extends React.Component {
+
   constructor(props) {
     super(props)
-  }
-
-  componentDidMount() {
     window.fbAsyncInit = () => {
       FB.Event.subscribe('auth.statusChange', (response) => {  // eslint-disable-line no-undef
         console.log('auth status change was called with status ' + response.status)
         this.statusChangeCallback(response)
       })
-
+      // Initialize the settings for Facebook
       FB.init({ // eslint-disable-line no-undef
         appId: 398313963869826,
         cookie: true, // enable cookies to allow server access to the session
@@ -23,7 +26,7 @@ export default class FacebookLogin extends React.Component {
       })
     }
 
-    // load and initialize the SDK asynchronously
+    // load and initialize the Facebook SDK asynchronously
     (function(d, s, id){
        var fjs = d.getElementsByTagName(s)[0]
        if (d.getElementById(id)) {return}
@@ -33,7 +36,7 @@ export default class FacebookLogin extends React.Component {
      }(document, 'script', 'facebook-jssdk'))
   }
 
-  handleUserResponse(response) {
+  handleUserResponse(response, loginWithFacebook) {
     console.log(response)
     console.log('Successful login for: ' + response.name)
     document.getElementById('status').innerHTML =
@@ -41,20 +44,23 @@ export default class FacebookLogin extends React.Component {
 
     var data = response
 
-    axios.post('http://localhost:5000/session/fblogin', data )
-    .then(function (response) {
-    console.log(response)
-  })
-  .catch(function (error) {
-    console.log(error)
-  })
+    loginWithFacebook(data)
+
+    .then(() => {
+      if (this.props.user.isLoggedIn) {
+        browserHistory.push('/')
+      }
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
 
   }
 
   // get user info from Graph API after a successful login
   getUserInfo() {
     console.log('Welcome!  Fetching your information.... ')
-    FB.api('/me', {fields: 'first_name, last_name, email, name, age_range, birthday, cover, gender, hometown, location, significant_other'}, this.handleUserResponse)
+    FB.api('/me', {fields: 'first_name, last_name, email, name, age_range, birthday, cover, gender, hometown, location, significant_other'}, (response) => this.handleUserResponse(response, this.props.actions.loginWithFacebook))
   }
 
   // callback to test the Graph API after login
@@ -84,3 +90,21 @@ export default class FacebookLogin extends React.Component {
     )
   }
 }
+
+FacebookLogin.PropTypes = {
+  user: React.PropTypes.object
+}
+
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FacebookLogin)
