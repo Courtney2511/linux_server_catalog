@@ -61,7 +61,7 @@ def logout():
     return jsonify(message), 200
 
 
-@session_api.route('/session/fb', methods=['POST'])
+@session_api.route('/session/fblogin', methods=['POST'])
 def fblogin():
     """ Handles login requests through facebook login"""
     data = request.get_json()
@@ -70,11 +70,30 @@ def fblogin():
     message = {}
     message['message'] = "facebook login in received"
 
-    email = data['data']['email']
-
-    return jsonify(message), 200
-
+    email = data['email']
+    print email
     user = helpers.user_by_email(email)
+    print user
 
     if user:
-        print "this user "
+        # create a JWT token to login
+
+        token_data = {
+            'iat': datetime.datetime.utcnow(),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=30),
+            'username': user.username,
+            'userId': user.id,
+            'isLoggedIn': True,
+        }
+        auth_token = jwt.encode(token_data, constants.SECRET_KEY,
+                                algorithm='HS256')
+        # create a JSON message with JWT and send it to client
+        message['auth_token'] = auth_token
+        message['success'] = True
+        print message
+        return jsonify(message), 200
+
+    if not user:
+        # create a new User instance from the facebook login credentails, then a JWT login.
+
+        return jsonify(message="User not found"), 200

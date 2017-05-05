@@ -1,5 +1,6 @@
 from database.models import Category, User, Photo
 from database import create_db, db_session, drop_db
+import helpers
 
 drop_db()
 
@@ -16,15 +17,23 @@ for category in categories:
 
 
 # set up users:
-newUser1 = User(username="Courtney",
+username1 = "Courtney"
+password1 = "password"
+hashed1 = helpers.make_pw_hash(username1, password1)
+
+newUser1 = User(username=username1,
                 email="courtney@test.com",
-                password="password")
+                password=hashed1)
 db_session.add(newUser1)
 db_session.commit()
 
-newUser2 = User(username="Cayleigh",
+username2 = "Cayleigh"
+password2 = "password"
+hashed2 = helpers.make_pw_hash(username2, password2)
+
+newUser2 = User(username=username2,
                 email="cayleigh@test.com",
-                password="password")
+                password=password2)
 db_session.add(newUser2)
 db_session.commit()
 
