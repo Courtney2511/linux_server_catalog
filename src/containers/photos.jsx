@@ -22,7 +22,7 @@ class Photos extends React.Component {
         }
         { // if photos exist, displays photos
           (this.props.photos.list && this.props.photos.list.length > 0)
-          ? this.props.photos.list.map(photo => <Photo key={photo.id} photo={photo} />)
+          ? this.props.photos.list.map(photo => <Photo getUserPhotoList={ this.props.actions.getUserPhotoList } key={photo.id} photo={photo} />)
           : null
         }
       </div>

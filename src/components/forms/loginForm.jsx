@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { browserHistory } from 'react-router'
 import * as Actions from '../../actions'
 import '../../../styles/form.scss'
+import FacebookLogin from '../FacebookLogin'
 
 class LoginForm extends React.Component {
 
@@ -31,6 +32,9 @@ class LoginForm extends React.Component {
             <div className="form-error">{this.props.user.login.error}</div>
           <input className="submit-button" type="submit" value="ok"></input>
         </form>
+        <div>
+          <FacebookLogin />
+        </div>
       </div>
     )
   }

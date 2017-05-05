@@ -25,8 +25,8 @@ class SignUpForm extends React.Component {
       <div className = "form-container">
         <h2>Join our community!</h2>
         {
-          (this.props.user.errors)
-          ? <div className="server-errors">Where a server error should go</div>
+          (this.props.user.isSignedUp === false)
+          ? <div className="server-errors">Server Error - Please try again</div>
           : null
         }
         <form action="" method="POST" onSubmit={event => this.handleSubmit(event) }>

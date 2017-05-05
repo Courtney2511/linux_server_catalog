@@ -3,34 +3,32 @@ import '../../styles/form.scss'
 import axios from 'axios'
 
 export default class FacebookLogin extends React.Component {
+
   constructor(props) {
     super(props)
   }
 
   componentDidMount() {
-    window.fbAsyncInit = () => {
-      FB.Event.subscribe('auth.statusChange', (response) => {  // eslint-disable-line no-undef
-        console.log('auth status change was called with status ' + response.status)
-        this.statusChangeCallback(response)
+    window.fbAsyncInit = function() {
+      FB.init({  // eslint-disable-line no-undef
+        appId: '398313963869826',
+        xfbml: true,
+        version: 'v2.9'
       })
+      FB.AppEvents.logPageView()  // eslint-disable-line no-undef
+    };
 
-      FB.init({ // eslint-disable-line no-undef
-        appId: 398313963869826,
-        cookie: true, // enable cookies to allow server access to the session
-        xfbml: true, // parse socail plugins on this page
-        version: 'v2.8',
-        status: true // asks facebook to return the auth status on this init call to save a separate call to getLoginStatus
-      })
-    }
-
-    // load and initialize the SDK asynchronously
     (function(d, s, id){
-       var fjs = d.getElementsByTagName(s)[0]
+       var js, fjs = d.getElementsByTagName(s)[0]
        if (d.getElementById(id)) {return}
-       var js = d.createElement(s); js.id = id
+       js = d.createElement(s); js.id = id
        js.src = "//connect.facebook.net/en_US/sdk.js"
        fjs.parentNode.insertBefore(js, fjs)
      }(document, 'script', 'facebook-jssdk'))
+
+     FB.getLoginStatus(function(response) {  // eslint-disable-line no-undef
+     statusChangeCallback(response)
+ })
   }
 
   handleUserResponse(response) {
@@ -41,7 +39,7 @@ export default class FacebookLogin extends React.Component {
 
     var data = response
 
-    axios.post('http://localhost:5000/session/fblogin', data )
+    axios.post('http://localhost:5000/fblogin', { data })
     .then(function (response) {
     console.log(response)
   })

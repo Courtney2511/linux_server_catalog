@@ -23,16 +23,18 @@ export default function photos(state = initialState, action) {
       }
     }
 
-    case DELETE_PHOTO: {
+    case DELETE_PHOTO:
       if (action.error) {
         return {
-          ...state, errors: serverError
+          ...state,
+          errors: serverError
         }
-      } else
-      return {
-        ...state, message: "photo deleted"
+      } else {
+        return {
+          ...state,
+          list: state.list.filter(item => item.id !== action.photoId)
+        }
       }
-    }
 
     case CLEAR_MESSAGE: {
       return {

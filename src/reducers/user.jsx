@@ -1,9 +1,11 @@
 // User Reducer
-
-import { LOGIN_USER } from '../actions'
-import { LOGOUT_USER } from '../actions'
-import { SIGNUP_USER } from '../actions'
-import { GET_USER_PHOTO_LIST } from '../actions'
+import {
+  LOGIN_USER,
+  LOGOUT_USER,
+  SIGNUP_USER,
+  GET_USER_PHOTO_LIST,
+  DELETE_PHOTO
+} from '../actions'
 import jwt_decode from 'jwt-decode'
 
 
@@ -100,6 +102,13 @@ export default function user(state = initialState, action) {
       } else {
         return {
         ...state, logout: { success: false, error: action.payload.data.errors }
+        }
+      }
+    case DELETE_PHOTO:
+      if (!action.error) {
+        return {
+          ...state,
+          photos: state.photos.filter(item => item.id !== action.photoId)
         }
       }
     default:

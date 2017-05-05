@@ -76,11 +76,11 @@ export function getPhotoDetail(photoId) {
 export function deletePhoto(photoId) {
 
   const url = `${process.env.API_SERVER}/photos/${photoId}`
-  // const url = 'http://localhost:5000/photos/' + photoId
   const data = axios.delete(url)
 
   return {
     type: DELETE_PHOTO,
+    photoId: photoId,
     payload: data
   }
 }
