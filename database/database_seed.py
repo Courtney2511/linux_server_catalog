@@ -1,10 +1,28 @@
-from database.models import Category, User, Photo
+from models import Category, User, Photo
 from database import create_db, db_session, drop_db
-import helpers
+import random
+import string
+import hashlib
+
 
 drop_db()
 
 create_db()
+
+
+def make_salt():
+    """ returns a random 5 letter salt """
+    return ''.join(random.choice(string.letters) for x in xrange(5))
+
+
+# hashes a users password
+def make_pw_hash(name, password, salt=None):
+    """ returns a hash of a users password with a salt """
+    if not salt:
+        salt = make_salt()
+    pw_hash = hashlib.sha256(name + password + salt).hexdigest()
+    return '%s,%s' % (pw_hash, salt)
+
 
 # set up categories:
 categories = ['Animals', 'Black and White', 'Landscape', 'People', 'Food']
@@ -19,7 +37,7 @@ for category in categories:
 # set up users:
 username1 = "Courtney"
 password1 = "password"
-hashed1 = helpers.make_pw_hash(username1, password1)
+hashed1 = make_pw_hash(username1, password1)
 
 newUser1 = User(username=username1,
                 email="courtney@test.com",
@@ -29,11 +47,11 @@ db_session.commit()
 
 username2 = "Cayleigh"
 password2 = "password"
-hashed2 = helpers.make_pw_hash(username2, password2)
+hashed2 = make_pw_hash(username2, password2)
 
 newUser2 = User(username=username2,
                 email="cayleigh@test.com",
-                password=password2)
+                password=hashed2)
 db_session.add(newUser2)
 db_session.commit()
 

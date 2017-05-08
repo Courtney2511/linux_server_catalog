@@ -1,8 +1,11 @@
 from flask import Blueprint, request, jsonify
+from database.models import User
 import helpers
 import jwt
 import datetime
 import constants
+from database.database import db_session
+
 
 session_api = Blueprint('session_api', __name__)
 
@@ -95,5 +98,24 @@ def fblogin():
 
     if not user:
         # create a new User instance from the facebook login credentails, then a JWT login.
+        username = data['name']
+        new_user = User(username=username, email=email)
+        db_session.add(new_user)
+        db_session.commit()
+        user_with_id = db_session.refresh(new_user)
+        message['user'] = user_with_id
 
-        return jsonify(message="User not found"), 200
+        token_data = {
+            'iat': datetime.datetime.utcnow(),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=30),
+            'username': user_with_id.username,
+            'userId': user_with_id.id,
+            'isLoggedIn': True,
+        }
+        auth_token = jwt.encode(token_data, constants.SECRET_KEY,
+                                algorithm='HS256')
+
+        message['auth_token'] = auth_token
+        message['success'] = True
+        print message
+        return jsonify(message), 200

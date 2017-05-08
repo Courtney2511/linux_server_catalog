@@ -30,7 +30,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String(30), nullable=False)
     email = Column(String(100), nullable=False)
-    password = Column(String(100), nullable=False)
+    password = Column(String(100), nullable=True)
 
     def __init__(self, username=None, email=None, password=None):
         self.username = username
@@ -45,7 +45,8 @@ class User(Base):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'password': self.password
         }
 
 

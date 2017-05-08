@@ -10,10 +10,10 @@ Base.query = db_session.query_property()
 
 
 def drop_db():
-    import database.models
+    import models
     Base.metadata.drop_all(bind=engine)
 
 
 def create_db():
-    import database.models
+    import models
     Base.metadata.create_all(bind=engine)
