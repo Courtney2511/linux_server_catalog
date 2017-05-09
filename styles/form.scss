@@ -1,11 +1,14 @@
+/* palette */
+$font-dark:  #263238;
+$white: #fff;
 
 .form-container {
   width: 600px;
   margin: auto;
   margin-top: 40px;
-  border: 1px solid white;
-  border-radius: 5px;
-  background-color: white;
+  border: 1px solid $white;
+  border-radius: 2px;
+  background-color: $white;
   box-shadow: rgba(187, 187, 187, 1) 0 0 20px -1px;
   text-align: center;
 
@@ -19,9 +22,10 @@
 input,
 textarea {
   width: 300px;
-  height: 20px;
+  height: 25px;
   border: 1px solid #f4f4f5;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  border-bottom: 0 0 0 1px solid black;
 }
 
 textarea {
@@ -43,5 +47,5 @@ textarea {
   background-color: blue;
   border: none;
   border-radius: 5px;
-  color: white;
+  color: $white;
 }

@@ -6,7 +6,7 @@ import { formatUnixShortDate } from '../helpers/date'
 export default function Photo(props) {
   return (
     <div className="photo-div">
-      <Link to={"/photos/" + props.photo.id}>
+      <Link className="photo-link" to={"/photos/" + props.photo.id}>
         <img className="photo" src={props.photo.picture} />
       </Link>
       <h3 className="photo-title">{props.photo.name}</h3>

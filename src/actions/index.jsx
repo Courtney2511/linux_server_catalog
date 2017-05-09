@@ -97,7 +97,6 @@ export function deletePhoto(photoId) {
 
 // updates photo detail
 export function editPhoto(photoId, userId, name, description, categoryId, url) {
-
   const serverUrl = `${process.env.API_SERVER}/photos/${photoId}`
   // const serverUrl = 'http://localhost:5000/photos/' + photoId
   const data = axios.put(serverUrl, {

@@ -60,7 +60,7 @@ class FacebookLogin extends React.Component {
   // get user info from Graph API after a successful login
   getUserInfo() {
     console.log('Welcome!  Fetching your information.... ')
-    FB.api('/me', {fields: 'first_name, last_name, email, name, age_range, birthday, cover, gender, hometown, location, significant_other'}, (response) => this.handleUserResponse(response, this.props.actions.loginWithFacebook))
+    FB.api('/me', {fields: 'first_name, last_name, email, name, age_range, birthday, cover, gender, hometown,   location, significant_other'}, (response) => this.handleUserResponse(response, this.props.actions.loginWithFacebook))  // eslint-disable-line
   }
 
   // callback to test the Graph API after login

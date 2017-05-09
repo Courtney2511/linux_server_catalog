@@ -41,7 +41,8 @@ export default function user(state = initialState, action) {
       // handles success
       } else {
         return {
-          ...state, photos: action.payload.data
+          ...state, photos: action.payload.data,
+                    error: null
           }
       }
     case SIGNUP_USER:

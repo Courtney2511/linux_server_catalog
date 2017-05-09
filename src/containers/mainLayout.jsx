@@ -17,8 +17,7 @@ class MainLayout extends React.Component {
       <header>
         <div className="main-header">
           <div className="header-left">
-            <i className="fa fa-bomb fa-lg" aria-hidden="true"></i>
-            <h1 className="title">PHOTOBOMB</h1>
+            <h1 className="title"><i className="fa fa-bomb fa-lg" aria-hidden="true"></i>PHOTOBOMB</h1>
           </div>
           <div className="header-right">
             { // displays dashboard or login panel based on log in status

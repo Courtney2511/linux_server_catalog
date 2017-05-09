@@ -11,7 +11,7 @@ class EditPhotoForm extends React.Component {
         <Control.text model=".name" />
         <Control.textarea model=".description"></Control.textarea>
         <div>
-          <Control.select model=".category">
+          <Control.select model=".category.id">
             <option value="1">Animals</option>
             <option value="2">Black & White</option>
             <option value="3">Landscape</option>
