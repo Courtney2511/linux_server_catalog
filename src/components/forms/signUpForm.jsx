@@ -23,7 +23,9 @@ class SignUpForm extends React.Component {
   render() {
     return (
       <div className = "form-container">
-        <h2>Join our community!</h2>
+        <div className="form-header">
+          <h2>Join our community!</h2>
+        </div>
         {
           (this.props.user.isSignedUp === false)
           ? <div className="server-errors">Server Error - Please try again</div>

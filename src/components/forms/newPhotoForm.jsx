@@ -28,7 +28,10 @@ class NewPhotoForm extends React.Component {
 
     return (
       <div className="form-container">
-      <h2>Show us your art.</h2>
+        <div className="form-header">
+          <h2>Show us your art.</h2>
+        </div>
+
       { // displays server errors, if any
         (this.props.photos.errors)
         ? <div className="server-errors">server error should go here</div>
@@ -38,7 +41,7 @@ class NewPhotoForm extends React.Component {
         (!this.props.user.isLoggedIn)
         ? <div>You must be logged in to post new photos</div>
         : <form method='POST' onSubmit={event => this.handleSubmit(event)}>
-          <input type="text" name="pictureUrl" placeholder="url to your photo photo"></input>
+          <input type="text" name="pictureUrl" placeholder="url to your photo"></input>
             { // displays url errors, if any
               (this.props.photos.errors && this.props.photos.errors.error_picture)
               ? <div className="form-error">{this.props.photos.errors.error_picture}</div>
@@ -57,6 +60,7 @@ class NewPhotoForm extends React.Component {
               : null
             }
           <br></br>
+          <div classs="category-select">
             <select name="category">
               <option value="1">Animals</option>
               <option value="2">Black & White</option>
@@ -64,6 +68,7 @@ class NewPhotoForm extends React.Component {
               <option value="4">People</option>
               <option value="5">Food</option>
             </select>
+          </div>
         <div className="form-submit">
           <input className="submit-button" type="submit" value="Share"></input>
         </div>

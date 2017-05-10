@@ -16,7 +16,7 @@ class UserPhotoList extends React.Component {
   render() {
     return (
       <div>
-        <h3>Your Posts</h3>
+        <h3 className="page-title">Posts</h3>
         { // displays message when a photo is deleted
           (this.props.photos.success)
           ? <div className="message">{this.props.photos.message}</div>

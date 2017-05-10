@@ -7,6 +7,9 @@ export default function PhotoUserProfile(props) {
   return (
     <div className="photolist-div">
       <div>
+        <img className="img-icon" src={props.photo.picture}/>
+      </div>
+      <div>
         <Link to={`/photos/${props.photo.id}`}> {props.photo.name} </Link>
       </div>
       <div>

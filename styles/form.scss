@@ -1,6 +1,13 @@
 /* palette */
 $font-dark:  #263238;
+$font-light: #fff;
 $white: #fff;
+$primary-dark: #4a0072;
+$primary: #7b1fa2;
+$primary-light: #ae52d4;
+$secondary-dark: #c17900;
+$secondary: #f9a825;
+$secondary-light: #ffd95a;
 
 .form-container {
   width: 600px;
@@ -9,27 +16,62 @@ $white: #fff;
   border: 1px solid $white;
   border-radius: 2px;
   background-color: $white;
-  box-shadow: rgba(187, 187, 187, 1) 0 0 20px -1px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   text-align: center;
+}
+
+.form-header {
+  background-color: $primary-light;
 
   h2 {
-    margin-left: 15px;
-    margin-right: 15px;
-    border-bottom: 1px solid #f4f4f5;
+    color: $font-light;
+    font-weight: 200;
+    margin: 0 15px 0 15px;
+    padding-top: 10px;
   }
 }
 
 input,
 textarea {
+  margin-top: 15px;
   width: 300px;
   height: 25px;
-  border: 1px solid #f4f4f5;
+  border: 0;
+  outline: 0;
+  background: transparent;
   margin-bottom: 10px;
-  border-bottom: 0 0 0 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 textarea {
   height: 8em;
+}
+
+.category-select {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  width: 120px;
+  border-radius: 3px;
+  overflow: hidden;
+  background-color: #fff;
+  background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
+}
+
+.category-select select {
+  padding: 5px 8px;
+  width: 130%;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
+.category-select select:focus {
+  outline: none;
 }
 
 .form-error {
@@ -43,9 +85,9 @@ textarea {
 .submit-button {
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 80px;
-  background-color: blue;
+  width: 100px;
+  background-color: $secondary-light;
   border: none;
-  border-radius: 5px;
-  color: $white;
+  border-radius: 2px;
+  color: $font-dark;
 }

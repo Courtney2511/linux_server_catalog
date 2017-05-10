@@ -24,7 +24,9 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div className="form-container">
-        <h2>Sign In</h2>
+        <div className="form-header">
+          <h2>Sign In</h2>
+        </div>
         <form action="" method='POST' onSubmit={event => this.handleSubmit(event)}>
           <input type="text" name="username" placeholder="username"></input>
             <div className="form-error"></div>

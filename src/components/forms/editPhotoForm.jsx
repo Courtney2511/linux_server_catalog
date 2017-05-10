@@ -20,7 +20,7 @@ class EditPhotoForm extends React.Component {
           </Control.select>
         </div>
         <div>
-          <Control.button model="photo" disabled={{valid: false}}>
+          <Control.button className="submit-button" model="photo" disabled={{valid: false}}>
             Submit!
           </Control.button>
         </div>
