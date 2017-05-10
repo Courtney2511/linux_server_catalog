@@ -1,0 +1,14 @@
+# OS Specific Files
+.DS_Store
+
+# Log and Output Files
+npm-debug.log
+
+# Coverage directory
+coverage
+
+# Dependency directory
+node_modules
+
+# Build Directory
+public

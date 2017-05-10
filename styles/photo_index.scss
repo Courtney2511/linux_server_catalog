@@ -1,0 +1,64 @@
+// @import 'main'
+
+/* palette */
+$font-dark:  #263238;
+$white: #fff;
+
+/* Index */
+
+.server-errors {
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  border: 2px solid red;
+  width: 400px;
+  border-radius: 5px;
+}
+
+.photo-div {
+  padding: 10px;
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: $white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.photo {
+  width: 100%;
+}
+
+.photo-title {
+  text-align: center;
+}
+
+.photo-desc {
+  display: inline-block;
+  margin: 8px;
+}
+
+.user {
+  display: inline-block;
+  padding-top: 8px;
+  margin-left: 8px;
+  color: grey;
+}
+
+.user-image {
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 15px;
+}
+
+/* Photo Detail */
+
+.photo-detail-div {
+  width: 80%;
+  background-color: $white;
+  margin: 0 auto;
+  text-align: center;
+}
