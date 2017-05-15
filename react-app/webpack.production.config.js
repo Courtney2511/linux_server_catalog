@@ -5,6 +5,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+console.log(`server was ${process.env.API_SERVER}`)
 loaders.push({
 	test: /\.scss$/,
 	loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader?sourceMap&localIdentName=[local]___[hash:base64:5]!sass-loader?outputStyle=expanded'}),
