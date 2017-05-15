@@ -68,7 +68,7 @@ module.exports = {
 		}),
     new webpack.DefinePlugin({
 			'process.env': {
-				API_SERVER: `"${process.env.API_SERVER || "http://localhost:5000"}"`
+				API_SERVER: `"${process.env.API_SERVER || "http://localhost:5000/api"}"`
 			}
 		}),
 	]

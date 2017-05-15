@@ -126,10 +126,15 @@ p {
   float: right;
   margin: 5px;
   list-style: none;
+
+  a {
+    color: $font-dark;
+  }
 }
 
 a {
   text-decoration: none;
+  color: $font-light;
 }
 
 a:visited {

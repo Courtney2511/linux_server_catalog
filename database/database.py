@@ -1,8 +1,12 @@
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('postgresql://courtney:password@localhost/photobomb')
+database_uri = os.getenv("DATABASE_URL", 'postgresql://courtney:password@localhost/photobomb')
+
+engine = create_engine(database_uri)
 db_session = scoped_session(sessionmaker(bind=engine))
 
 Base = declarative_base()

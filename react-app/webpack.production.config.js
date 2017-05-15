@@ -13,12 +13,11 @@ loaders.push({
 
 module.exports = {
 	entry: [
-		'./src/index.jsx',
-		'./styles/index.scss'
+		'./src/index.jsx'
 	],
 	output: {
 		publicPath: '/',
-		path: path.join(__dirname, 'public'),
+		path: path.join(__dirname, '../public'),
 		filename: '[chunkhash].js'
 	},
 	resolve: {
@@ -31,7 +30,8 @@ module.exports = {
 		new WebpackCleanupPlugin(),
 		new webpack.DefinePlugin({
 			'process.env': {
-				NODE_ENV: '"production"'
+				NODE_ENV: '"production"',
+        API_SERVER: `"${process.env.API_SERVER || "http://localhost:5000/api"}"`
 			}
 		}),
 		new webpack.optimize.UglifyJsPlugin({

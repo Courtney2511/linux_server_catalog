@@ -18,7 +18,7 @@ export const LOGIN_WITH_FACEBOOK = 'LOGIN_WITH_FACEBOOK'
 
 // log in with Facebook
 export function loginWithFacebook(fb_data) {
-  const url = "http://localhost:5000/session/fblogin"
+  const url = `${process.env.API_SERVER}/session/fblogin`
   const data = axios.post(url, fb_data)
 
   return {
@@ -73,7 +73,6 @@ export function clearMessage() {
 export function getPhotoDetail(photoId) {
 
   const url = `${process.env.API_SERVER}/photos/${photoId}`
-  // const url = 'http://localhost:5000/photos/' + photoId
   const data = axios.get(url)
 
   return {
@@ -98,7 +97,6 @@ export function deletePhoto(photoId) {
 // updates photo detail
 export function editPhoto(photoId, userId, name, description, categoryId, url) {
   const serverUrl = `${process.env.API_SERVER}/photos/${photoId}`
-  // const serverUrl = 'http://localhost:5000/photos/' + photoId
   const data = axios.put(serverUrl, {
     photoId: photoId,
     userId: userId,

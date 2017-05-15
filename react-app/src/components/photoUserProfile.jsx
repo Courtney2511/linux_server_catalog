@@ -18,6 +18,7 @@ export default function PhotoUserProfile(props) {
       <div className="user-actions">
         <Link to={`/users/${props.photo.user.id}/photos/${props.photo.id}`}>Edit</Link>
         <button id="delete-button" onClick={
+            // eslint-disable-next-line no-alert
             () => confirm("Are you sure you want to delete?") ? props.deletePhoto() : false
           }>Delete
         </button>
