@@ -1,6 +1,5 @@
 import React from 'react'
-import '../../styles/form.scss'
-// import axios from 'axios'
+import styles from '../../styles/form.scss'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as Actions from '../actions'
@@ -82,15 +81,14 @@ class FacebookLogin extends React.Component {
     return(
       <div>
         <h2>Facebook Login</h2>
-        <button className="facebook" href="#" onClick={this.handleClick}>Login with Facebook</button>
+        <button className={styles['facebook']} href="#" onClick={this.handleClick}>Login with Facebook</button>
         <br></br>
         <span id="status"></span>
-          <div className="fb-like" data-share="true" data-width="450" data-show-faces="true"></div>
-          <div className="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
       </div>
     )
   }
 }
+
 
 FacebookLogin.PropTypes = {
   user: React.PropTypes.object

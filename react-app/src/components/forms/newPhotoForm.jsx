@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../../styles/form.scss'
+import styles from '../../../styles/form.scss'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as Actions from '../../actions'
@@ -27,14 +27,14 @@ class NewPhotoForm extends React.Component {
   render() {
 
     return (
-      <div className="form-container">
-        <div className="form-header">
+      <div className={styles['form-container']}>
+        <div className={styles['form-header']}>
           <h2>Show us your art.</h2>
         </div>
 
       { // displays server errors, if any
         (this.props.photos.errors)
-        ? <div className="server-errors">server error should go here</div>
+        ? <div className={styles['server-errors']}>server error should go here</div>
         : null
       }
       { // conditionaly displays form if logged in
@@ -44,23 +44,23 @@ class NewPhotoForm extends React.Component {
           <input type="text" name="pictureUrl" placeholder="url to your photo"></input>
             { // displays url errors, if any
               (this.props.photos.errors && this.props.photos.errors.error_picture)
-              ? <div className="form-error">{this.props.photos.errors.error_picture}</div>
+              ? <div className={styles['form-error']}>{this.props.photos.errors.error_picture}</div>
               : null
             }
           <input type="text" name="name" placeholder="Title"></input>
            {  // displays name errors, if any
              (this.props.photos.errors && this.props.photos.errors.error_name)
-             ? <div className="form-error">{this.props.photos.errors.error_name}</div>
+             ? <div className={styles['form-error']}>{this.props.photos.errors.error_name}</div>
              : null
            }
           <textarea  name="description" placeholder="Tell us the story..."></textarea>
             { // displays description errors, if any
               (this.props.photos.errors && this.props.photos.errors.error_description)
-              ? <div className="form-error">{this.props.photos.errors.error_description}</div>
+              ? <div className={styles['form-error']}>{this.props.photos.errors.error_description}</div>
               : null
             }
           <br></br>
-          <div classs="category-select">
+          <div className={styles['category-select']}>
             <select name="category">
               <option value="1">Animals</option>
               <option value="2">Black & White</option>
@@ -69,8 +69,8 @@ class NewPhotoForm extends React.Component {
               <option value="5">Food</option>
             </select>
           </div>
-        <div className="form-submit">
-          <input className="submit-button" type="submit" value="Share"></input>
+        <div className={styles['form-submit']}>
+          <input className={styles['submit-button']} type="submit" value="Share"></input>
         </div>
       </form>
     }

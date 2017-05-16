@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import '../../styles/photo_index.scss'
+// import styles from '../../styles/photo_index.scss'
 import Photo from './photo.jsx'
 
 export default class PhotosByCategory extends React.Component {

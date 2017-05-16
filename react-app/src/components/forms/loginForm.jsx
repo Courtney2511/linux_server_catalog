@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { browserHistory } from 'react-router'
 import * as Actions from '../../actions'
-import '../../../styles/form.scss'
+import styles from '../../../styles/form.scss'
 import FacebookLogin from '../facebookLogin'
 
 class LoginForm extends React.Component {
@@ -23,16 +23,16 @@ class LoginForm extends React.Component {
   // renders LoginForm
   render() {
     return (
-      <div className="form-container">
-        <div className="form-header">
+      <div className={styles['form-container']}>
+        <div className={styles['form-header']}>
           <h2>Sign In</h2>
         </div>
         <form action="" method='POST' onSubmit={event => this.handleSubmit(event)}>
           <input type="text" name="username" placeholder="username"></input>
-            <div className="form-error"></div>
+            <div className={styles['form-error']}></div>
           <input type="password" name="password" placeholder="password"></input>
-            <div className="form-error">{this.props.user.login.error}</div>
-          <input className="submit-button" type="submit" value="ok"></input>
+            <div className={styles['form-error']}>{this.props.user.login.error}</div>
+          <input className={styles['submit-button']} type="submit" value="ok"></input>
         </form>
         <div>
           <FacebookLogin />

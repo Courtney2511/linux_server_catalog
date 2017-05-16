@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../../styles/form.scss'
+import styles from '../../../styles/form.scss'
 import { LocalForm, Control } from 'react-redux-form'
 
 class EditPhotoForm extends React.Component {
@@ -20,7 +20,7 @@ class EditPhotoForm extends React.Component {
           </Control.select>
         </div>
         <div>
-          <Control.button className="submit-button" model="photo" disabled={{valid: false}}>
+          <Control.button className={styles['submit-button']} model="photo" disabled={{valid: false}}>
             Submit!
           </Control.button>
         </div>

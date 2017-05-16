@@ -8,7 +8,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 console.log(`server was ${process.env.API_SERVER}`)
 loaders.push({
 	test: /\.scss$/,
-	loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader?sourceMap&localIdentName=[local]___[hash:base64:5]!sass-loader?outputStyle=expanded'}),
+	loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader?modules=true&sourceMap&localIdentName=[local]___[hash:base64:5]!sass-loader?outputStyle=expanded'}),
 	exclude: ['node_modules']
 });
 

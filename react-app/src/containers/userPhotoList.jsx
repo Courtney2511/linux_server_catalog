@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../styles/photo_index.scss'
+import styles from '../../styles/photo_index.scss'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as Actions from '../actions'
@@ -16,18 +16,18 @@ class UserPhotoList extends React.Component {
   render() {
     return (
       <div>
-        <h3 className="page-title">Posts</h3>
+        <h3 className={styles['page-title']}>Posts</h3>
         { // displays message when a photo is deleted
           (this.props.photos.success)
-          ? <div className="message">{this.props.photos.message}</div>
+          ? <div className={styles['message']}>{this.props.photos.message}</div>
           : null
         }
         {
           (this.props.photos.errors)
-          ? <div className="server-errors">{this.props.photos.errors}</div>
+          ? <div className={styles['server-errors']}>{this.props.photos.errors}</div>
           : null
         }
-        <div className="photos">
+        <div className={styles['photos']}>
           {this.props.user.photos.map(photo => <PhotoUserProfile key={photo.id} photo={photo} deletePhoto={() => this.props.actions.deletePhoto(photo.id)} />)}
         </div>
       </div>

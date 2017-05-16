@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../styles/form.scss'
+import styles from '../../styles/form.scss'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
@@ -21,8 +21,8 @@ class EditPhoto extends React.Component {
 
   render() {
     return (
-      <div className="form-container">
-        <div className="form-header">
+      <div className={styles['form-container']}>
+        <div className={styles['form-header']}>
           <h2>Need to make some changes?</h2>
         </div>
         { // displays server error, if any
