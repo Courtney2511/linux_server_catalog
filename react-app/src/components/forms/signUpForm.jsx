@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { browserHistory } from 'react-router'
-import styles from '../../../styles/main.scss'
+import styles from '../../../styles/form.scss'
 import * as Actions from '../../actions'
 
 
@@ -28,7 +28,7 @@ class SignUpForm extends React.Component {
         </div>
         {
           (this.props.user.isSignedUp === false)
-          ? <div className={styles['server-errors']}>Server Error - Please try again</div>
+          ? <div className={styles['server-errors']}></div>
           : null
         }
         <form action="" method="POST" onSubmit={event => this.handleSubmit(event) }>
