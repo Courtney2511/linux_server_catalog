@@ -2,9 +2,27 @@
 
 /* palette */
 $font-dark:  #263238;
+$font-light: #fff;
 $white: #fff;
+$primary-dark: #4a0072;
+$primary: #7b1fa2;
+$primary-light: #ae52d4;
+$secondary-dark: #c17900;
+$secondary: #f9a825;
+$secondary-light: #ffd95a;
 
 /* Index */
+
+.page-title {
+  text-align: center;
+  padding: 10px;
+  background-color: $primary-light;
+  color: $font-light;
+  margin: 0 auto;
+  margin-bottom: 0;
+  width: 80%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
 
 .server-errors {
   margin-top: 40px;

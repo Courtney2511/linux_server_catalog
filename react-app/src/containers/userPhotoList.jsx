@@ -8,8 +8,6 @@ import PhotoUserProfile from '../components/photoUserProfile.jsx'
 class UserPhotoList extends React.Component {
 
   componentDidMount() {
-    console.log("when the page loads userId is")
-    console.log(this.props.user)
     this.props.actions.getUserPhotoList(this.props.user.userId)
   }
 
