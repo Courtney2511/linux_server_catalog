@@ -27,17 +27,14 @@ export default function user(state = initialState, action) {
     case GET_USER_PHOTO_LIST:
       // handles server error
       if (action.error) {
-        console.log("caught an error")
         // handles 404
         if (action.payload.response && action.payload.response.status === 404) {
-          console.log("it was a 404")
           return {
             ...state, errors: action.payload.response.data.message,
                       photos: []
           }
         // handles 500
         } else {
-          console.log("it was the server")
           return {
             ...state, errors: "Server Error",
                       photos: []
@@ -45,7 +42,6 @@ export default function user(state = initialState, action) {
         }
       // handles success
       } else {
-        console.log("returned successful")
         return {
           ...state, photos: action.payload.data,
                     errors: null
@@ -89,7 +85,6 @@ export default function user(state = initialState, action) {
         }
       // handles success
       } else {
-        console.log(action.payload.data)
         const decoded = jwt_decode(action.payload.data.auth_token)
         return {
           ...state, isLoggedIn: true,

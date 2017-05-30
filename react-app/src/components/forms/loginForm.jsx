@@ -27,6 +27,11 @@ class LoginForm extends React.Component {
         <div className={styles['form-header']}>
           <h2>Sign In</h2>
         </div>
+        {
+          (this.props.user.isSignedUp)
+         ? <div className={styles['highlight']}>You have successfully signed up, please log in</div>
+         : null
+        }
         <form action="" method='POST' onSubmit={event => this.handleSubmit(event)}>
           <input type="text" name="username" placeholder="username"></input>
             <div className={styles['form-error']}></div>

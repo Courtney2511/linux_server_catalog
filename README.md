@@ -16,6 +16,7 @@ https://photobombapp.herokuapp.com/
 
 -  Python 2.7
 -  Postgres
+-  Node 5.12.0
 
 ## Contents
 
@@ -37,6 +38,12 @@ Clone the repo in your terminal
 
 ```
 git clone https://github.com/Courtney2511/item_catalogue.git
+```
+
+install dependecies
+
+```
+pip install
 ```
 
 create the database and role
@@ -62,6 +69,7 @@ open a new terminal window and run the frontend
 
 ```
 cd react-app
+yarn install
 npm start
 ```
 
