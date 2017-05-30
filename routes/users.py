@@ -18,10 +18,10 @@ def get_users():
 def get_photos(user_id):
     """ returns photos belonging to a user """
     photos = helpers.photos_by_user(user_id)
-    print photos
     if len(photos) == 0:
         return jsonify(message="You have no photo posts"), 404
     photos = [photo.serialize for photo in photos]
+    print photos
     return jsonify(photos), 200
 
 

@@ -19,9 +19,6 @@ export default function configureStore(initialState) {
   )
 
   const load = storage.createLoader(engine)
-  load(store)
-    .then((newState) => console.log('Loaded state:', newState))
-    .catch(() => console.log('Failed to load previous state'))
 
   if (module.hot) {
       // Enable Webpack hot module replacement for reducers
@@ -31,5 +28,5 @@ export default function configureStore(initialState) {
       })
     }
 
-    return store
+    return load(store).then(() => store)
 }

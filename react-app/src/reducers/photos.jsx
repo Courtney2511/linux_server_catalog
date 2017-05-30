@@ -97,7 +97,7 @@ export default function photos(state = initialState, action) {
         ...state, photoDetail: null
       }
     }
-    // FIXED!!!!
+
     case GET_PHOTOS:
       if (action.error) {
         // handles 404

@@ -34,7 +34,7 @@ class NewPhotoForm extends React.Component {
 
       { // displays server errors, if any
         (this.props.photos.errors)
-        ? <div className={styles['server-errors']}>server error should go here</div>
+        ? <div className={styles['server-errors']}>{this.props.photos.errors}</div>
         : null
       }
       { // conditionaly displays form if logged in

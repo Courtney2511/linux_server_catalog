@@ -27,23 +27,29 @@ export default function user(state = initialState, action) {
     case GET_USER_PHOTO_LIST:
       // handles server error
       if (action.error) {
-        return {
-          ...state, error: {
-                              success: false,
-                              error: serverError
-                            }
-        }
-      // handles bad request
-      } else if (action.payload.status !== 200) {
-        return {
-          ...state, error: 'This resource does not exist'
+        console.log("caught an error")
+        // handles 404
+        if (action.payload.response && action.payload.response.status === 404) {
+          console.log("it was a 404")
+          return {
+            ...state, errors: action.payload.response.data.message,
+                      photos: []
+          }
+        // handles 500
+        } else {
+          console.log("it was the server")
+          return {
+            ...state, errors: "Server Error",
+                      photos: []
+          }
         }
       // handles success
       } else {
+        console.log("returned successful")
         return {
           ...state, photos: action.payload.data,
-                    error: null
-          }
+                    errors: null
+        }
       }
     case SIGNUP_USER:
       if (action.error) {

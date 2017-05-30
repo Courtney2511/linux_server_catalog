@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from database.database import db_session
 from flask_cors import CORS
 import constants
@@ -19,6 +19,12 @@ app.register_blueprint(session_api, url_prefix='/api')
 app.register_blueprint(photos_api, url_prefix='/api')
 app.register_blueprint(users_api, url_prefix='/api')
 CORS(app)
+
+
+# Other API stuff
+@app.route('/api/<path:path>')
+def badApiPath(path):
+    return jsonify("No API Endpoint at /api/" + path), 400
 
 
 @app.teardown_appcontext

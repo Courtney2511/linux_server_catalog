@@ -8,11 +8,18 @@ import PhotoUserProfile from '../components/photoUserProfile.jsx'
 class UserPhotoList extends React.Component {
 
   componentDidMount() {
-    this.props.actions.getUserPhotoList(this.props.user.userId)
+    if (this.props.user.isLoggedIn) {
+      this.props.actions.getUserPhotoList(this.props.user.userId)
+    }
   }
 
   render() {
-    return (
+    return (!this.props.user.isLoggedIn)
+    ? (<div>
+        <h3 className={styles['page-title']}>Posts</h3>
+        <div className={styles['no-posts']}>You must be logged in view your previous posts</div>
+      </div>)
+    : (
       <div>
         <h3 className={styles['page-title']}>Posts</h3>
         { // displays message when a photo is deleted
@@ -20,14 +27,23 @@ class UserPhotoList extends React.Component {
           ? <div className={styles['message']}>{this.props.photos.message}</div>
           : null
         }
-        {
+        { // displays errors, if any
           (this.props.photos.errors)
           ? <div className={styles['server-errors']}>{this.props.photos.errors}</div>
           : null
         }
-        <div className={styles['photos']}>
-          {this.props.user.photos.map(photo => <PhotoUserProfile key={photo.id} photo={photo} deletePhoto={() => this.props.actions.deletePhoto(photo.id)} />)}
-        </div>
+        { // displays errors, if any
+          (this.props.user.errors)
+          ? <div className={styles['no-posts']}>{this.props.user.errors}</div>
+          : null
+        }
+        { // displays user photos, if any
+         (this.props.user.photos && this.props.user.photos.length > 0)
+        ? <div className={styles['photos']}>
+            {this.props.user.photos.map(photo => <PhotoUserProfile key={photo.id} photo={photo} deletePhoto={() => this.props.actions.deletePhoto(photo.id)} />)}
+          </div>
+        : null
+        }
       </div>
     )
   }
