@@ -28,7 +28,7 @@ export function loginWithFacebook(fb_data) {
 }
 
 // gets photos by user
-export function getUserPhotoList(userId, jwtToken) {
+export function getUserPhotoList(userId) {
   const url = `${process.env.API_SERVER}/users/${userId}/photos`
   const data = axios.get(url)
 
