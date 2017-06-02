@@ -2,6 +2,8 @@ from flask import Blueprint, jsonify, request
 from database.models import User
 from database.database import db_session
 import helpers
+import jwt
+import constants
 
 
 users_api = Blueprint('users_api', __name__)
@@ -18,8 +20,16 @@ def get_users():
 def get_photos(user_id):
     """ returns photos belonging to a user """
     photos = helpers.photos_by_user(user_id)
+    data = request.get_json()
+    jwt_token = data['jwtToken']
+    try:
+        decoded = jwt.decode(jwt_token, constants.SECRET_KEY)
+    except jwt.exceptions.InvalidTokenError:
+        return jsonify("invalid token"), 400
     if len(photos) == 0:
         return jsonify(message="You have no photo posts"), 404
+    if decoded['userId'] != user_id:
+        return jsonify("you can't retrieve this photo list"), 401
     photos = [photo.serialize for photo in photos]
     print photos
     return jsonify(photos), 200
@@ -29,8 +39,18 @@ def get_photos(user_id):
 def delete_user(user_id):
     """ Deletes a User """
     user = User.query.get(user_id)
+    data = request.get_json()
+    jwt_token = data['jwtToken']
+    # check for valid token
+    try:
+        decoded = jwt.decode(jwt_token, constants.SECRET_KEY)
+    except jwt.exceptions.InvalidTokenError:
+        return jsonify("token is not valid"), 400
     if user is None:
         return jsonify(Message="Not Found"), 404
+    # check to make sure user names match
+    if decoded['username'] != user.username:
+        return jsonify("you can only delete your own profile"), 401
     db_session.delete(user)
     db_session.commit()
     return jsonify(success=True)

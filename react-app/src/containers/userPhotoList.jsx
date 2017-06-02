@@ -9,7 +9,7 @@ class UserPhotoList extends React.Component {
 
   componentDidMount() {
     if (this.props.user.isLoggedIn) {
-      this.props.actions.getUserPhotoList(this.props.user.userId)
+      this.props.actions.getUserPhotoList(this.props.user.userId, this.props.user.jwtToken)
     }
   }
 
@@ -40,7 +40,7 @@ class UserPhotoList extends React.Component {
         { // displays user photos, if any
          (this.props.user.photos && this.props.user.photos.length > 0)
         ? <div className={styles['photos']}>
-            {this.props.user.photos.map(photo => <PhotoUserProfile key={photo.id} photo={photo} deletePhoto={() => this.props.actions.deletePhoto(photo.id)} />)}
+            {this.props.user.photos.map(photo => <PhotoUserProfile key={photo.id} photo={photo} deletePhoto={() => this.props.actions.deletePhoto(photo.id, this.props.user.jwtToken)} />)}
           </div>
         : null
         }

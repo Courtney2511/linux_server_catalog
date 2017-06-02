@@ -28,7 +28,7 @@ export function loginWithFacebook(fb_data) {
 }
 
 // gets photos by user
-export function getUserPhotoList(userId) {
+export function getUserPhotoList(userId, jwtToken) {
   const url = `${process.env.API_SERVER}/users/${userId}/photos`
   const data = axios.get(url)
 
@@ -82,10 +82,12 @@ export function getPhotoDetail(photoId) {
 }
 
 // delete photo
-export function deletePhoto(photoId) {
+export function deletePhoto(photoId, jwtToken) {
 
   const url = `${process.env.API_SERVER}/photos/${photoId}`
-  const data = axios.delete(url)
+  const data = axios.delete(url, {
+    jwtToken: jwtToken,
+  })
 
   return {
     type: DELETE_PHOTO,
@@ -95,7 +97,7 @@ export function deletePhoto(photoId) {
 }
 
 // updates photo detail
-export function editPhoto(photoId, userId, name, description, categoryId, url) {
+export function editPhoto(photoId, userId, name, description, categoryId, url, jwtToken) {
   const serverUrl = `${process.env.API_SERVER}/photos/${photoId}`
   const data = axios.put(serverUrl, {
     photoId: photoId,
@@ -104,6 +106,7 @@ export function editPhoto(photoId, userId, name, description, categoryId, url) {
     description: description,
     categoryId: categoryId,
     url: url,
+    jwtToken: jwtToken,
   })
 
   return {

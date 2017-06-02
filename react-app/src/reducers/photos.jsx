@@ -29,6 +29,10 @@ export default function photos(state = initialState, action) {
           ...state,
           errors: serverError
         }
+      } else if (action.payload.response && action.payload.response.status === 401) {
+        return {
+          ...state, errors: action.payload.response.data.errors,
+        }
       } else {
         return {
           ...state,
@@ -42,7 +46,7 @@ export default function photos(state = initialState, action) {
       }
 
     }
-    // FIXED!!
+
     case ADD_NEW_PHOTO: {
       // handles server error
       if (action.error) {
@@ -68,7 +72,7 @@ export default function photos(state = initialState, action) {
         ...state, newPhoto: null
       }
     }
-    // FIXED!!
+
     case GET_PHOTO_DETAIL: {
       if (action.error) {
           // handles 404
