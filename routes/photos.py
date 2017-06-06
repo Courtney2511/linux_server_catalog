@@ -56,7 +56,6 @@ def new_photo():
         return jsonify(errors=message), 200
 
     # validate data
-    url_is_valid = helpers.valid_url(url)
     if not helpers.valid_url(url):
         message['error_picture'] = "you must provide a valid url"
         success = False

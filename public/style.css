@@ -172,6 +172,10 @@ a:hover {
   margin-left: 15px;
 }
 
+.photolist-div___1QQSW a {
+  color: #263238;
+}
+
 .img-icon___1H-o1 {
   width: 40px;
   height: 40px;
@@ -187,7 +191,7 @@ a:hover {
   padding-top: 10px;
 }
 
-#edit-button___2fb6- {
+.user-actions___3ftH7 a {
   color: inherit;
   display: inline-block;
   border: none;
@@ -197,11 +201,11 @@ a:hover {
   padding-left: 0;
 }
 
-#edit-button___2fb6-:hover {
+.user-actions___3ftH7 a:hover {
   border-bottom: 2px solid #f9a825;
 }
 
-#delete-button___4EVSr {
+.user-actions___3ftH7 button {
   color: inherit;
   display: inline-block;
   border: none;
@@ -213,11 +217,22 @@ a:hover {
   margin-left: 15px !important;
 }
 
-#delete-button___4EVSr:hover {
+.user-actions___3ftH7 button:hover {
   border-bottom: 2px solid #f9a825;
 }
 /* palette */
 /* Index */
+.page-title___dq8sk {
+  text-align: center;
+  padding: 10px;
+  background-color: #ae52d4;
+  color: #fff;
+  margin: 0 auto;
+  margin-bottom: 0;
+  width: 80%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
 .server-errors___2CaXI {
   margin-top: 40px;
   margin-left: auto;
@@ -228,6 +243,15 @@ a:hover {
   border: 2px solid red;
   width: 400px;
   border-radius: 5px;
+}
+
+.no-posts___3suhn {
+  width: 80%;
+  font-size: 18px;
+  background-color: #fff;
+  padding: 10px;
+  margin: 0 auto;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .photo-div___1koTw {
@@ -328,4 +352,10 @@ textarea {
   border: none;
   border-radius: 2px;
   color: #263238;
+}
+
+.highlight___1G7en {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
 }
