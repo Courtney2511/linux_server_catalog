@@ -184,11 +184,11 @@ export function logInUser(username, password) {
 export function logOutUser(jwtToken) {
 
   const options = {
-    auth_token: jwtToken
+    headers: {"X-Authorization": jwtToken}
   }
 
   const url = `${process.env.API_SERVER}/session/end`
-  const data = axios.post(url, options)
+  const data = axios.post(url, null, options)
 
   return {
     type: LOGOUT_USER,

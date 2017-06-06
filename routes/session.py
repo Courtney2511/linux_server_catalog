@@ -48,8 +48,8 @@ def login():
 @session_api.route('/session/end', methods=['POST'])
 def logout():
     """ Posts to application with logout parameters"""
-    data = request.get_json()
-    token = data['auth_token']
+    headers = request.headers
+    token = headers['X-Authorization']
     message = {}
     try:
         jwt.decode(token, constants.SECRET_KEY)
