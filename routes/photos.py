@@ -117,12 +117,12 @@ def edit_photo(photo_id):
 @photos_api.route('/photos/<int:photo_id>', methods=['DELETE'])
 def delete_photo(photo_id):
     """ Deletes a photo """
-    data = request.get_json()
+    headers = request.headers
     photo = Photo.query.get(photo_id)
     if photo is None:
         return jsonify(errors="Not Found"), 404
     # authenticate user by jwtToken
-    jwt_token = data['jwtToken']
+    jwt_token = headers['X-Authorization']
     message = {}
     # decode the jwtToken
     try:

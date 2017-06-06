@@ -89,7 +89,9 @@ export function deletePhoto(photoId, jwtToken) {
 
   const url = `${process.env.API_SERVER}/photos/${photoId}`
   const data = axios.delete(url, {
-    jwtToken: jwtToken,
+    headers: {
+      "X-Authorization": jwtToken
+    },
   })
 
   return {
