@@ -20,8 +20,8 @@ def get_users():
 def get_photos(user_id):
     """ returns photos belonging to a user """
     photos = helpers.photos_by_user(user_id)
-    data = request.get_json()
-    jwt_token = data['jwtToken']
+    data = request.headers
+    jwt_token = data['X-Authorization']
     try:
         decoded = jwt.decode(jwt_token, constants.SECRET_KEY)
     except jwt.exceptions.InvalidTokenError:
@@ -31,7 +31,6 @@ def get_photos(user_id):
     if decoded['userId'] != user_id:
         return jsonify("you can't retrieve this photo list"), 401
     photos = [photo.serialize for photo in photos]
-    print photos
     return jsonify(photos), 200
 
 

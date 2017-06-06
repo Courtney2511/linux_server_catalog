@@ -28,10 +28,14 @@ export function loginWithFacebook(fb_data) {
 }
 
 // gets photos by user
-export function getUserPhotoList(userId) {
+export function getUserPhotoList(userId, jwtToken) {
   const url = `${process.env.API_SERVER}/users/${userId}/photos`
-  const data = axios.get(url)
-
+  const data = axios.get(url, {
+    headers: {
+      "X-Authorization": jwtToken
+    }
+  })
+  console.log(data)
   return {
     type: GET_USER_PHOTO_LIST,
     payload: data
