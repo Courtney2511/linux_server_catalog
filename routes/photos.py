@@ -57,7 +57,6 @@ def new_photo():
 
     # validate data
     url_is_valid = helpers.valid_url(url)
-    print url_is_valid
     if not helpers.valid_url(url):
         message['error_picture'] = "you must provide a valid url"
         success = False
