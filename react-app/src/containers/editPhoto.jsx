@@ -15,7 +15,7 @@ class EditPhoto extends React.Component {
 
   handleSubmit(values) {
     this.props.actions.editPhoto(values.id, values.user.id, values.name, values.description, values.category.id, values.picture, this.props.user.jwtToken)
-    this.props.actions.getUserPhotoList(values.user.id)
+    this.props.actions.getUserPhotoList(values.user.id, this.props.user.jwtToken)
     browserHistory.push(`/photos/${values.id}`)
   }
 

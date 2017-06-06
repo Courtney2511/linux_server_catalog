@@ -111,7 +111,6 @@ export function editPhoto(photoId, userId, name, description, categoryId, url, j
     description: description,
     categoryId: categoryId,
     url: url,
-    jwtToken: jwtToken,
   },
   {
     headers: {
