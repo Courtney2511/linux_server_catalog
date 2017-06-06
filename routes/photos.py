@@ -21,12 +21,13 @@ def get_photos():
 @photos_api.route('/photos', methods=['POST'])
 def new_photo():
     """ Creates a new photo """
+    headers = request.headers
     data = request.get_json()
     # initialze return message
     message = {}
     success = ''
     # check for valid token
-    jwt_token = data['jwtToken']
+    jwt_token = headers['X-Authorization']
     try:
         jwt.decode(jwt_token, constants.SECRET_KEY)
     except jwt.exceptions.InvalidTokenError:

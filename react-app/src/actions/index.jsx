@@ -35,7 +35,6 @@ export function getUserPhotoList(userId, jwtToken) {
       "X-Authorization": jwtToken
     }
   })
-  console.log(data)
   return {
     type: GET_USER_PHOTO_LIST,
     payload: data
@@ -121,7 +120,7 @@ export function editPhoto(photoId, userId, name, description, categoryId, url, j
 
 
 // posts new photo to server
-export function addNewPhoto(userId, name, description, categoryId, url) {
+export function addNewPhoto(userId, name, description, categoryId, url, jwtToken) {
 
   const serverUrl = `${process.env.API_SERVER}/photos`
   const data = axios.post(serverUrl, {
@@ -129,7 +128,11 @@ export function addNewPhoto(userId, name, description, categoryId, url) {
     name: name,
     description: description,
     categoryId: categoryId,
-    url: url
+    url: url,
+  }, {
+    headers: {
+      "X-Authorization": jwtToken
+    },
   })
 
   return {
