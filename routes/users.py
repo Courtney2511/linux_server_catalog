@@ -38,8 +38,8 @@ def get_photos(user_id):
 def delete_user(user_id):
     """ Deletes a User """
     user = User.query.get(user_id)
-    data = request.get_json()
-    jwt_token = data['jwtToken']
+    headers = request.headers
+    jwt_token = headers['X-Authorization']
     # check for valid token
     try:
         decoded = jwt.decode(jwt_token, constants.SECRET_KEY)
