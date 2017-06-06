@@ -91,7 +91,8 @@ def edit_photo(photo_id):
     if photo is None:
         return jsonify(errors="resource not found"), 404
     data = request.get_json()
-    jwt_token = data['jwtToken']
+    headers = request.headers
+    jwt_token = headers['X-Authorization']
     message = {}
     # check for valid token
     try:
@@ -102,7 +103,7 @@ def edit_photo(photo_id):
     # check to see if user owns photo
     if decoded['username'] != photo.user.username:
         return jsonify("You must own a photo to edit it"), 401
-    else:
+    if decoded and decoded['username'] == photo.user.username:
         photo.name = data['name']
         photo.description = data['description']
         photo.picture = data['url']

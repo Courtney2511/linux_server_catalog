@@ -112,6 +112,11 @@ export function editPhoto(photoId, userId, name, description, categoryId, url, j
     categoryId: categoryId,
     url: url,
     jwtToken: jwtToken,
+  },
+  {
+    headers: {
+      "X-Authorization": jwtToken
+    }
   })
 
   return {
