@@ -200,34 +200,34 @@ a:hover {
 .user-actions {
   float: right;
   padding-top: 10px;
-}
 
-#edit-button {
-  color: inherit;
-  display: inline-block;
-  border: none;
-  background-color: $white;
-  font-size: 16px;
-  margin: 0;
-  padding-left: 0;
+  a {
+    color: inherit;
+    display: inline-block;
+    border: none;
+    background-color: $white;
+    font-size: 16px;
+    margin: 0;
+    padding-left: 0;
 
-  &:hover {
-    border-bottom: 2px solid $secondary;
+    &:hover {
+      border-bottom: 2px solid $secondary;
+    }
   }
-}
 
-#delete-button {
-  color: inherit;
-  display: inline-block;
-  border: none;
-  background-color: $white;
-  font-size: 18px;
-  font-weight: 200;
-  margin: 0;
-  padding-left: 0;
-  margin-left: 15px !important;
+  button {
+    color: inherit;
+    display: inline-block;
+    border: none;
+    background-color: $white;
+    font-size: 18px;
+    font-weight: 200;
+    margin: 0;
+    padding-left: 0;
+    margin-left: 15px !important;
 
-  &:hover {
-    border-bottom: 2px solid $secondary;
+    &:hover {
+      border-bottom: 2px solid $secondary;
+    }
   }
 }
