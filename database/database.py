@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-database_uri = os.getenv("DATABASE_URL", 'postgresql://photobomb@localhost/photobomb')
+database_uri = os.getenv("DATABASE_URL", 'postgresql:///photobomb')
 
 engine = create_engine(database_uri)
 db_session = scoped_session(sessionmaker(bind=engine))
