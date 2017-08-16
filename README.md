@@ -32,45 +32,25 @@ https://photobombapp.herokuapp.com/
 4. routes/
   * Python-Flask code for API endpoints
 
-### To Run locally:
+### Linux Server information:
 
-Clone the repo in your terminal
+  * IP Address: 34.209.35.255
+  * URL: photobomb.courtneynoonan.com
 
-```
-git clone https://github.com/Courtney2511/item_catalogue.git
-```
+  * Software Installed:
+	* Finger
+	* Apache2
+	* git
+	* ntp
+	* postgresql
+	* mod_wsgi
 
-install dependecies
+  * Configuration:
+	* Apache2 configured to serve a Python mod_wsgi application
 
-```
-pip install
-```
-
-create the database and role
-
-```
-createuser -l photobomb
-createdb -O photobomb photobomb
-```
-
-create and seed the schema
+  * To access the server:
 
 ```
-python database/database_seed.py
+ssh grader@34.209.35.255 -p 2200 -i [RSA_KEY]
 ```
 
-run the backend
-
-```
-python photobomb.py
-```
-
-open a new terminal window and run the frontend
-
-```
-cd react-app
-yarn install
-npm start
-```
-
-open your browser to http://localhost:8888
